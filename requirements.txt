@@ -1,11 +1,4 @@
-certifi==2025.1.31
 cffi==1.17.1
-charset-normalizer==3.4.1
 clingo==5.7.1
 clingox==1.2.1
-docopt==0.6.2
-idna==3.10
 pycparser==2.22
-requests==2.32.3
-urllib3==2.3.0
-yarg==0.1.10

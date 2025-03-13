@@ -1,1 +1,1 @@
-python venv -m .venv
+python -m venv .venv
