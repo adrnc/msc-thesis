@@ -9,13 +9,13 @@ class Context:
     def seq(self, x, y):
         return [x, y]
 
-    def on_model(m):
-        print(m)
+def on_model(m):
+    print(m)
 
-    ctl = Control()
-    ctl.add("base", [], """\
-    p(@inc(10)).
-    q(@seq(1,2)).
-    """)
-    ctl.ground([("base", [])], context=Context())
-    print(ctl.solve(on_model=on_model))
+ctl = Control()
+ctl.add("base", [], """\
+p(@inc(10)).
+q(@seq(1,2)).
+""")
+ctl.ground([("base", [])], context=Context())
+print(ctl.solve(on_model=on_model))
