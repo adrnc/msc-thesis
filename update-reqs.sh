@@ -1,1 +1,1 @@
-pipreqs .
+pip freeze > requirements.txt
