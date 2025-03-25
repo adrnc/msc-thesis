@@ -28,8 +28,9 @@ case_fact(c2, f3).
 % infer new case decision
 case_decision(N, S, C) :- new_case(N), case(C, S).
 
-% restrict missing case rule condition in new case
-:- case_decision(N, S1, C), case_rule_condition(C, F), not case_fact(N, F).
+% restrict missing case rule condition in new case,
+% but if I am not mistaken, the result model does not require to meet this rule
+%:- case_decision(N, S1, C), case_rule_condition(C, F), not case_fact(N, F).
 
 % restrict weaker fact situations
 :- case_decision(N, S1, C),                     factor(F, S1), case_fact(C, F), not case_fact(N, F).
