@@ -44,4 +44,4 @@ priority_ordering(W, Z) :-
     not not_entails(C, W), not not_entails(Z, R).
 
 % prevent inconsistent case bases
-%:- priority_ordering(R1, R2), priority_ordering(R2, R1).
+:- priority_ordering(R1, R2), priority_ordering(R2, R1).
