@@ -27,6 +27,7 @@ reason(r2, defendant).
 fact(r2, f3).
 
 % infer all fact situations coming from cases
+% TODO: infer ALL potential fact situations?
 fact_situation(C) :- case(C, R).
 fact_situation(R) :- case(C, R).
 
