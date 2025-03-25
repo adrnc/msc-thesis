@@ -26,7 +26,7 @@ factor(c2, f3).
 reason(r2, defendant).
 factor(r2, f3).
 
-% infer all fact situations
+% infer all fact situations coming from cases
 fact_situation(C) :- case(C, R).
 fact_situation(R) :- case(C, R).
 
@@ -38,7 +38,7 @@ not_entails(X, Y) :-
 priority_ordering(W, Z) :-
     % retrieve info about case
     case(C, R), reason(R, S1), opposite(S1, S2),
-    % retrieve matching reasons
+    % retrieve matching reasons for opposite sides
     reason(W, S2), reason(Z, S1),
     % check if the entailment holds
     not not_entails(C, W), not not_entails(Z, R).
