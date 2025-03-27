@@ -52,7 +52,7 @@ priority_ordering(W, Z) :-
     % check if the entailment holds
     not not_entails(C, W), not not_entails(Z, R).
 
-inconsistent(base) :- priority_ordering(R1, R2), priority_ordering(R2, R1).
+inconsistent_base :- priority_ordering(R1, R2), priority_ordering(R2, R1).
 
 % unsat if consistent case base
-:- not inconsistent(base).
+:- not inconsistent_base.
