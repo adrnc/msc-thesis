@@ -47,7 +47,7 @@ not_entails(X, Y) :-
 priority_ordering(W, Z) :-
     % retrieve info about case
     case(C, R), reason(R, S1), opposite(S1, S2),
-    % retrieve matching reasons for opposite sides
+    % retrieve matching reason choices for opposite sides
     reason_choice(W, S2), reason_choice(Z, S1),
     % check if the entailment holds
     not not_entails(C, W), not not_entails(Z, R).
