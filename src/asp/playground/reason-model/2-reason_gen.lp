@@ -31,8 +31,7 @@ reason_choice(w, plaintiff).
 reason_choice(z, defendant).
 
 % select reasons to test
-{ fact(w, F) : factor(F, plaintiff) }.
-{ fact(z, F) : factor(F, defendant) }.
+{ fact(R, F) : reason_choice(R, S), factor(F, S) }.
 
 % mark all relevant fact situations
 fact_situation(C) :- case(C, R, S).
