@@ -3,26 +3,26 @@ opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
 % global factors
-factor(f1, plaintiff).
-factor(f2, plaintiff).
-factor(f3, defendant).
-factor(f4, defendant).
+factor(p1, plaintiff).
+factor(p2, plaintiff).
+factor(d1, defendant).
+factor(d2, defendant).
 
 % case with some reason and some fact situation
 case(c1, r1, plaintiff).
 
-fact(c1, f1).
-fact(c1, f2).
-fact(c1, f3).
-fact(c1, f4).
+fact(c1, p1).
+fact(c1, p2).
+fact(c1, d1).
+fact(c1, d2).
 
-fact(r1, f1).
+fact(r1, p1).
 
 % case to be decided
 unresolved_case(c2, r2).
 
-fact(c2, f1).
-fact(c2, f3).
+fact(c2, p1).
+fact(c2, d1).
 
 % two reason choices opposing each other
 reason_choice(w, plaintiff).
@@ -46,3 +46,6 @@ not_entails_case_reason(C1, R2) :-
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % check if the entailment holds for the first and for the second case
     not not_entails_case_reason(C1, R2), not not_entails_case_reason(C2, R1).
+
+#show new_case/3.
+#show new_fact/2.
