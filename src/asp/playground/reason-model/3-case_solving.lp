@@ -60,3 +60,5 @@ inconsistent_base :- priority_ordering(R1, R2), priority_ordering(R2, R1).
 
 % unsat if consistent case base
 :- not inconsistent_base.
+
+%#show new_case_decision/3.
