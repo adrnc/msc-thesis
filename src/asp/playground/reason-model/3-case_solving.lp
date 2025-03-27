@@ -33,7 +33,7 @@ new_case_decision(C, R, S1) :- new_case(C, R), opposite(S1, S2), not case(C, R, 
 case(C, R, S) :- new_case_decision(C, R, S).
 
 % select reason for new case decision
-{ fact(R, F) :- new_case_decision(C, R, S), fact(C, F), factor(F, S) }.
+{ fact(R, F) : new_case_decision(C, R, S), fact(C, F), factor(F, S) }.
 
 % select reasons to test
 { fact(R, F) : reason_choice(R, S), factor(F, S) }.
