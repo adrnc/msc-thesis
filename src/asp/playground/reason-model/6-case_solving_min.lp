@@ -49,8 +49,8 @@ not_entails_case_reason(C1, R2) :-
     not not_entails_case_reason(C1, R2), not not_entails_case_reason(C2, R1).
 
 % minimize the number of facts required for the reason
-#preference(min_reasons, subset) { new_fact(R, F) }.
-#optimize(min_reasons).
+%#preference(min_reasons, subset) { new_fact(R, F) }.
+%#optimize(min_reasons).
 
 % show case results and used reason
 #show new_case/3.
