@@ -29,7 +29,7 @@ new_case(C, R, S1) :- unresolved_case(C, R), opposite(S1, S2), not case(C, R, S2
 case(C, R, S) :- new_case(C, R, S).
 
 % select reason for new case decision
-{ new_fact(R, F) : new_case(C, R, S), fact(C, F), factor(F, S) }.
+{ new_fact(R, F) : fact(C, F), factor(F, S) } :- new_case(C, R, S).
 fact(R, F) :- new_fact(R, F).
 
 % prevent empty reasons
