@@ -24,10 +24,6 @@ unresolved_case(c2, r2).
 fact(c2, p1).
 fact(c2, d1).
 
-% two reason choices opposing each other
-reason_choice(w, plaintiff).
-reason_choice(z, defendant).
-
 % select decision for new case
 new_case(C, R, S1) :- unresolved_case(C, R), opposite(S1, S2), not case(C, R, S2).
 case(C, R, S) :- new_case(C, R, S).
