@@ -36,7 +36,10 @@ fact(R, F) :- new_fact(R, F).
 
 % infer if some fact situation does not entail the other one
 not_entails_case_reason(C1, R2) :-
-    case(C1, R1, S1), case(C2, R2, S2), fact(R2, F), not fact(C1, F).
+    % retrieve info about two cases
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % check entailment
+    fact(R2, F), not fact(C1, F).
 
 % constrain inconsistency
 :-
