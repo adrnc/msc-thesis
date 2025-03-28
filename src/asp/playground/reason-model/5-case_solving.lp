@@ -32,6 +32,9 @@ case(C, R, S) :- new_case(C, R, S).
 { new_fact(R, F) : new_case(C, R, S), fact(C, F), factor(F, S) }.
 fact(R, F) :- new_fact(R, F).
 
+% prevent empty reasons
+:- new_case(C, R, S), #count { F: new_fact(R, F) } = 0.
+
 % infer if some fact situation does not entail the other one
 not_entails_case_reason(C1, R2) :-
     case(C1, R1, S1), case(C2, R2, S2), fact(R2, F), not fact(C1, F).
