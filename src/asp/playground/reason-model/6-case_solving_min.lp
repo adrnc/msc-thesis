@@ -31,7 +31,7 @@ new_case(C, R, S1) :- unresolved_case(C, R), opposite(S1, S2), not case(C, R, S2
 case(C, R, S) :- new_case(C, R, S).
 
 % select minimal reason for new case decision
-#preference(min_reasons, subset){ new_fact(R, F) : new_case(C, R, S), fact(C, F), factor(F, S) }.
+{ new_fact(R, F) : new_case(C, R, S), fact(C, F), factor(F, S) }.
 fact(R, F) :- new_fact(R, F).
 
 % prevent empty reasons
@@ -49,6 +49,7 @@ not_entails_case_reason(C1, R2) :-
     not not_entails_case_reason(C1, R2), not not_entails_case_reason(C2, R1).
 
 % minimize the number of facts required for the reason
+#preference(min_reasons, subset) { new_fact(R, F) }.
 #optimize(min_reasons).
 
 % show case results and used reason
