@@ -9,22 +9,22 @@ factor(d1, defendant).
 factor(d2, defendant).
 
 % case with some reason and some fact situation
-case(1, r1, plaintiff).
+case(c1, r1, plaintiff).
 
-fact(1, p1).
-fact(1, p2).
-fact(1, d1).
-fact(1, d2).
+fact(c1, p1).
+fact(c1, p2).
+fact(c1, d1).
+fact(c1, d2).
 
 fact(r1, p1).
 
 % case to be decided
-case(2, r2, defendant).
+case(c2, r2, defendant).
 
-fact(2, p1).
-fact(2, p2).
-fact(2, d1).
-fact(2, d2).
+fact(c2, p1).
+fact(c2, p2).
+fact(c2, d1).
+fact(c2, d2).
 
 % infer if some fact situation does not entail the other one
 not_entails_case_reason(C1, R2) :-
