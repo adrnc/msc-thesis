@@ -58,7 +58,7 @@ case_inconsistent(C1, S1) :- case_conflict(C1, S1, C2, S2).
 % check valid case decisions
 case_decision(C, S) :- case_proposal(C, S), not case_inconsistent(C, S).
 
-% mark case bases as inconsistent where no decision can be reached
+% mark unresolved cases as inconsistent where no decision can be reached
 :-
     % retrieve unresolve case and both opposite sides
     unresolved_case(C, R), opposite(S1, S2),
