@@ -5,6 +5,7 @@ case(c4, r4, defendant).
 
 dimension(c1, d1, 30).
 dimension(c1, d2, 60).
+%dimension(c1, d2, 15).
 
 magnitude(r4, d1, 12).
 
@@ -35,15 +36,16 @@ not_entails_case_reason(C1, R2) :-
 
 % infer if some fact situation does not entail the other one
 % by checking if some dimension is weaker
-not_entails_case_proposal_reason(C1, R2) :-
+not_entails_case_reason(C1, R2) :-
     % retrieve info about two cases
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % check entailment
-    magnitude(R2, D, V1), dimension(C1, D, V2), V2 < V1.
+    % TODO: fix
+    magnitude(R2, D, V2), dimension(C1, D, V1), V2 > V1.
 
 % constrain inconsistency
 :-
     % retrieve info about two cases
-    case(C1, S1), case(C2, R2, S2), opposite(S1, S2),
-    % check if the entailment for the reason of the decided case holds for the case proposal
-    not not_entails_case_proposal_reason(C1, R2).
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % check if the entailment holds
+    not not_entails_case_reason(C1, R2), not not_entails_case_reason(C2, R1).
