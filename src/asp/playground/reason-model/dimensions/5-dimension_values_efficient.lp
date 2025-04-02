@@ -28,29 +28,29 @@ opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
 % check if a case entails some magnitude from a case of opposite side
-case_entails_magnitude(C1, R2, D) :-
+not_case_entails_magnitude(C1, R2, D) :-
     % select two cases of opposite side
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(R2, D, P), dimension(C1, D, Q),
     % check if that magnitude is not entailed
-    dimension_strengthens(D, S1), P <= Q.
+    dimension_strengthens(D, S1), P < Q.
 
 % check if a case entails some magnitude from a case of opposite side
-case_entails_magnitude(C1, R2, D) :-
+not_case_entails_magnitude(C1, R2, D) :-
     % select two cases of opposite side
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(R2, D, P), dimension(C1, D, Q),
     % check if that magnitude is not entailed
-    dimension_strengthens(D, S2), P >= Q.
+    dimension_strengthens(D, S2), P > Q.
 
 % define when some reason of a case from opposite side is not entailed
 not_case_entails_reason(C1, R2) :-
     % select two cases of opposite side
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % select a magnitude from the second case and check if it is not entailed
-    magnitude(R2, D, P), not case_entails_magnitude(C1, R2, D).
+    magnitude(R2, D, P), not_case_entails_magnitude(C1, R2, D).
 
 % constrain inconsistency
 :-
