@@ -12,7 +12,7 @@ dimension(c4, d2, 60).
 
 magnitude(r4, d1, 12).
 
-% some inconsistent case
+% some case, inconsistent with the previous one
 case(c8, r8, plaintiff).
 
 dimension(c8, d1, 36).
