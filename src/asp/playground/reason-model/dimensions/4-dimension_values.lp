@@ -2,7 +2,7 @@
 
 % each dimension has to weaken/strengthen one side or the other
 dimension_strengthens(d1, defendant).
-dimension_strengthens(d2, plaintiff).
+dimension_strengthens(d2, defendant).
 
 % case with some reason and some fact situation
 case(c4, r4, defendant).
@@ -38,7 +38,7 @@ case_entails_magnitude(C1, R2, D) :-
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(R2, D, P), dimension(C1, D, Q),
     % check if that magnitude is entailed
-    dimension_strengthens(D, S2), P < Q.
+    dimension_strengthens(D, S2), P <= Q.
 
 % check if a case entails some magnitude from a case of opposite side
 case_entails_magnitude(C1, R2, D) :-
@@ -47,7 +47,7 @@ case_entails_magnitude(C1, R2, D) :-
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(R2, D, P), dimension(C1, D, Q),
     % check if that magnitude is entailed
-    dimension_weakens(D, S2), P < Q.
+    dimension_weakens(D, S2), P >= Q.
 
 % define when some reason of a case from opposite side is not entailed
 case_reason_not_entailed(C1, R2) :-
@@ -59,7 +59,7 @@ case_reason_not_entailed(C1, R2) :-
     not case_entails_magnitude(C1, R2, D).
 % constrain inconsistency
 
-priority_ordering(C1, R2, R1):-
+:-
     % select two cases of opposite side
     case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % check entailment of case reasons
