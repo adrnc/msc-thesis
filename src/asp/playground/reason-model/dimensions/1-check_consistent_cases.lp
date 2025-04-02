@@ -9,7 +9,7 @@ dimension(c4, d2, 60).
 
 magnitude(r4, d1, 12).
 
-% some unresolved case
+% some other case
 case(c6, r6, plaintiff).
 
 dimension(c6, d1, 36).
