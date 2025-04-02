@@ -12,8 +12,8 @@ magnitude(r4, d1, 12).
 % some unresolved case
 case(c6, r6, plaintiff).
 
-dimension(c1, d1, 36).
-dimension(c1, d2, 10).
+dimension(c6, d1, 36).
+dimension(c6, d2, 10).
 
 magnitude(r6, d2, 25).
 
