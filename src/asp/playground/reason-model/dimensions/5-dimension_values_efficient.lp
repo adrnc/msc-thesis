@@ -9,7 +9,6 @@ case(c4, r4, defendant).
 
 dimension(c4, d1, 30).
 dimension(c4, d2, 60).
-%dimension(c1, d2, 15).
 
 magnitude(r4, d1, 12).
 
