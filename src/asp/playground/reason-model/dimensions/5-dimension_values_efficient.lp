@@ -1,0 +1,60 @@
+% PART OF INPUT
+
+% each dimension has to weaken/strengthen one side or the other
+dimension_strengthens(d1, defendant).
+dimension_strengthens(d2, defendant).
+
+% case with some reason and some fact situation
+case(c4, r4, defendant).
+
+dimension(c4, d1, 30).
+dimension(c4, d2, 60).
+%dimension(c1, d2, 15).
+
+magnitude(r4, d1, 12).
+
+% some inconsistent case
+case(c8, r8, plaintiff).
+
+dimension(c8, d1, 36).
+dimension(c8, d2, 10).
+
+magnitude(r8, d2, 75).
+
+% PART OF PROGRAM
+
+% define opposite sides
+opposite(plaintiff, defendant).
+opposite(defendant, plaintiff).
+
+% check if a case entails some magnitude from a case of opposite side
+case_entails_magnitude(C1, R2, D) :-
+    % select two cases of opposite side
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case
+    magnitude(R2, D, P), dimension(C1, D, Q),
+    % check if that magnitude is not entailed
+    dimension_strengthens(D, S1), P <= Q.
+
+% check if a case entails some magnitude from a case of opposite side
+case_entails_magnitude(C1, R2, D) :-
+    % select two cases of opposite side
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case
+    magnitude(R2, D, P), dimension(C1, D, Q),
+    % check if that magnitude is not entailed
+    dimension_strengthens(D, S2), P >= Q.
+
+% define when some reason of a case from opposite side is not entailed
+not_case_entails_reason(C1, R2) :-
+    % select two cases of opposite side
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % select a magnitude from the second case and check if it is not entailed
+    magnitude(R2, D, P), not case_entails_magnitude(C1, R2, D).
+
+% constrain inconsistency
+:-
+    % select two cases of opposite side
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
+    % check entailment of case reasons
+    not not_case_entails_reason(C1, R2), not not_case_entails_reason(C2, R1).
