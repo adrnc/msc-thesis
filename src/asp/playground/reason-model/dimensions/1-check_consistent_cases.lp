@@ -45,6 +45,6 @@ not_entails_case_reason(C1, R2) :-
 % constrain inconsistency
 :-
     % select two cases of opposite side
-    case(C1, R1, S1), case(C2, R2, S2),
+    case(C1, R1, S1), case(C2, R2, S2), opposite(S1, S2),
     % check entailment of case reasons
     not not_entails_case_reason(C1, R2), not not_entails_case_reason(C2, R1).
