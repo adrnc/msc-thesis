@@ -35,9 +35,6 @@ ord(S, P, P) :- case(C, R, S), magnitude(R, D, P).
 ord(S, Q, Q) :- case(C, R, S), dimension(C, D, Q).
 ord(S, P, Q) :- case(C, R, S), magnitude(R, D, P), dimension(C, D, Q).
 
-% allow checking if some dimension is present
-dimension_present(C, D) :- dimension(C, D, Q).
-
 % check if a case entails some magnitude from a case of opposite side
 case_entails_magnitude(C1, R2, D) :-
     % select two cases of opposite side
