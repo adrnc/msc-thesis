@@ -4,20 +4,25 @@
 dimension_strengthens(d1, defendant).
 dimension_strengthens(d2, defendant).
 
-% case with some reason and some fact situation
+% case c4 decided for the defendant
 case(c4, r4, defendant).
 
+% facts holding in case c4
 dimension(c4, d1, 30).
 dimension(c4, d2, 60).
 
+% reason justifying the result of c4
 magnitude(r4, d1, 12).
 
-% some case, inconsistent with the previous one
+% case c8 decided for the plaintiff,
+% inconsistent with c4
 case(c8, r8, plaintiff).
 
+% facts holding in case c8
 dimension(c8, d1, 36).
 dimension(c8, d2, 10).
 
+% reason justying the result of c8
 magnitude(r8, d2, 75).
 
 % PART OF PROGRAM
