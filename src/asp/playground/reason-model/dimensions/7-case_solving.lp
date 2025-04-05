@@ -63,15 +63,21 @@ not_case_entails_reason(C1, C2) :-
 case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
 case(C, S) :- case_proposal(C, S).
 
-% extend case information
-%case_rmod
+% select removed or weakened magnitudes for case proposals
+case_proposal_reason_mod(C, S, removed, D, 0) :- case_proposal(C, S), magnitude(C, D, P).
+case_proposal_reason_mod(C, S, weaker, D, P - 1) :- case_proposal(C, S), magnitude(C, D, P), dimension_strengthens(D, S)
+case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S)
 
-% check if a case rmod is inconsistent
-not_case_rmod_consistent(C, S, removed, D, 0) :-
-    % select a case and a case rmod
-    case(C1, S1), case_rmod(C2, S2, removed, 0), opposite(S1, S2),
-    % check entailment of case reasons
-    not not_case_entails_reason(C1, R2), not not_case_rmod_entails_reason(C2, R1).
+% TODO: not_case_entails_proposal_reason_mod
+
+% check if a case reason mod is inconsistent
+not_case_proposal_reason_mod_consistent(C, S, removed, D, 0) :-
+    % select a case proposal with modified reason and a regular case
+    case_proposal_reason_mod(C1, S1, removed, D, 0), case(C2, S2), opposite(S1, S2),
+    % check entailment of regular case reason
+    not not_case_entails_reason(C1, C2),
+    % check entailment of modified case proposal reason
+    not not_case_entails_proposal_reason_mod(C2, C1, S1, removed, D, 0).
 
 % constrain weaker justifications than the current one
-:- case_proposal(C, S), case_rmod(C, S, M, D, P), not not_case_rmod_consistent(C, S, M, D, P).
+:- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
