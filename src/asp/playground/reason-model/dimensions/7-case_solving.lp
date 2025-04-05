@@ -79,5 +79,5 @@ not_case_proposal_reason_mod_consistent(C, S, removed, D, 0) :-
     % check entailment of modified case proposal reason
     not not_case_entails_proposal_reason_mod(C2, C1, S1, removed, D, 0).
 
-% constrain weaker justifications than the current one
+% constrain to only output the weakest justifications
 :- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
