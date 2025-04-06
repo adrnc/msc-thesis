@@ -5,7 +5,7 @@ dimension_strengthens(d1, defendant).
 dimension_strengthens(d2, defendant).
 
 % optionally, set minimums and maximums for dimensions
-dimension_min(d1, 0);
+dimension_min(d1, 0).
 
 % case c4 decided for the defendant
 case(c4, defendant).
@@ -70,6 +70,8 @@ has_dimension_max(D) :- dimension_max(D, M).
 case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
 case(C, S) :- case_proposal(C, S).
 
+
+
 % select removed magnitudes for case proposals
 case_proposal_reason_mod(C, S, removed, D, 0) :- case_proposal(C, S), magnitude(C, D, P).
 
@@ -81,16 +83,59 @@ case_proposal_reason_mod(C, S, weaker, D, P - 1) :- case_proposal(C, S), magnitu
 case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), not has_dimension_min(D).
 case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), dimension_max(D, M), M > P.
 
-% TODO: not_case_entails_proposal_reason_mod
+% check if a case entails some magnitude from a case proposal of opposite side
+not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
+    % select a regular case and a case proposal with removed reason magnitude of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case that is not the modified magnitude
+    magnitude(C2, D, P), dimension(C1, D, Q), D != DX,
+    % check if that magnitude is not entailed
+    dimension_strengthens(D, S1), P < Q.
+
+% check if a case entails some magnitude from a case proposal of opposite side
+not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
+    % select a regular case and a case proposal with removed reason magnitude of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case that is not the modified magnitude
+    magnitude(C2, D, P), dimension(C1, D, Q), D != DX,
+    % check if that magnitude is not entailed
+    dimension_strengthens(D, S2), P > Q.
+
+% check if a case entails some magnitude from a case proposal of opposite side
+not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, DX, PX, DX) :-
+    % select a regular case and a case proposal with removed reason magnitude of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, weaker, DX, PX), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case that is the modified magnitude
+    magnitude(C2, DX, P), dimension(C1, DX, Q),
+    % check if that magnitude is not entailed
+    dimension_strengthens(DX, S1), PX < Q.
+
+% check if a case entails some magnitude from a case proposal of opposite side
+not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, DX, PX, DX) :-
+    % select a regular case and a case proposal with removed reason magnitude of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, weaker, DX, PX), opposite(S1, S2),
+    % select a magnitude from the second reason and a dimension from the first case that is the modified magnitude
+    magnitude(C2, DX, P), dimension(C1, DX, Q),
+    % check if that magnitude is not entailed
+    dimension_strengthens(DX, S2), PX > Q.
+
+% check if a case entails some magnitude from a case proposal of opposite side
+not_case_entails_proposal_reason_mod(C1, C2) :-
+    % select a regular case and a case proposal with modified reason of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
+    % select a magnitude from the second case and check if it is not entailed
+    magnitude(C2, D, P), not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D).
 
 % check if a case reason mod is inconsistent
-not_case_proposal_reason_mod_consistent(C, S, M, D, P) :-
-    % select a case proposal with modified reason and a regular case
-    case_proposal_reason_mod(C1, S1, M, D, P), case(C2, S2), opposite(S1, S2),
-    % check entailment of regular case reason
-    not not_case_entails_reason(C1, C2),
+not_case_proposal_reason_mod_consistent(C2, S2, M, D, P) :-
+    % select a regular case and a case proposal with modified reason of opposite side
+    case(C1, S1), case_proposal_reason_mod(C2, S2, M, D, P), opposite(S1, S2),
     % check entailment of modified case proposal reason
-    not not_case_entails_proposal_reason_mod(C2, C1, S1, M, D, P).
+    not not_case_entails_proposal_reason_mod(C1, C2, S2, M, D, P),
+    % check entailment of regular case reason
+    not not_case_entails_reason(C2, C1).
 
 % constrain to only output the weakest justifications
 :- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
+
+%#show case_proposal/2.
