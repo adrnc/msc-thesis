@@ -111,9 +111,9 @@ case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
     dimension_strengthens(D, S2), P <= Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
-case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, D, P, D) :-
+case_entails_proposal_reason_mod_magnitude(C1, C2, S2, removed, D, P, D) :-
     % select a regular case and a case proposal with removed reason magnitude of opposite side
-    case(C1, S1), case_proposal_reason_mod(C2, S2, M, D, P), opposite(S1, S2).
+    case(C1, S1), case_proposal_reason_mod(C2, S2, removed, D, P), opposite(S1, S2).
 
 % check if a case entails some magnitude from a case proposal of opposite side
 case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, D, P, D) :-
@@ -152,6 +152,5 @@ not_case_proposal_reason_mod_consistent(C2, S2, M, D, P) :-
 % constrain to only output the weakest justifications
 :- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
 
-#show case_proposal/2.
-#show magnitude_proposal/3.
-#show case_entails_proposal_reason_mod_magnitude/7.
+%#show case_proposal/2.
+%#show magnitude_proposal/3.
