@@ -40,7 +40,7 @@ case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(C2, D, P), dimension(C1, D, Q),
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S1), P >= Q.
 
 % check if a case entails some magnitude from a case of opposite side
@@ -49,7 +49,7 @@ case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case
     magnitude(C2, D, P), dimension(C1, D, Q),
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S2), P <= Q.
 
 % define when some reason of a case from opposite side is not entailed
@@ -98,7 +98,7 @@ case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
     case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case that is not the modified magnitude
     magnitude(C2, D, P), dimension(C1, D, Q), D != DX,
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S1), P >= Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
@@ -107,7 +107,7 @@ case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
     case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
     % select a magnitude from the second reason and a dimension from the first case that is not the modified magnitude
     magnitude(C2, D, P), dimension(C1, D, Q), D != DX,
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S2), P <= Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
@@ -121,7 +121,7 @@ case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, D, P, D) :-
     case(C1, S1), case_proposal_reason_mod(C2, S2, weaker, D, P), opposite(S1, S2),
     % select the weakened dimension from the first case that is the modified magnitude
     dimension(C1, D, Q),
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S1), P >= Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
@@ -130,7 +130,7 @@ case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, D, P, D) :-
     case(C1, S1), case_proposal_reason_mod(C2, S2, weaker, D, P), opposite(S1, S2),
     % select the weakened dimension from the first case that is the modified magnitude
     dimension(C1, D, Q),
-    % check if that magnitude is not entailed
+    % check if that magnitude is entailed
     dimension_strengthens(D, S2), P <= Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
