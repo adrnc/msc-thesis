@@ -5,28 +5,20 @@ allowed_dimension_value(-5..5).
 
 % each dimension has to weaken/strengthen one side or the other
 dimension_strengthens(d1, defendant).
-dimension_strengthens(d2, plaintiff).
+dimension_strengthens(d2, defendant).
 
 % optionally, set minimums and maximums for dimensions
 dimension_min(d1, -5).
 dimension_max(d2, 5).
 
-% case c1 decided for the defendant
 case(c1, defendant).
-
-% facts holding in case c1
 dimension(c1, d1, 1).
 dimension(c1, d2, 1).
+magnitude(c1, d1, 1).
 
-% reason justifying the result of c1
-magnitude(c1, d1, 0).
-
-% case c2
-unsolved_case(c2).
-
-% facts holding in case c2
-dimension(c2, d1, 1).
-dimension(c2, d2, 1).
+unsolved_case(c3).
+dimension(c3, d1, 1).
+dimension(c3, d2, 1).
 
 % PART OF PROGRAM
 
@@ -152,5 +144,5 @@ not_case_proposal_reason_mod_consistent(C2, S2, M, D, P) :-
 % constrain to only output the weakest justifications
 :- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
 
-%#show case_proposal/2.
-%#show magnitude_proposal/3.
+#show case_proposal/2.
+#show magnitude_proposal/3.
