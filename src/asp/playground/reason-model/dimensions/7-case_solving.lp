@@ -9,6 +9,7 @@ dimension_strengthens(d2, defendant).
 
 % optionally, set minimums and maximums for dimensions
 dimension_min(d1, 0).
+dimension_max(d2, 100).
 
 % case c4 decided for the defendant
 case(c4, defendant).
