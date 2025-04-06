@@ -1,5 +1,8 @@
 % PART OF INPUT
 
+% define global dimension limit
+allowed_dimension_value(-100..100).
+
 % each dimension has to weaken/strengthen one side or the other
 dimension_strengthens(d1, defendant).
 dimension_strengthens(d2, defendant).
@@ -70,7 +73,12 @@ has_dimension_max(D) :- dimension_max(D, M).
 case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
 case(C, S) :- case_proposal(C, S).
 
+% propose new magnitudes
+{ magnitude_proposal(C, D, P) : dimension(C, D, Q), allowed_dimension_value(P) } :- case_proposal(C, S).
+magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
+% prevent magnitude proposals with two different values for the same dimension
+:- case_proposal(C, S), magnitude_proposal(C, D, P1), magnitude_proposal(C, D, P2), P1 != P2.
 
 % select removed magnitudes for case proposals
 case_proposal_reason_mod(C, S, removed, D, 0) :- case_proposal(C, S), magnitude(C, D, P).
@@ -120,7 +128,7 @@ not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, weaker, DX, PX, DX) :
     dimension_strengthens(DX, S2), PX > Q.
 
 % check if a case entails some magnitude from a case proposal of opposite side
-not_case_entails_proposal_reason_mod(C1, C2) :-
+not_case_entails_proposal_reason_mod(C1, C2, S2, M, DX, PX) :-
     % select a regular case and a case proposal with modified reason of opposite side
     case(C1, S1), case_proposal_reason_mod(C2, S2, M, DX, PX), opposite(S1, S2),
     % select a magnitude from the second case and check if it is not entailed
@@ -138,4 +146,5 @@ not_case_proposal_reason_mod_consistent(C2, S2, M, D, P) :-
 % constrain to only output the weakest justifications
 :- case_proposal_reason_mod(C, S, M, D, P), not not_case_proposal_reason_mod_consistent(C, S, M, D, P).
 
-%#show case_proposal/2.
+#show case_proposal/2.
+#show magnitude_proposal/3.
