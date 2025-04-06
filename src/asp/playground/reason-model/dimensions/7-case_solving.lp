@@ -85,11 +85,11 @@ case_proposal_reason_mod(C, S, removed, D, 0) :- case_proposal(C, S), magnitude(
 
 % select weakened strengthening magnitudes case proposals
 case_proposal_reason_mod(C, S, weaker, D, P - 1) :- case_proposal(C, S), magnitude(C, D, P), dimension_strengthens(D, S), not has_dimension_min(D).
-case_proposal_reason_mod(C, S, weaker, D, P - 1) :- case_proposal(C, S), magnitude(C, D, P), dimension_strengthens(D, S), dimension_min(D, M), M < P.
+case_proposal_reason_mod(C, S, weaker, D, P - 1) :- case_proposal(C, S), magnitude(C, D, P), dimension_strengthens(D, S), dimension_min(D, M), P >= M.
 
 % select weakened weakening magnitudes for case proposals
-case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), not has_dimension_min(D).
-case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), dimension_max(D, M), M > P.
+case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), not has_dimension_max(D).
+case_proposal_reason_mod(C, S, weaker, D, P + 1) :- case_proposal(C, S), magnitude(C, D, P), not dimension_strengthens(D, S), dimension_max(D, M), P <= M.
 
 % check if a case entails some magnitude from a case proposal of opposite side
 not_case_entails_proposal_reason_mod_magnitude(C1, C2, S2, M, DX, PX, D) :-
