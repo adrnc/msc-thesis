@@ -19,7 +19,7 @@ magnitude(c1, d1, 1).
 
 unsolved_case(c3).
 dimension(c3, d1, 1).
-dimension(c3, d2, 0).%dimension(c3, d2, 2).
+dimension(c3, d2, 2). %dimension(c3, d2, 0).
 
 % PART OF PROGRAM
 
