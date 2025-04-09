@@ -73,7 +73,7 @@ not_case_space_mod_consistent(TX, CX, MX, DX, PX) :-
     not not_case_mod_entails_reason(TX, CX, MX, DX, PX, C1, C2), not not_case_mod_entails_reason(TX, CX, MX, DX, PX, C2, C1).
 
 % require inconsistency for modified case space
-%:- case_space_mod(TX, CX, MX, DX, PX), not not_case_space_mod_consistent(TX, CX, MX, DX, PX).
+:- case_space_mod(TX, CX, MX, DX, PX), not not_case_space_mod_consistent(TX, CX, MX, DX, PX).
 
 %%% GENERATE CASE SPACE TYPES %%%
 
@@ -128,4 +128,7 @@ case_space_mod(strong, CX, strengthen, DX, PX) :-
 
 #show case_proposal/2.
 #show magnitude_type_proposal/4.
-#show case_space_mod/5.
+#show case_type_proposal/3.
+#show not_case_space_mod_consistent/5.
+
+% NOTE: does not work, but does not have to work either
