@@ -29,8 +29,7 @@ opposite(S2, S1) :- opposite(S1, S2).
 
 %%% DIMENSION HELPERS %%%
 
-dimension_value(D, Min) :- dimension_range(D, Min, Max).
-dimension_value(D, V + 1) :- dimension_value(D, V), dimension_range(D, Min, Max), V < Max.
+dimension_value(D, Min..Max) :- dimension_range(D, Min, Max).
 
 dimension_factor(D, S, 1) :- dimension_strengthens(D, S).
 dimension_factor(D, S2, -1) :- dimension_strengthens(D, S1), opposite(S1, S2).
@@ -97,5 +96,5 @@ magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX,
 
 magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
-#show case_proposal/2.
-#show magnitude_proposal/3.
+%#show case_proposal/2.
+%#show magnitude_proposal/3.
