@@ -31,10 +31,16 @@ opposite(S2, S1) :- opposite(S1, S2).
 
 dimension_value(D, Min..Max) :- dimension_range(D, Min, Max).
 
+dimension_present(C, D) :- dimension(C, D, Q).
+
 dimension_factor(D, S, 1) :- dimension_strengthens(D, S).
 dimension_factor(D, S2, -1) :- dimension_strengthens(D, S1), opposite(S1, S2).
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
+
+not_case_entails_magnitude(C1, C2, D) :-
+    case(C1, S1), case(C2, S2), opposite(S1, S2),
+    magnitude(C2, D, P), not dimension_present(C1, D).
 
 not_case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
@@ -51,6 +57,10 @@ not_case_entails_reason(C1, C2) :-
     not not_case_entails_reason(C1, C2), not not_case_entails_reason(C2, C1).
 
 %%% CHECK INCONSISTENCY OF MODIFIED CASE SPACES %%%
+
+not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
+    case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
+    magnitude_mod(C2, D, P, CX, MX, DX, PX), not dimension_present(C1, D).
 
 not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
@@ -96,5 +106,5 @@ magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX,
 
 magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
-%#show case_proposal/2.
-%#show magnitude_proposal/3.
+#show case_proposal/2.
+#show magnitude_proposal/3.
