@@ -24,7 +24,7 @@ dimension(c3, d2, 2).
 % PART OF PROGRAM
 
 opposite(plaintiff, defendant).
-opposite(defendant, plaintiff).
+opposite(S2, S1) :- opposite(S1, S2).
 
 %%% DIMENSION HELPERS %%%
 
