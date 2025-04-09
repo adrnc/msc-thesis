@@ -81,7 +81,7 @@ case_space_type(weak).
 case_space_type(strong).
 
 case_type(C, S, TX) :- case(C, S), case_space_type(TX).
-magnitude_type(C, D, P, TX) :- magnitude(C, D, P, TX), case_space_type(TX).
+magnitude_type(C, D, P, TX) :- magnitude(C, D, P), case_space_type(TX).
 
 %%% GENERATE CASE SPACE MODIFICATIONS %%%
 
