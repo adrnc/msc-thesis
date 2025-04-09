@@ -82,9 +82,9 @@ magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
 
-case_space_mod(C, removed, D, P) :- case_proposal(C, S), magnitude(C, D, P).
+case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
 
-case_space_mod(C, weaker, D, V) :-
+case_space_mod(C, weaken, D, V) :-
     case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
     dimension_value(D, V), V = P - F.
 
@@ -95,7 +95,7 @@ case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
 
-magnitude_mod(CX, DX, PX, CX, weaker, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaker, DX, PX).
+magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
 #show case_proposal/2.
 #show magnitude_proposal/3.
