@@ -95,7 +95,6 @@ magnitude_mod(CX, DX, PX, TX, CX, strengthen, DX, PX) :- magnitude_type(TX, CX, 
 
 magnitude_mod(CX, DX, PX, TX, CX, add, DX, PX) :- case_space_mod(TX, CX, add, DX, PX).
 
-
 %%% GENERATE CASE PROPOSALS %%%
 
 case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
