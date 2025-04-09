@@ -75,7 +75,7 @@ magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
 
-case_space_mod(C, removed, D1, P1) :- case_proposal(C, S), magnitude(C, D1, P1), magnitude(C, D2, P2), D1 != D2.
+case_space_mod(C, removed, D, P) :- case_proposal(C, S), magnitude(C, D, P).
 
 case_space_mod(C, weaker, D, V) :-
     case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
