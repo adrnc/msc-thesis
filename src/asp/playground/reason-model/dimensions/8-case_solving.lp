@@ -10,10 +10,16 @@ case(c1, defendant).
 dimension(c1, d1, 1).
 dimension(c1, d2, 1).
 magnitude(c1, d1, 1).
+magnitude(c1, d2, 1).
+
+case(c2, plaintiff).
+dimension(c2, d1, 1).
+dimension(c2, d2, 0).
+magnitude(c1, d1, 1).
 
 unsolved_case(c3).
 dimension(c3, d1, 1).
-dimension(c3, d2, 1).
+dimension(c3, d2, 2I).
 
 % PART OF PROGRAM
 
@@ -92,5 +98,3 @@ magnitude_mod(CX, DX, PX, CX, weaker, DX, PX) :- magnitude(CX, DX, P), case_spac
 
 #show case_proposal/2.
 #show magnitude_proposal/3.
-#show case_space_mod/4.
-#show not_case_space_mod_consistent/4.
