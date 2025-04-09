@@ -106,5 +106,7 @@ magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX,
 
 magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
+%%% OUTPUT %%%
+
 #show case_proposal/2.
 #show magnitude_proposal/3.
