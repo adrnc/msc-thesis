@@ -59,7 +59,7 @@ not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX).
 
-% check inconsisency for modified case space
+% check inconsistency for modified case space
 not_case_space_mod_consistent(CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
