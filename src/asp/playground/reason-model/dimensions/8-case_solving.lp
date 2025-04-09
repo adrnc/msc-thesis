@@ -56,12 +56,12 @@ not_case_mod_entails_magnitude(C1, C2, D) :-
     dimension_strengthens(D, S2), P > Q.
 
 not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
-    case(C1, S1, CX, MX, DX, PX), case(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
+    case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX).
 
 % check inconsisency for modified case space
 not_case_space_mod_consistent(CX, MX, DX, PX) :-
-    case(C1, S1, CX, MX, DX, PX), case(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
+    case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
 
 % require inconsistency for modified case space
@@ -73,12 +73,15 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 case(C, S) :- case_proposal(C, S).
 
 % TODO: make more efficient
-1 { magnitude(C, D, P) : dimension(C, D, Q), allowed_dimension_value(P) } :- case_proposal(C, S).
+1 { magnitude_proposal(C, D, P) : dimension(C, D, Q), allowed_dimension_value(P) } :- case_proposal(C, S).
 magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
 :- case_proposal(C, S), magnitude_proposal(C, D, P1), magnitude_proposal(C, D, P2), P1 != P2.
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
+
+has_dimension_min(D) :- dimension_min(D, M).
+has_dimension_max(D) :- dimension_max(D, M).
 
 case_space_mod(C, removed, D1, P1) :- case_proposal(C, S), magnitude(C, D1, P1), magnitude(C, D2, P2), D1 != D2.
 
