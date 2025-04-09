@@ -3,8 +3,8 @@
 dimension_strengthens(d1, defendant).
 dimension_strengthens(d2, defendant).
 
-dimension_minmax(d1, -5, 5).
-dimension_minmax(d2, -5, 5).
+dimension_range(d1, -5, 5).
+dimension_range(d2, -5, 5).
 
 case(c1, defendant).
 dimension(c1, d1, 1).
@@ -28,8 +28,8 @@ opposite(defendant, plaintiff).
 
 %%% DIMENSION HELPERS %%%
 
-dimension_value(D, Min) :- dimension_minmax(D, Min, Max).
-dimension_value(D, V + 1) :- dimension_value(D, V), dimension_minmax(D, Min, Max), V < Max.
+dimension_value(D, Min) :- dimension_range(D, Min, Max).
+dimension_value(D, V + 1) :- dimension_value(D, V), dimension_range(D, Min, Max), V < Max.
 
 dimension_factor(D, S, 1) :- dimension_strengthens(D, S).
 dimension_factor(D, S2, -1) :- dimension_strengthens(D, S1), opposite(S1, S2).
