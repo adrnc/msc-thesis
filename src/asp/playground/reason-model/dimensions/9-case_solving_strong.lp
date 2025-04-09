@@ -90,10 +90,10 @@ case_mod(TX, CX, MX, DX, PX, C, S) :- case_type(TX, C, S), case_space_mod(TX, CX
 magnitude_mod(TX, CX, MX, DX, PX, C, D, P) :- magnitude_type(TX, C, D, P), case_space_mod(TX, CX, MX, DX, PX), C != CX.
 magnitude_mod(TX, CX, MX, DX, PX, C, D, P) :- magnitude_type(TX, C, D, P), case_space_mod(TX, CX, MX, DX, PX), D != DX.
 
-magnitude_mod(CX, DX, PX, TX, CX, weaken, DX, PX) :- magnitude_type(TX, CX, DX, P), case_space_mod(TX, CX, weaken, DX, PX).
-magnitude_mod(CX, DX, PX, TX, CX, strengthen, DX, PX) :- magnitude_type(TX, CX, DX, P), case_space_mod(TX, CX, strengthen, DX, PX).
+magnitude_mod(TX, CX, weaken, DX, PX, CX, DX, PX) :- magnitude_type(TX, CX, DX, P), case_space_mod(TX, CX, weaken, DX, PX).
+magnitude_mod(TX, CX, strengthen, DX, PX, CX, DX, PX) :- magnitude_type(TX, CX, DX, P), case_space_mod(TX, CX, strengthen, DX, PX).
 
-magnitude_mod(CX, DX, PX, TX, CX, add, DX, PX) :- case_space_mod(TX, CX, add, DX, PX).
+magnitude_mod(TX, CX, add, DX, PX, CX, DX, PX) :- case_space_mod(TX, CX, add, DX, PX).
 
 %%% GENERATE CASE PROPOSALS %%%
 
@@ -117,8 +117,8 @@ case_space_mod(weak, CX, weaken, DX, PX) :-
 case_space_mod(strong, CX, add, DX, PX) :-
     case_type_proposal(strong, CX, S), dimension(CX, DX, Q),
     dimension_value(DX, P), not magnitude_type(strong, CX, DX, P),
-    % TODO: efficiency?
-    dimension_value(DX, PX).
+    % TODO: improve efficiency
+    dimension_value(DX, PX), dimension_factor(D, S, F), (PX * F) <= (Q * F).
 
 case_space_mod(strong, CX, strengthen, DX, PX) :-
     case_type_proposal(strong, CX, S), magnitude_type(strong, CX, DX, P), dimension_factor(DX, S, F),
