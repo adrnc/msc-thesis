@@ -1,10 +1,7 @@
 % PART OF INPUT
 
-dimension_strengthens(d1, defendant).
-dimension_strengthens(d2, defendant).
-
-dimension_range(d1, -5, 5).
-dimension_range(d2, -5, 5).
+dimension_config(d1, defendant, -5, 5).
+dimension_config(d2, defendant, -5, 5).
 
 case(c1, defendant).
 dimension(c1, d1, 1).
@@ -29,12 +26,12 @@ opposite(S2, S1) :- opposite(S1, S2).
 
 %%% DIMENSION HELPERS %%%
 
-dimension_value(D, Min..Max) :- dimension_range(D, Min, Max).
+dimension_value(D, Min..Max) :- dimension_config(D, S, Min, Max).
 
 dimension_present(C, D) :- dimension(C, D, Q).
 
-dimension_factor(D, S, 1) :- dimension_strengthens(D, S).
-dimension_factor(D, S2, -1) :- dimension_strengthens(D, S1), opposite(S1, S2).
+dimension_factor(D, S, 1) :- dimension_config(D, S, Min, Max).
+dimension_factor(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
