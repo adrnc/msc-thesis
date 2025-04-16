@@ -1,6 +1,6 @@
 %%% GENERAL INFO %%%
 
-
+% First, check the example
 
 %%% SIDE DEFINITIONS %%%
 
