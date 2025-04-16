@@ -1,6 +1,27 @@
 %%% GENERAL INFO %%%
 
-% First, check the example
+% We will first give a rough outline of how the reason model works.
+% It involves three parts:
+% 1. For every unsolved case, we choose some winning side and reason.
+% 2. We check the consistency of the case base including the newly decided cases.
+% 3. We check whether we can find a weaker reason that allows us to rule
+%    for the same side. If so, we do not consider that reason.
+%
+% Let us give a bit more details on these:
+%
+% ad 1.) Choosing a winning side and some reason is easy.
+% We simply select either the "defendant" or the "plaintiff" as the
+% winning side and then afterwards select the magnitudes for the reason
+% in such a way that they respect the requirements of Horty's reason model.
+
+% ad 2.) The consistency check is based on Horty's following observation:
+% A case base is inconsistent if and only if there are two cases C1 and C2
+% of opposite sides S1 and S2 such that the reason of C2 satisfies the facts
+% in C1 and the reason of C1 satisfies the facts in C2. By "satisfies" we mean
+% that the dimensional facts present in C2 have to be strong enough such
+% that the reason of C1 can be used to decide C2 in favour of S1. Likewise,
+% the reason of C2 can be used to decide C1 in favour of S2. If we find two
+% such cases, we consider the case base inconsistent.
 
 %%% SIDE DEFINITIONS %%%
 
