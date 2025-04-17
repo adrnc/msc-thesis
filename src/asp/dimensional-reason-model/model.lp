@@ -66,12 +66,12 @@ dimensional_fact_present(C, D) :- dimensional_fact(C, D, Q).
 % Consider a dimension D with value Q and a magnitude M with
 % value P. If the dimension strengthens side S, we the require
 % P <= Q to be satisfied. Likewise, if the dimension strengthens
-% the side opposite of S, we require P >= Q. By introducing a factor F
+% the side opposite of S, we require P >= Q. By introducing a sign F
 % that is 1 iff D strengthens S and -1 iff D strengthens the side
 % opposite of S. Thus, we can write (P * F) <= (Q * F) to capture
 % both conditions with one statement.
-dimension_factor(D, S, 1) :- dimension_config(D, S, Min, Max).
-dimension_factor(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
+dimension_sign(D, S, 1) :- dimension_config(D, S, Min, Max).
+dimension_sign(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
 
 %%% GENERATE CASE PROPOSALS %%%
 
@@ -85,9 +85,9 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 
 % Along with the proposal of a winning side S comes a proposal of magnitudes for the reason.
 % To prevent illegal magnitudes, we restrict that they entail the case facts through the
-% factor restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
-% value and F the factor for D and side S, as described earlier.
-{ magnitude_proposal(C, D, P) : dimensional_fact(C, D, Q),  dimension_value(D, P), dimension_factor(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
+% sign restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
+% value and F the sign for D and side S, as described earlier.
+{ magnitude_proposal(C, D, P) : dimensional_fact(C, D, Q),  dimension_value(D, P), dimension_sign(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
 
 % Here we simply prevent that a case contains to magnitudes for the same dimension D that
 % have different values. That is, every magnitude can only occur at most once.
@@ -101,8 +101,9 @@ reason_magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
 % In the following section we will enforce the consistency of the case space.
 % In particular, we will check if we can find two cases of opposite side where
-% each case's fact situation entails the other case's reason, as already described at the top.
-% If two such cases can be found, the model is unsatisfiable.
+% each case's fact situation entails the other case's reason,
+% as already described at the top. If two such cases can be found,
+% the model is unsatisfiable.
 %
 % Do note that it is much easier to check whether a reason is NOT entailed
 % compared to whether a reason is entailed, since checking the former merely requires
@@ -120,15 +121,16 @@ not_case_entails_reason_magnitude(C1, C2, D) :-
 
 % This is the second NOT-entailment check where we again select two cases C1 and C2 and test if
 % the magnitude M on dimension D for case C2 is not satisfied by case C1. This time, because
-% dimensional fact of D is present in C1, but too weak. Here we make use of the factor defined
-% earlier. Consider checking entailment first. Given values P for the magnitude and Q for the dimensional fact, we require (P * F) <= (Q * F),
-% where factor F is taken for side S2 strengthening C2, as this is the side we want
-% to argue for. Thus, we receive F through dimension_factor(D, S2, F). Since we want to
-% NOT-entailment, we test for the opposite, namely (P * F) > (Q * F).
+% dimensional fact of D is present in C1, but too weak. Here we make use of the sign defined
+% earlier. Consider checking entailment first. Given values P for the magnitude and Q for
+% the dimensional fact, we require (P * F) <= (Q * F), where sign F is taken for side S2
+% strengthening C2, as this is the side we want to argue for. Thus, we receive F through
+% dimension_sign(D, S2, F). Since we want to NOT-entailment, we test for the opposite,
+% namely (P * F) > (Q * F).
 not_case_entails_reason_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     reason_magnitude(C2, D, P), dimensional_fact(C1, D, Q),
-    dimension_factor(D, S2, F), (P * F) > (Q * F).
+    dimension_sign(D, S2, F), (P * F) > (Q * F).
 
 % Now we check if case C1 does not eintail the reason for case C2. This happens when we can
 % magnitude that is not entailed.
@@ -161,12 +163,12 @@ not_case_entails_reason(C1, C2) :-
 case_space_mod(C, remove, D, P) :- case_proposal(C, S), reason_magnitude(C, D, P).
 
 % Likewise, here we define all case spaces that have exactly one magnitude weakened, but everthing
-% else stays the same. Why do we set the new threshold value V = P - F where F is the dimension factor for the given side? That's because if
+% else stays the same. Why do we set the new threshold value V = P - F where F is the dimension sign for the given side? That's because if
 % a dimension strengthens a side, F = 1 and V = P - 1 will weaken the reason. In contrast, if
 % a dimension strengthens the opposite side F = -1 and V = P + 1 will weaken the reason.
 % Therefore, we can simply set V = P - F.
 case_space_mod(C, weaken, D, V) :-
-    case_proposal(C, S), reason_magnitude(C, D, P), dimension_factor(D, S, F),
+    case_proposal(C, S), reason_magnitude(C, D, P), dimension_sign(D, S, F),
     dimension_value(D, V), V = P - F.
 
 %%% GENERATE MODIFIED CASE SPACES %%%
@@ -207,7 +209,7 @@ not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
 not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), dimensional_fact(C1, D, Q),
-    dimension_factor(D, S2, F), (P * F) > (Q * F).
+    dimension_sign(D, S2, F), (P * F) > (Q * F).
 
 % Again, we check which reasons are not entailed.
 not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
