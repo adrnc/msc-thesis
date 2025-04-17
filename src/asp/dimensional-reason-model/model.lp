@@ -35,7 +35,7 @@
 % at least one reason is not satisfied by the opposite case. Either the reason of C2 cannot be
 % taken to rule for S2 in case C1 or the reason of C1 cannot be taken to rule for S1 in case S1.
 % Let us now consider that we chose some reason for an unsolved case such that the case base is
-% consistent. Then making the reason stronger cannot cause the case base to become inconsistent,
+% consistent. Then, making the reason stronger cannot cause the case base to become inconsistent,
 % since for all reasons of C1 and C2, one will  stay unsatisfied by the respective other case.
 % Thus, it is sufficient for us to output the weakest possible reasons, as all reasons stronger
 % than the weakest reason will also yield a consistent case base.
@@ -217,8 +217,8 @@ not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
     case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
     reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX).
 
-% At this point, our check differs from the consistency check. Here we simply find all case
-% modified spaces that are inconsistent.
+% At this point, our check differs from the consistency check. Here we simply find all
+% modified case spaces that are inconsistent.
 not_case_space_mod_consistent(CX, MX, DX, PX) :-
     case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
