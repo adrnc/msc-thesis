@@ -171,13 +171,13 @@ case_space_mod(C, weaken, D, V) :-
 
 %%% GENERATE MODIFIED CASE SPACES %%%
 
-% Having defined what modified case spaces we want to generate, we perform the modifications
+% Having defined what modified case spaces we want to generate, we apply the modifications
 % in the following section.
 
 % For every case we create an equivalent case in every modified case space.
 case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
 
-% Here we copy every magnitude as is that is not affected as by the case space modification
+% Here we copy every magnitude as is, that is not affected by the case space modification,
 % to the new case space.
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
@@ -190,25 +190,38 @@ magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_spac
 
 %%% CHECK INCONSISTENCY OF MODIFIED CASE SPACES %%%
 
+% Similar to the consistency check, we check for inconsistency of the modified case spaces.
+% If at least one of the modified case spaces is consistent, we have found a weaker reason that
+% can be used to consistently rule for the same side. If not, this means all weaker reasons are
+% inconsistent, thus we have found the weakest reason in our model. Like before, we check for
+% NOT-entailment of magnitudes and reasons.
+
+% As seen in the consistency check, we again check if a magnitude is present, but the necessary
+% dimension is missing.
 not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     magnitude_mod(C2, D, P, CX, MX, DX, PX), not dimension_present(C1, D).
 
+% Also, as seen in the consistency check, we again check if a magnitude is required to be stronger
+% than given in the present dimension.
 not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     magnitude_mod(C2, D, P, CX, MX, DX, PX), dimension(C1, D, Q),
-    dimension_factor(D, S1, F), (P * F) < (Q * F).
+    dimension_factor(D, S2, F), (P * F) > (Q * F).
 
+% Again, we check which reasons are not entailed.
 not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX).
 
-% check inconsistency for modified case space
+% At this point, our check differs from the consistency check. Here we simply find all case
+% modified spaces that are inconsistent.
 not_case_space_mod_consistent(CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
 
-% require inconsistency for modified case space
+% And most importantly, we require all modified case spaces to be inconsistent. This we way ensure
+% that we have found the weakest possible reason.
 :- case_space_mod(CX, MX, DX, PX), not not_case_space_mod_consistent(CX, MX, DX, PX).
 
 %%% OUTPUT %%%
