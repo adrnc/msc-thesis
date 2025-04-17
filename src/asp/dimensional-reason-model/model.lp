@@ -86,7 +86,9 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 % Along with the proposal of a winning side S comes a proposal of magnitudes for the reason.
 % To prevent illegal magnitudes, we restrict that they entail the case facts through the
 % sign restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
-% value and F the sign for D and side S, as described earlier.
+% value and F the sign for D and side S, as described earlier. Do note that this statement is
+% also the greatest performance bottleneck of the model, as exponentially many reasons have to
+% be checked in the worst case.
 { magnitude_proposal(C, D, P) :
     dimensional_fact(C, D, Q), dimension_value(D, P), dimension_sign(D, S, F), (P * F) <= (Q * F) }
         :- case_proposal(C, S).
