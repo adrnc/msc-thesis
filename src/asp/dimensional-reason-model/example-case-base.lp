@@ -61,7 +61,7 @@ dimensional_fact(c2, d1, 1).
 dimensional_fact(c2, d2, 0).
 reason_magnitude(c1, d1, 1).
 
-%%% SOLVED %%%
+%%% UNSOLVED CASE %%%
 
 % In this section we define unsolved cases.
 % Each unsolved case is made up of the following:
