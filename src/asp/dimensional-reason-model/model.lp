@@ -127,6 +127,23 @@ not_case_entails_reason(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     not not_case_entails_reason(C1, C2), not not_case_entails_reason(C2, C1).
 
+%%% SELECT CASE SPACE MODIFICATIONS %%%
+
+case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
+
+case_space_mod(C, weaken, D, V) :-
+    case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
+    dimension_value(D, V), V = P - F.
+
+%%% GENERATE MODIFIED CASE SPACES %%%
+
+case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
+
+magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
+magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
+
+magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
+
 %%% CHECK INCONSISTENCY OF MODIFIED CASE SPACES %%%
 
 not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
@@ -149,23 +166,6 @@ not_case_space_mod_consistent(CX, MX, DX, PX) :-
 
 % require inconsistency for modified case space
 :- case_space_mod(CX, MX, DX, PX), not not_case_space_mod_consistent(CX, MX, DX, PX).
-
-%%% SELECT CASE SPACE MODIFICATIONS %%%
-
-case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
-
-case_space_mod(C, weaken, D, V) :-
-    case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
-    dimension_value(D, V), V = P - F.
-
-%%% GENERATE MODIFIED CASE SPACES %%%
-
-case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
-
-magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
-magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
-
-magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
 %%% OUTPUT %%%
 
