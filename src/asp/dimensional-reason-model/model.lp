@@ -87,7 +87,9 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 % To prevent illegal magnitudes, we restrict that they entail the case facts through the
 % sign restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
 % value and F the sign for D and side S, as described earlier.
-{ magnitude_proposal(C, D, P) : dimensional_fact(C, D, Q),  dimension_value(D, P), dimension_sign(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
+{ magnitude_proposal(C, D, P) :
+    dimensional_fact(C, D, Q), dimension_value(D, P), dimension_sign(D, S, F), (P * F) <= (Q * F) }
+        :- case_proposal(C, S).
 
 % Here we simply prevent that a case contains to magnitudes for the same dimension D that
 % have different values. That is, every magnitude can only occur at most once.
@@ -163,10 +165,10 @@ not_case_entails_reason(C1, C2) :-
 case_space_mod(C, remove, D, P) :- case_proposal(C, S), reason_magnitude(C, D, P).
 
 % Likewise, here we define all case spaces that have exactly one magnitude weakened, but everthing
-% else stays the same. Why do we set the new threshold value V = P - F where F is the dimension sign for the given side? That's because if
-% a dimension strengthens a side, F = 1 and V = P - 1 will weaken the reason. In contrast, if
-% a dimension strengthens the opposite side F = -1 and V = P + 1 will weaken the reason.
-% Therefore, we can simply set V = P - F.
+% else stays the same. Why do we set the new threshold value V = P - F where F is the dimension sign
+% for the given side? That's because if a dimension strengthens a side, F = 1 and V = P - 1 will
+% weaken the reason. In contrast, if a dimension strengthens the opposite side F = -1 and V = P + 1
+% will weaken the reason. Therefore, we can simply set V = P - F.
 case_space_mod(C, weaken, D, V) :-
     case_proposal(C, S), reason_magnitude(C, D, P), dimension_sign(D, S, F),
     dimension_value(D, V), V = P - F.
