@@ -25,15 +25,34 @@
 
 %%% SIDE DEFINITIONS %%%
 
+% Here, we define the opposite sides,
+% namely, "plaintiff" and "defendant".
+
 opposite(plaintiff, defendant).
 opposite(S2, S1) :- opposite(S1, S2).
 
 %%% DIMENSION HELPERS %%%
 
+% This section contains some helpers that simplify
+% the reasoning with dimensional facts.
+
+% Here we define every potential value a dimension D can take.
 dimension_value(D, Min..Max) :- dimension_config(D, S, Min, Max).
 
+% This gives us info, if a dimension D is present in a case C,
+% regardless of its specific value. We will use this to check the
+% entailment of reasons.
 dimension_present(C, D) :- dimension(C, D, Q).
 
+% This one is the most difficult helper to grasp for now,
+% but it merely simplifies checking entailment of reasons.
+% Consider a dimension D with value Q and a magnitude M with
+% value P. If the dimension strengthens side S, we the require
+% P <= Q to be satisfied. Likewise, if the dimension strengthens
+% the side opposite of S, we require P >= Q. By introducing a factor F
+% that is 1 iff D strengthens S and -1 iff D strengthens the side
+% opposite of S. Thus, we can write (P * F) <= (Q * F) to capture
+% both conditions with one statement.
 dimension_factor(D, S, 1) :- dimension_config(D, S, Min, Max).
 dimension_factor(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
 
