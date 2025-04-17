@@ -1,4 +1,4 @@
-%%% GENERAL INFO %%%
+%%% OVERVIEW %%%
 
 % We will first give a rough outline of how the reason model works.
 % It involves three parts:
