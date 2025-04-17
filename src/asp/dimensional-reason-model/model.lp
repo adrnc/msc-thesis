@@ -58,6 +58,30 @@ dimension_present(C, D) :- dimension(C, D, Q).
 dimension_factor(D, S, 1) :- dimension_config(D, S, Min, Max).
 dimension_factor(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
 
+%%% GENERATE CASE PROPOSALS %%%
+
+% In this section we generate new case proposals for unsolved cases. Each proposal
+% consists of a proposed side, and a reason, i.e.,
+% a selection of magnitudes.
+
+% Here we define a case proposal for either side. This presents a choice to the model of
+% which side to rule in favour for.
+case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
+
+% Along with the proposal of a winning side S comes a proposal of magnitudes for the reason.
+% To prevent illegal magnitudes, we restrict that they entail the case facts through the
+% factor restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
+% value and F the factor for D and side S, as described earlier.
+{ magnitude_proposal(C, D, P) : dimension(C, D, Q),  dimension_value(D, P), dimension_factor(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
+
+% Here we simply prevent that a case contains to magnitudes for the same dimension D that
+% have different values. That is, every magnitude can only occur at most once.
+:- case_proposal(C, S), magnitude_proposal(C, D, P1), magnitude_proposal(C, D, P2), P1 != P2.
+
+% We consider a case proposal no different from a regular case.
+case(C, S) :- case_proposal(C, S).
+magnitude(C, D, P) :- magnitude_proposal(C, D, P).
+
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
 % In the following section we will enforce the consistency of the case space.
@@ -125,16 +149,6 @@ not_case_space_mod_consistent(CX, MX, DX, PX) :-
 
 % require inconsistency for modified case space
 :- case_space_mod(CX, MX, DX, PX), not not_case_space_mod_consistent(CX, MX, DX, PX).
-
-%%% GENERATE CASE PROPOSALS %%%
-
-case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
-case(C, S) :- case_proposal(C, S).
-
-{ magnitude_proposal(C, D, P) : dimension(C, D, Q),  dimension_value(D, P), dimension_factor(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
-magnitude(C, D, P) :- magnitude_proposal(C, D, P).
-
-:- case_proposal(C, S), magnitude_proposal(C, D, P1), magnitude_proposal(C, D, P2), P1 != P2.
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
 
