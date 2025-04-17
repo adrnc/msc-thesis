@@ -229,5 +229,8 @@ not_case_space_mod_consistent(CX, MX, DX, PX) :-
 
 %%% OUTPUT %%%
 
+% As we are only interested in how the new cases were solved and
+% what reason was selected, only this information is output.
+
 #show case_proposal/2.
 #show magnitude_proposal/3.
