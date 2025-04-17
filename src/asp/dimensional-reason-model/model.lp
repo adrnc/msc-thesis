@@ -171,12 +171,22 @@ case_space_mod(C, weaken, D, V) :-
 
 %%% GENERATE MODIFIED CASE SPACES %%%
 
+% Having defined what modified case spaces we want to generate, we perform the modifications
+% in the following section.
+
+% For every case we create an equivalent case in every modified case space.
 case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
 
+% Here we copy every magnitude as is that is not affected as by the case space modification
+% to the new case space.
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
 magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
 
+% Most importantly, we replace the modified magnitudes. Here, we assign the modified
+% magnitude its weakened value.
 magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
+
+% Since we do not copy the removed magnitudes, they will not be present in the modified case spaces.
 
 %%% CHECK INCONSISTENCY OF MODIFIED CASE SPACES %%%
 
