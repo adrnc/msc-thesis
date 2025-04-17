@@ -80,12 +80,16 @@ not_case_entails_magnitude(C1, C2, D) :-
     magnitude(C2, D, P), not dimension_present(C1, D).
 
 % This is the second NOT-entailment check where we again select two cases C1 and C2 and test if
-% the magnitude on dimension D for case C2 is not satisfied by case C1. This time, because
-% dimensional fact D is present in C1, but too weak. Here we make use of the factor defined earlier.
+% the magnitude M on dimension D for case C2 is not satisfied by case C1. This time, because
+% dimensional fact of D is present in C1, but too weak. Here we make use of the factor defined
+% earlier. Consider checking entailment first. Given values P for the magnitude and Q for the dimensional fact, we require (P * F) <= (Q * F),
+% where factor F is taken for side S2 strengthening C2, as this is the side we want
+% to argue for. Thus, we receive F through dimension_factor(D, S2, F). Since we want to
+% NOT-entailment, we test for the opposite, namely (P * F) > (Q * F).
 not_case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     magnitude(C2, D, P), dimension(C1, D, Q),
-    dimension_factor(D, S1, F), (P * F) < (Q * F).
+    dimension_factor(D, S2, F), (P * F) > (Q * F).
 
 % Now we check if case C1 does not eintail the reason for case C2. This happens when we can
 % magnitude that is not entailed.
