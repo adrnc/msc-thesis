@@ -13,7 +13,7 @@
 % We simply select either the "defendant" or the "plaintiff" as the
 % winning side and then afterwards select the magnitudes for the reason
 % in such a way that they respect the requirements of Horty's reason model.
-
+%
 % ad 2.) The consistency check is based on Horty's following observation:
 % A case base is inconsistent if and only if there are two cases C1 and C2
 % of opposite sides S1 and S2 such that the reason of C2 satisfies the facts
@@ -22,12 +22,23 @@
 % that the reason of C1 can be used to decide C2 in favour of S1. Likewise,
 % the reason of C2 can be used to decide C1 in favour of S2. If we find two
 % such cases, we consider the case base inconsistent.
-
+%
 % ad 3.) Lastly, we further restrict how unsolved cases can decide on reasons.
 % We do this because selecting reasons may yield exponentially many models. To prevent this,
 % we only allow the weakest possible reasons for a case to be considered for models. That is,
 % if we can weaken the selected reason and this modified case base stays consistent, the selected
-% reason will not be considered.
+% reason will not be considered. Why is it sufficient to consider weakest possible reasons?
+% We reconsider the inconsistency condition from earlier, where a case is inconsistent if
+% and only if there are two cases C1 and C2 of opposite sides S1 and S2, where the reason of C2
+% can be taken to rule for S2 in case C1 and the reason of C1 can be taken to rule for S1 in
+% case C2. Thus, a case base is consistent if and only if for all cases C1 and C2 of opposite side
+% at least one reason is not satisfied by the opposite case. Either the reason of C2 cannot be
+% taken to rule for S2 in case C1 or the reason of C1 cannot be taken to rule for S1 in case S1.
+% Let us now consider that we chose some reason for an unsolved case such that the case base is
+% consistent. Then making the reason stronger cannot cause the case base to become inconsistent,
+% since for all reasons of C1 and C2, one will  stay unsatisfied by the respective other case.
+% Thus, it is sufficient for us to output the weakest possible reasons, as all reasons stronger
+% than the weakest reason will also yield a consistent case base.
 
 %%% SIDE DEFINITIONS %%%
 
