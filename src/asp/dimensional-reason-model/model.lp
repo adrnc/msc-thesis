@@ -152,8 +152,7 @@ not_case_entails_reason(C1, C2) :-
 % interested in finding the weakest possible reason, for the modified case spaces we only
 % select unsolved cases for modification and we only either remove or weaken a magnitude.
 % We define these modified case spaces with case_space_mod(C, Mod, D, P). C is the case,
-% Mod is the selected modification, and the
-modified magnitude refers to the dimension D
+% Mod is the selected modification, and the modified magnitude refers to the dimension D
 % and gets assigned the new threshold value P. Of course, in case of deletion, this threshold value
 % is irrelevant.
 
