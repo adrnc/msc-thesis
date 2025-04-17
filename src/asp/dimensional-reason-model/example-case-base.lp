@@ -23,8 +23,8 @@ dimension_config(d2, defendant, -5, 5).
 % This section contains cases that were already solved.
 % Each case is made up of the following:
 % 1. Exactly one: case(CASE_ID, WINNING_SIDE)
-% 2. Several: dimension(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
-% 3. Several: magnitude(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
+% 2. Several: dimensional_fact(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
+% 3. Several: reason_magnitude(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
 %
 % This is the implemented equivalent of Horty's case triple <X, r, s>
 % where X are the dimensions present as facts, r is the rule and s is
@@ -36,12 +36,12 @@ dimension_config(d2, defendant, -5, 5).
 % was ruled for in favour.
 %
 % Each fact present in the case is defined with
-% dimension(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
+% dimensional_fact(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
 % where DIMENSION_VALUE is within the the range of
 % the dimension configured with DIMENSION_ID.
 %
 % The reason that is used to rule for the winning side is defined
-% with magnitude(CASE_ID, DIMENSION_ID, THRESHOLD_VALUE).
+% with reason_magnitude(CASE_ID, DIMENSION_ID, THRESHOLD_VALUE).
 % The THRESHOLD_VALUE has to be either above or below the value
 % of the matching dimension, which has to be present. This depends
 % on which side the dimension strengthens. If the dimension strengthens
@@ -51,27 +51,27 @@ dimension_config(d2, defendant, -5, 5).
 % to the dimension value.
 
 case(c1, defendant).
-dimension(c1, d1, 1).
-dimension(c1, d2, 1).
-magnitude(c1, d1, 1).
-magnitude(c1, d2, 1).
+dimensional_fact(c1, d1, 1).
+dimensional_fact(c1, d2, 1).
+reason_magnitude(c1, d1, 1).
+reason_magnitude(c1, d2, 1).
 
 case(c2, plaintiff).
-dimension(c2, d1, 1).
-dimension(c2, d2, 0).
-magnitude(c1, d1, 1).
+dimensional_fact(c2, d1, 1).
+dimensional_fact(c2, d2, 0).
+reason_magnitude(c1, d1, 1).
 
 %%% SOLVED %%%
 
 % In this section we define unsolved cases.
 % Each unsolved case is made up of the following:
 % 1. Exactly one: unsolved_case(CASE_ID)
-% 2. Several: dimension(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
+% 2. Several: dimensional_fact(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
 %
 % Again, the CASE_ID has to be unique. In contrast to a solved case,
 % no winning side is yet given and neither is a reason. Both of these
 % will be decided upon by the model.
 
 unsolved_case(c3).
-dimension(c3, d1, 1).
-dimension(c3, d2, 2). %dimension(c3, d2, 0).
+dimensional_fact(c3, d1, 1).
+dimensional_fact(c3, d2, 2). %dimensional_fact(c3, d2, 0).

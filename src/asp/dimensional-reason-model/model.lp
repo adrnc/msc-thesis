@@ -59,7 +59,7 @@ dimension_value(D, Min..Max) :- dimension_config(D, S, Min, Max).
 % This gives us info, if a dimension D is present in a case C,
 % regardless of its specific value. We will use this to check the
 % entailment of reasons.
-dimension_present(C, D) :- dimension(C, D, Q).
+dimensional_fact_present(C, D) :- dimensional_fact(C, D, Q).
 
 % This one is the most difficult helper to grasp for now,
 % but it merely simplifies checking entailment of reasons.
@@ -87,7 +87,7 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 % To prevent illegal magnitudes, we restrict that they entail the case facts through the
 % factor restriction (P * F) <= (Q * F), where P is the magnitude value, Q the dimensional fact
 % value and F the factor for D and side S, as described earlier.
-{ magnitude_proposal(C, D, P) : dimension(C, D, Q),  dimension_value(D, P), dimension_factor(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
+{ magnitude_proposal(C, D, P) : dimensional_fact(C, D, Q),  dimension_value(D, P), dimension_factor(D, S, F), (P * F) <= (Q * F) } :- case_proposal(C, S).
 
 % Here we simply prevent that a case contains to magnitudes for the same dimension D that
 % have different values. That is, every magnitude can only occur at most once.
@@ -95,7 +95,7 @@ case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C,
 
 % We consider a case proposal no different from a regular case.
 case(C, S) :- case_proposal(C, S).
-magnitude(C, D, P) :- magnitude_proposal(C, D, P).
+reason_magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
@@ -114,9 +114,9 @@ magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 % This is the first NOT-entailment check, where we select two cases C1 and C2 and test if
 % the magnitude on dimension D for case C2 is not satisfied by case C1, because dimensional
 % fact D is missing in C1.
-not_case_entails_magnitude(C1, C2, D) :-
+not_case_entails_reason_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
-    magnitude(C2, D, P), not dimension_present(C1, D).
+    reason_magnitude(C2, D, P), not dimensional_fact_present(C1, D).
 
 % This is the second NOT-entailment check where we again select two cases C1 and C2 and test if
 % the magnitude M on dimension D for case C2 is not satisfied by case C1. This time, because
@@ -125,16 +125,16 @@ not_case_entails_magnitude(C1, C2, D) :-
 % where factor F is taken for side S2 strengthening C2, as this is the side we want
 % to argue for. Thus, we receive F through dimension_factor(D, S2, F). Since we want to
 % NOT-entailment, we test for the opposite, namely (P * F) > (Q * F).
-not_case_entails_magnitude(C1, C2, D) :-
+not_case_entails_reason_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
-    magnitude(C2, D, P), dimension(C1, D, Q),
+    reason_magnitude(C2, D, P), dimensional_fact(C1, D, Q),
     dimension_factor(D, S2, F), (P * F) > (Q * F).
 
 % Now we check if case C1 does not eintail the reason for case C2. This happens when we can
 % magnitude that is not entailed.
 not_case_entails_reason(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
-    magnitude(C2, D, P), not_case_entails_magnitude(C1, C2, D).
+    reason_magnitude(C2, D, P), not_case_entails_reason_magnitude(C1, C2, D).
 
 % Lastly, we check for consistency by requiring that no two cases of opposite side can
 % entail each other's reasons, as described in the top section.
@@ -158,7 +158,7 @@ not_case_entails_reason(C1, C2) :-
 
 % Here we define all case spaces that have exactly one magnitude removed, but everything else
 % stays the same.
-case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
+case_space_mod(C, remove, D, P) :- case_proposal(C, S), reason_magnitude(C, D, P).
 
 % Likewise, here we define all case spaces that have exactly one magnitude weakened, but everthing
 % else stays the same. Why do we set the new threshold value V = P - F where F is the dimension factor for the given side? That's because if
@@ -166,7 +166,7 @@ case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
 % a dimension strengthens the opposite side F = -1 and V = P + 1 will weaken the reason.
 % Therefore, we can simply set V = P - F.
 case_space_mod(C, weaken, D, V) :-
-    case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
+    case_proposal(C, S), reason_magnitude(C, D, P), dimension_factor(D, S, F),
     dimension_value(D, V), V = P - F.
 
 %%% GENERATE MODIFIED CASE SPACES %%%
@@ -179,12 +179,12 @@ case_mod(C, S, CX, MX, DX, PX) :- case(C, S), case_space_mod(CX, MX, DX, PX).
 
 % Here we copy every magnitude as is, that is not affected by the case space modification,
 % to the new case space.
-magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
-magnitude_mod(C, D, P, CX, MX, DX, PX) :- magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
+reason_magnitude_mod(C, D, P, CX, MX, DX, PX) :- reason_magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), C != CX.
+reason_magnitude_mod(C, D, P, CX, MX, DX, PX) :- reason_magnitude(C, D, P), case_space_mod(CX, MX, DX, PX), D != DX.
 
 % Most importantly, we replace the modified magnitudes. Here, we assign the modified
 % magnitude its weakened value.
-magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
+reason_magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- reason_magnitude(CX, DX, P), case_space_mod(CX, weaken, DX, PX).
 
 % Since we do not copy the removed magnitudes, they will not be present in the modified case spaces.
 
@@ -198,21 +198,21 @@ magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- magnitude(CX, DX, P), case_spac
 
 % As seen in the consistency check, we again check if a magnitude is present, but the necessary
 % dimension is missing.
-not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
+not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
-    magnitude_mod(C2, D, P, CX, MX, DX, PX), not dimension_present(C1, D).
+    reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), not dimensional_fact_present(C1, D).
 
 % Also, as seen in the consistency check, we again check if a magnitude is required to be stronger
 % than given in the present dimension.
-not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX) :-
+not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
-    magnitude_mod(C2, D, P, CX, MX, DX, PX), dimension(C1, D, Q),
+    reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), dimensional_fact(C1, D, Q),
     dimension_factor(D, S2, F), (P * F) > (Q * F).
 
 % Again, we check which reasons are not entailed.
 not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
     case_mod(C1, S1, CX, MX, DX, PX), case_mod(C2, S2, CX, MX, DX, PX), opposite(S1, S2),
-    magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_magnitude(C1, C2, D, CX, MX, DX, PX).
+    reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX).
 
 % At this point, our check differs from the consistency check. Here we simply find all case
 % modified spaces that are inconsistent.
