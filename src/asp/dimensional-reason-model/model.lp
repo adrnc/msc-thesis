@@ -23,7 +23,11 @@
 % the reason of C2 can be used to decide C1 in favour of S2. If we find two
 % such cases, we consider the case base inconsistent.
 
-% ad 3.)
+% ad 3.) Lastly, we further restrict how unsolved cases can decide on reasons.
+% We do this because selecting reasons may yield exponentially many models. To prevent this,
+% we only allow the weakest possible reasons for a case to be considered for models. That is,
+% if we can weaken the selected reason and this modified case base stays consistent, the selected
+% reason will not be considered.
 
 %%% SIDE DEFINITIONS %%%
 
