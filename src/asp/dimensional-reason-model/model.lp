@@ -144,8 +144,28 @@ not_case_entails_reason(C1, C2) :-
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
 
+% As described earlier, we want to check if we have found the weakest possible reason for a side.
+% To do so in practice, we distinguish between the regular case space and several modified case spaces.
+% The regular case space was already defined in previous steps. Now we will generate several
+% modified case spaces. A modified case space is a case space, where exactly one magnitude
+% in exactly one case is changed, whereas everything else stays the same. Since we are
+% interested in finding the weakest possible reason, for the modified case spaces we only
+% select unsolved cases for modification and we only either remove or weaken a magnitude.
+% We define these modified case spaces with case_space_mod(C, Mod, D, P). C is the case,
+% Mod is the selected modification, and the
+modified magnitude refers to the dimension D
+% and gets assigned the new threshold value P. Of course, in case of deletion, this threshold value
+% is irrelevant.
+
+% Here we define all case spaces that have exactly one magnitude removed, but everything else
+% stays the same.
 case_space_mod(C, remove, D, P) :- case_proposal(C, S), magnitude(C, D, P).
 
+% Likewise, here we define all case spaces that have exactly one magnitude weakened, but everthing
+% else stays the same. Why do we set the new threshold value V = P - F where F is the dimension factor for the given side? That's because if
+% a dimension strengthens a side, F = 1 and V = P - 1 will weaken the reason. In contrast, if
+% a dimension strengthens the opposite side F = -1 and V = P + 1 will weaken the reason.
+% Therefore, we can simply set V = P - F.
 case_space_mod(C, weaken, D, V) :-
     case_proposal(C, S), magnitude(C, D, P), dimension_factor(D, S, F),
     dimension_value(D, V), V = P - F.
