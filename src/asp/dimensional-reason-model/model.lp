@@ -23,6 +23,8 @@
 % the reason of C2 can be used to decide C1 in favour of S2. If we find two
 % such cases, we consider the case base inconsistent.
 
+% ad 3.)
+
 %%% SIDE DEFINITIONS %%%
 
 % Here, we define the opposite sides,
@@ -58,20 +60,41 @@ dimension_factor(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
+% In the following section we will enforce the consistency of the case space.
+% In particular, we will check if we can find two cases of opposite side where
+% each case's fact situation entails the other case's reason, as already described at the top.
+% If two such cases can be found, the model is unsatisfiable.
+%
+% Do note that it is much easier to check whether a reason is NOT entailed
+% compared to whether a reason is entailed, since checking the former merely requires
+% us to find one magnitude that is not satisfied by a dimensional fact.
+% For magnitudes not entailed there are to cases:
+% 1. The needed dimension for entailment is not present.
+% 2. The needed dimension for entailment is too weak.
+
+% This is the first NOT-entailment check, where we select two cases C1 and C2 and test if
+% the magnitude on dimension D for case C2 is not satisfied by case C1, because dimensional
+% fact D is missing in C1.
 not_case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     magnitude(C2, D, P), not dimension_present(C1, D).
 
+% This is the second NOT-entailment check where we again select two cases C1 and C2 and test if
+% the magnitude on dimension D for case C2 is not satisfied by case C1. This time, because
+% dimensional fact D is present in C1, but too weak. Here we make use of the factor defined earlier.
 not_case_entails_magnitude(C1, C2, D) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     magnitude(C2, D, P), dimension(C1, D, Q),
     dimension_factor(D, S1, F), (P * F) < (Q * F).
 
+% Now we check if case C1 does not eintail the reason for case C2. This happens when we can
+% magnitude that is not entailed.
 not_case_entails_reason(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     magnitude(C2, D, P), not_case_entails_magnitude(C1, C2, D).
 
-% prevent inconsistency for regular case space
+% Lastly, we check for consistency by requiring that no two cases of opposite side can
+% entail each other's reasons, as described in the top section.
 :-
     case(C1, S1), case(C2, S2), opposite(S1, S2),
     not not_case_entails_reason(C1, C2), not not_case_entails_reason(C2, C1).
