@@ -45,8 +45,8 @@
 % Here, we define the opposite sides,
 % namely, "plaintiff" and "defendant".
 
-opposite(plaintiff, defendant).
-opposite(S2, S1) :- opposite(S1, S2).
+opposite_side(plaintiff, defendant).
+opposite_side(S2, S1) :- opposite_side(S1, S2).
 
 %%% DIMENSION HELPERS %%%
 
@@ -71,7 +71,7 @@ dimensional_fact_present(C, D) :- dimensional_fact(C, D, Q).
 % opposite of S. Thus, we can write (P * F) <= (Q * F) to capture
 % both conditions with one statement.
 dimension_sign(D, S, 1) :- dimension_definition(D, S, Min, Max).
-dimension_sign(D, S2, -1) :- dimension_definition(D, S1, Min, Max), opposite(S1, S2).
+dimension_sign(D, S2, -1) :- dimension_definition(D, S1, Min, Max), opposite_side(S1, S2).
 
 %%% GENERATE CASE PROPOSALS %%%
 
@@ -81,7 +81,7 @@ dimension_sign(D, S2, -1) :- dimension_definition(D, S1, Min, Max), opposite(S1,
 
 % Here we define a case proposal for either side. This presents a choice to the model of
 % which side to rule in favour for.
-case_proposal(C, S1) :- unsolved_case(C), opposite(S1, S2), not case_proposal(C, S2).
+case_proposal(C, S1) :- unsolved_case(C), opposite_side(S1, S2), not case_proposal(C, S2).
 
 % Along with the proposal of a winning side S comes a proposal of magnitudes for the reason.
 % To prevent illegal magnitudes, we restrict that they entail the case facts through the
@@ -120,7 +120,7 @@ reason_magnitude(C, D, P) :- magnitude_proposal(C, D, P).
 % the magnitude on dimension D for case C2 is not satisfied by case C1, because dimensional
 % fact D is missing in C1.
 not_case_entails_reason_magnitude(C1, C2, D) :-
-    case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude(C2, D, P), not dimensional_fact_present(C1, D).
 
 % This is the second NOT-entailment check where we again select two cases C1 and C2 and test if
@@ -132,20 +132,20 @@ not_case_entails_reason_magnitude(C1, C2, D) :-
 % dimension_sign(D, S2, F). Since we want to NOT-entailment, we test for the opposite,
 % namely (P * F) > (Q * F).
 not_case_entails_reason_magnitude(C1, C2, D) :-
-    case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude(C2, D, P), dimensional_fact(C1, D, Q),
     dimension_sign(D, S2, F), (P * F) > (Q * F).
 
 % Now we check if case C1 does not eintail the reason for case C2. This happens when we can
 % magnitude that is not entailed.
 not_case_entails_reason(C1, C2) :-
-    case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude(C2, D, P), not_case_entails_reason_magnitude(C1, C2, D).
 
 % Lastly, we check for consistency by requiring that no two cases of opposite side can
 % entail each other's reasons, as described in the top section.
 :-
-    case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     not not_case_entails_reason(C1, C2), not not_case_entails_reason(C2, C1).
 
 %%% SELECT CASE SPACE MODIFICATIONS %%%
@@ -202,25 +202,25 @@ reason_magnitude_mod(CX, DX, PX, CX, weaken, DX, PX) :- reason_magnitude(CX, DX,
 % As seen in the consistency check, we again check if a magnitude is present, but the necessary
 % dimension is missing.
 not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
-    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), not dimensional_fact_present(C1, D).
 
 % Also, as seen in the consistency check, we again check if a magnitude is required to be stronger
 % than given in the present dimension.
 not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX) :-
-    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), dimensional_fact(C1, D, Q),
     dimension_sign(D, S2, F), (P * F) > (Q * F).
 
 % Again, we check which reasons are not entailed.
 not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX) :-
-    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude_mod(C2, D, P, CX, MX, DX, PX), not_case_mod_entails_reason_magnitude(C1, C2, D, CX, MX, DX, PX).
 
 % At this point, our check differs from the consistency check. Here we simply find all
 % modified case spaces that are inconsistent.
 not_case_space_mod_consistent(CX, MX, DX, PX) :-
-    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite(S1, S2),
+    case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
 
 % And most importantly, we require all modified case spaces to be inconsistent. This we way ensure
