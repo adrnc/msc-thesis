@@ -54,7 +54,7 @@ opposite(S2, S1) :- opposite(S1, S2).
 % the reasoning with dimensional facts.
 
 % Here we define every potential value a dimension D can take.
-dimension_value(D, Min..Max) :- dimension_config(D, S, Min, Max).
+dimension_value(D, Min..Max) :- dimension_definition(D, S, Min, Max).
 
 % This gives us info, if a dimension D is present in a case C,
 % regardless of its specific value. We will use this to check the
@@ -70,8 +70,8 @@ dimensional_fact_present(C, D) :- dimensional_fact(C, D, Q).
 % that is 1 iff D strengthens S and -1 iff D strengthens the side
 % opposite of S. Thus, we can write (P * F) <= (Q * F) to capture
 % both conditions with one statement.
-dimension_sign(D, S, 1) :- dimension_config(D, S, Min, Max).
-dimension_sign(D, S2, -1) :- dimension_config(D, S1, Min, Max), opposite(S1, S2).
+dimension_sign(D, S, 1) :- dimension_definition(D, S, Min, Max).
+dimension_sign(D, S2, -1) :- dimension_definition(D, S1, Min, Max), opposite(S1, S2).
 
 %%% GENERATE CASE PROPOSALS %%%
 

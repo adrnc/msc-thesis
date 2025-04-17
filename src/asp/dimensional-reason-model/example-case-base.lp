@@ -1,7 +1,7 @@
 %%% DIMENSION CONFIGURATION %%%
 
 % In this part we define types of dimensions like so:
-% dimension_config(DIMENSION_ID, STRENGTHENS_SIDE, MIN_VALUE, MAX_VALUE)
+% dimension_definition(DIMENSION_ID, STRENGTHENS_SIDE, MIN_VALUE, MAX_VALUE)
 %
 % The DIMENSION_ID uniquely identifies a dimension across cases.
 % MIN_VALUE and MAX_VALUE limit the range a dimension can have.
@@ -15,8 +15,8 @@
 % this means that MIN_VALUE favours S the most and MAX_VALUE favours
 % the side opposite of S the most.
 
-dimension_config(d1, defendant, -5, 5).
-dimension_config(d2, defendant, -5, 5).
+dimension_definition(d1, defendant, -5, 5).
+dimension_definition(d2, defendant, -5, 5).
 
 %%% SOLVED CASES %%%
 
