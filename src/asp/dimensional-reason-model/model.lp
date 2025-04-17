@@ -7,7 +7,7 @@
 % 3. We check whether we can find a weaker reason that allows us to rule
 %    for the same side. If so, we do not consider that reason.
 %
-% Let us give a bit more details on these:
+% Let us look at these in a bit more detail:
 %
 % ad 1.) Choosing a winning side and some reason is easy.
 % We simply select either the "defendant" or the "plaintiff" as the
