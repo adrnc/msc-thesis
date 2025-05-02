@@ -21,4 +21,10 @@ in pkgs.mkShell {
         clingo
         clingcon
     ];
+
+    # Create a venv with "python -m venv .venv" first
+    shellHook = ''
+        source .venv/bin/activate
+    '';
+    # Run "pip install -r requirements.txt" if necessary
 }
