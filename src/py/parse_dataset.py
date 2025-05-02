@@ -1,10 +1,13 @@
 from sys import argv, stdin, stdout
 import json
 
+
 USE_ID_PREFIX = True
+
 
 def id(pre, value):
     return f"{pre if USE_ID_PREFIX else ""}{value}"
+
 
 def use_file(file_or_filename, mode, cb):
     if isinstance(file_or_filename, str):
@@ -12,6 +15,7 @@ def use_file(file_or_filename, mode, cb):
             return cb(file)
 
     return cb(file_or_filename)
+
 
 def write_asp(input_json, output_file):
     delim = r"%%%"
@@ -36,8 +40,6 @@ def write_asp(input_json, output_file):
             output_file.write(f"reason_magnitude({c_id}, {id("d", m["dimension_id"])}, {m["satisfies_value"]}).\n")
 
         output_file.write("\n")
-
-
 
 
 def main():
