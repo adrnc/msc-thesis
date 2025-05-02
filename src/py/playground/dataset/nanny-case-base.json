@@ -1,0 +1,227 @@
+{
+  "dimensional_fact_definitions": [
+    { "id": 0, "description": "Screen time minutes before scheduled bedtime", "strengthens": "plaintiff", "min_value": 0, "max_value": 180 },
+    { "id": 1, "description": "Sugar intake grams after dinner", "strengthens": "plaintiff", "min_value": 0, "max_value": 100 },
+    { "id": 2, "description": "Count of bedtime protests by children", "strengthens": "plaintiff", "min_value": 0, "max_value": 10 },
+    { "id": 3, "description": "Ambient noise level in bedroom (dB)", "strengthens": "plaintiff", "min_value": 20, "max_value": 80 },
+    { "id": 4, "description": "Reading/story time minutes before scheduled bedtime", "strengthens": "defendant", "min_value": 0, "max_value": 60 },
+    { "id": 5, "description": "Parental routine consistency rating", "strengthens": "defendant", "min_value": 0, "max_value": 10 },
+    { "id": 6, "description": "Physical activity minutes during day", "strengthens": "defendant", "min_value": 0, "max_value": 180 },
+    { "id": 7, "description": "Homework completion percentage before bedtime", "strengthens": "defendant", "min_value": 0, "max_value": 100 },
+    { "id": 8, "description": "Sibling cooperation incidents count", "strengthens": "defendant", "min_value": 0, "max_value": 10 },
+    { "id": 9, "description": "Parental engagement minutes before scheduled bedtime", "strengthens": "defendant", "min_value": 0, "max_value": 120 }
+  ],
+  "past_cases": [
+    {
+      "id": 0,
+      "description": "Very high screen time and protests with weak routine—kids misbehaved, so parents enforce bedtime.",
+      "winner": "defendant",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 160 },
+        { "dimension_id": 1, "value": 70 },
+        { "dimension_id": 2, "value": 8 },
+        { "dimension_id": 3, "value": 65 },
+        { "dimension_id": 4, "value": 15 },
+        { "dimension_id": 5, "value": 3 },
+        { "dimension_id": 6, "value": 20 },
+        { "dimension_id": 7, "value": 40 },
+        { "dimension_id": 8, "value": 2 },
+        { "dimension_id": 9, "value": 10 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 0, "satisfies_value": 150 },
+        { "dimension_id": 2, "satisfies_value": 8 }
+      ]
+    },
+    {
+      "id": 1,
+      "description": "Excellent reading, routine, activity and homework—kids earn to stay up a bit later.",
+      "winner": "plaintiff",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 40 },
+        { "dimension_id": 1, "value": 20 },
+        { "dimension_id": 2, "value": 1 },
+        { "dimension_id": 3, "value": 30 },
+        { "dimension_id": 4, "value": 50 },
+        { "dimension_id": 5, "value": 9 },
+        { "dimension_id": 6, "value": 100 },
+        { "dimension_id": 7, "value": 90 },
+        { "dimension_id": 8, "value": 7 },
+        { "dimension_id": 9, "value": 60 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 4, "satisfies_value": 45 },
+        { "dimension_id": 5, "satisfies_value": 8 },
+        { "dimension_id": 7, "satisfies_value": 95 }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "Moderate routine but very high sugar and noise—misbehavior predominates, bedtime enforced.",
+      "winner": "defendant",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 100 },
+        { "dimension_id": 1, "value": 85 },
+        { "dimension_id": 2, "value": 6 },
+        { "dimension_id": 3, "value": 70 },
+        { "dimension_id": 4, "value": 20 },
+        { "dimension_id": 5, "value": 5 },
+        { "dimension_id": 6, "value": 50 },
+        { "dimension_id": 7, "value": 60 },
+        { "dimension_id": 8, "value": 3 },
+        { "dimension_id": 9, "value": 25 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 1, "satisfies_value": 80 },
+        { "dimension_id": 3, "satisfies_value": 65 }
+      ]
+    },
+    {
+      "id": 3,
+      "description": "Strong homework, activity and engagement—kids behaved well, so they may stay up.",
+      "winner": "plaintiff",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 50 },
+        { "dimension_id": 1, "value": 30 },
+        { "dimension_id": 2, "value": 2 },
+        { "dimension_id": 3, "value": 25 },
+        { "dimension_id": 4, "value": 40 },
+        { "dimension_id": 5, "value": 8 },
+        { "dimension_id": 6, "value": 120 },
+        { "dimension_id": 7, "value": 85 },
+        { "dimension_id": 8, "value": 6 },
+        { "dimension_id": 9, "value": 50 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 6, "satisfies_value": 110 },
+        { "dimension_id": 7, "satisfies_value": 80 }
+      ]
+    },
+    {
+      "id": 4,
+      "description": "High protests and screen time with poor routine—misbehavior, bedtime enforced.",
+      "winner": "defendant",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 130 },
+        { "dimension_id": 1, "value": 60 },
+        { "dimension_id": 2, "value": 9 },
+        { "dimension_id": 3, "value": 55 },
+        { "dimension_id": 4, "value": 10 },
+        { "dimension_id": 5, "value": 4 },
+        { "dimension_id": 6, "value": 30 },
+        { "dimension_id": 7, "value": 35 },
+        { "dimension_id": 8, "value": 1 },
+        { "dimension_id": 9, "value": 15 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 2, "satisfies_value": 9 },
+        { "dimension_id": 0, "satisfies_value": 120 }
+      ]
+    },
+    {
+      "id": 5,
+      "description": "Balanced screen and reading with solid routine—good behavior, kids stay up.",
+      "winner": "plaintiff",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 70 },
+        { "dimension_id": 1, "value": 30 },
+        { "dimension_id": 2, "value": 3 },
+        { "dimension_id": 3, "value": 35 },
+        { "dimension_id": 4, "value": 45 },
+        { "dimension_id": 5, "value": 7 },
+        { "dimension_id": 6, "value": 80 },
+        { "dimension_id": 7, "value": 75 },
+        { "dimension_id": 8, "value": 5 },
+        { "dimension_id": 9, "value": 40 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 4, "satisfies_value": 40 },
+        { "dimension_id": 5, "satisfies_value": 7 }
+      ]
+    },
+    {
+      "id": 6,
+      "description": "Low activity but extreme noise and sugar—misbehavior, bedtime enforced.",
+      "winner": "defendant",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 110 },
+        { "dimension_id": 1, "value": 90 },
+        { "dimension_id": 2, "value": 7 },
+        { "dimension_id": 3, "value": 75 },
+        { "dimension_id": 4, "value": 10 },
+        { "dimension_id": 5, "value": 2 },
+        { "dimension_id": 6, "value": 15 },
+        { "dimension_id": 7, "value": 50 },
+        { "dimension_id": 8, "value": 2 },
+        { "dimension_id": 9, "value": 20 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 3, "satisfies_value": 70 },
+        { "dimension_id": 1, "satisfies_value": 85 }
+      ]
+    },
+    {
+      "id": 7,
+      "description": "Perfect sibling cooperation and engagement—good behavior, kids stay up.",
+      "winner": "plaintiff",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 20 },
+        { "dimension_id": 1, "value": 10 },
+        { "dimension_id": 2, "value": 0 },
+        { "dimension_id": 3, "value": 20 },
+        { "dimension_id": 4, "value": 50 },
+        { "dimension_id": 5, "value": 10 },
+        { "dimension_id": 6, "value": 100 },
+        { "dimension_id": 7, "value": 95 },
+        { "dimension_id": 8, "value": 10 },
+        { "dimension_id": 9, "value": 90 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 8, "satisfies_value": 10 },
+        { "dimension_id": 9, "satisfies_value": 85 }
+      ]
+    },
+    {
+      "id": 8,
+      "description": "Moderate protests and screen with solid activity—misbehavior still moderate, bedtime enforced.",
+      "winner": "defendant",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 90 },
+        { "dimension_id": 1, "value": 40 },
+        { "dimension_id": 2, "value": 5 },
+        { "dimension_id": 3, "value": 50 },
+        { "dimension_id": 4, "value": 25 },
+        { "dimension_id": 5, "value": 5 },
+        { "dimension_id": 6, "value": 70 },
+        { "dimension_id": 7, "value": 65 },
+        { "dimension_id": 8, "value": 4 },
+        { "dimension_id": 9, "value": 30 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 0, "satisfies_value": 85 },
+        { "dimension_id": 2, "satisfies_value": 5 }
+      ]
+    },
+    {
+      "id": 9,
+      "description": "High reading, routine and homework—excellent behavior, kids earn to stay up.",
+      "winner": "plaintiff",
+      "dimensional_facts": [
+        { "dimension_id": 0, "value": 50 },
+        { "dimension_id": 1, "value": 30 },
+        { "dimension_id": 2, "value": 2 },
+        { "dimension_id": 3, "value": 35 },
+        { "dimension_id": 4, "value": 55 },
+        { "dimension_id": 5, "value": 8 },
+        { "dimension_id": 6, "value": 90 },
+        { "dimension_id": 7, "value": 80 },
+        { "dimension_id": 8, "value": 6 },
+        { "dimension_id": 9, "value": 45 }
+      ],
+      "decision_reasons": [
+        { "dimension_id": 4, "satisfies_value": 50 },
+        { "dimension_id": 6, "satisfies_value": 85 }
+      ]
+    }
+  ]
+}
