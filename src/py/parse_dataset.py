@@ -26,7 +26,7 @@ def write_asp(input_json, output_file):
     for c in input_json["past_cases"]:
         c_id = id("c", c["id"])
 
-        print(f"% Case description: {c["description"]}")
+        print(f"% CASE {c_id}: {c["description"]}")
         print(f"case({c_id}, {c["winner"]}).")
 
         for f in c["dimensional_facts"]:
