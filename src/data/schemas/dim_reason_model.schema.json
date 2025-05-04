@@ -1,0 +1,82 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/adrnc/msc-thesis/refs/heads/main/src/data/schema/dim_reason_model.schema.json",
+    "title": "DimReasonModel dataset",
+    "description": "",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["dimensional_fact_definitions", "past_cases"],
+    "properties": {
+        "fact_definitions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "description", "strengthens", "min_value", "max_value"],
+                "properties": {
+                    "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_(defendant|plaintiff)$" },
+                    "description": { "type": "string" },
+                    "strengthens": { "enum": ["defendant", "plaintiff"] },
+                    "min_value": { "type": "integer" },
+                    "max_value": { "type": "integer", "minimum": "1/min_value" }
+                },
+                "if": {
+                    "properties": {
+                        "strengthens": { "const": "defendant" }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_defendant$" }
+                    }
+                },
+                "else": {
+                    "properties": {
+                        "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_plaintiff$" }
+                    }
+                }
+            }
+        },
+        "cases": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["case_id", "description", "winner", "facts", "facts_used_for_reason"],
+                "properties": {
+                    "case_id": { "type": "string", "pattern": "^case[0-9]+_(defendant|plaintiff)$" },
+                    "description": { "type": "string" },
+                    "winner": { "enum": ["defendant", "plaintiff"] },
+                    "facts": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["used_fact_id", "value", "used_for_reason"],
+                            "properties": {
+                                "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_(defendant|plaintiff)$" },
+                                "value": { "type": "integer" },
+                                "used_for_reason": { "type": "boolean" },
+                                "allOf": [
+                                    {
+                                        "if": {
+                                            "properties": {
+                                                "used_for_reason": { "const": true },
+                                                "used_fact_id": { "pattern": "_defendant$" }
+                                            }
+                                        },
+                                        "then": {
+                                            "properties": {
+                                                ""
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

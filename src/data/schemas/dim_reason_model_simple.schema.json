@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/adrnc/msc-thesis/refs/heads/main/src/data/schema/dim_reason_model.schema.json",
+    "$id": "https://raw.githubusercontent.com/adrnc/msc-thesis/refs/heads/main/src/data/schema/dim_reason_model_simple.schema.json",
     "title": "DimReasonModel dataset",
     "description": "",
     "type": "object",
