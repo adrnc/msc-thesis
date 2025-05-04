@@ -5,34 +5,34 @@
     "description": "",
     "type": "object",
     "additionalProperties": false,
-    "required": ["dimensional_fact_definitions", "past_cases"],
+    "required": ["fact_definitions", "cases"],
     "properties": {
         "fact_definitions": {
             "type": "array",
             "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["id", "description", "strengthens", "min_value", "max_value"],
+                "required": ["id", "description", "strengthens_side", "min_value", "max_value"],
                 "properties": {
-                    "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_(defendant|plaintiff)$" },
+                    "id": { "type": "string", "pattern": "^fact[0-9]+_(defendant|plaintiff)$" },
                     "description": { "type": "string" },
-                    "strengthens": { "enum": ["defendant", "plaintiff"] },
+                    "strengthens_side": { "enum": ["defendant", "plaintiff"] },
                     "min_value": { "type": "integer" },
                     "max_value": { "type": "integer", "minimum": "1/min_value" }
                 },
                 "if": {
                     "properties": {
-                        "strengthens": { "const": "defendant" }
+                        "strengthens_side": { "const": "defendant" }
                     }
                 },
                 "then": {
                     "properties": {
-                        "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_defendant$" }
+                        "id": { "type": "string", "pattern": "_defendant$" }
                     }
                 },
                 "else": {
                     "properties": {
-                        "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_plaintiff$" }
+                        "id": { "type": "string", "pattern": "_plaintiff$" }
                     }
                 }
             }
@@ -42,38 +42,109 @@
             "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["case_id", "description", "winner", "facts", "facts_used_for_reason"],
+                "required": ["id", "description", "winner", "facts"],
                 "properties": {
-                    "case_id": { "type": "string", "pattern": "^case[0-9]+_(defendant|plaintiff)$" },
+                    "id": { "type": "string", "pattern": "^case[0-9]+_(defendant|plaintiff)$" },
                     "description": { "type": "string" },
-                    "winner": { "enum": ["defendant", "plaintiff"] },
+                    "winning_side": { "enum": ["defendant", "plaintiff"] },
                     "facts": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "additionalProperties": false,
-                            "required": ["used_fact_id", "value", "used_for_reason"],
+                            "required": ["referenced_fact_id", "value", "used_for_reason"],
                             "properties": {
-                                "fact_definition_id": { "type": "string", "pattern": "^factdef[0-9]+_(defendant|plaintiff)$" },
+                                "referenced_fact_id": { "type": "string", "pattern": "^fact[0-9]+_(defendant|plaintiff)$" },
                                 "value": { "type": "integer" },
-                                "used_for_reason": { "type": "boolean" },
-                                "allOf": [
-                                    {
+                                "used_for_reason": { "type": "boolean" }
+                            }
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "winning_side": { "const": "defendant" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "facts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "if": {
+                                        "properties": {
+                                            "used_for_reason": { "const": true }
+                                        }
+                                    },
+                                    "then": {
+                                        "required": ["reason_value"],
                                         "if": {
                                             "properties": {
-                                                "used_for_reason": { "const": true },
-                                                "used_fact_id": { "pattern": "_defendant$" }
+                                                "referenced_fact_id": { "type": "string", "pattern": "_defendant$" }
                                             }
                                         },
                                         "then": {
                                             "properties": {
-                                                ""
+                                                "reason_value": { "type": "integer", "maximum": "1/value" }
+                                            }
+                                        },
+                                        "else": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "minimum": "1/value" }
                                             }
                                         }
                                     }
-                                ]
+                                }
                             }
                         }
+                    },
+                    "else": {
+                        "properties": {
+                            "facts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "if": {
+                                        "properties": {
+                                            "used_for_reason": { "const": true }
+                                        }
+                                    },
+                                    "then": {
+                                        "required": ["reason_value"],
+                                        "if": {
+                                            "properties": {
+                                                "referenced_fact_id": { "type": "string", "pattern": "_defendant$" }
+                                            }
+                                        },
+                                        "then": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "minimum": "1/value" }
+                                            }
+                                        },
+                                        "else": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "maximum": "1/value" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "winning_side": { "const": "defendant" }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "id": { "type": "string", "pattern": "^_defendant$" }
+                    }
+                },
+                "else": {
+                    "properties": {
+                        "id": { "type": "string", "pattern": "_plaintiff$" }
                     }
                 }
             }
