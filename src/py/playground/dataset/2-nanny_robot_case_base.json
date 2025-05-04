@@ -1,0 +1,687 @@
+{
+  "fact_definitions": [
+    {
+      "id": "fact0_plaintiff",
+      "description": "Screen time minutes before scheduled bedtime",
+      "strengthens_side": "plaintiff",
+      "min_value": 0,
+      "max_value": 180
+    },
+    {
+      "id": "fact1_plaintiff",
+      "description": "Sugar intake grams after dinner",
+      "strengthens_side": "plaintiff",
+      "min_value": 0,
+      "max_value": 100
+    },
+    {
+      "id": "fact2_plaintiff",
+      "description": "Count of bedtime protests by children",
+      "strengthens_side": "plaintiff",
+      "min_value": 0,
+      "max_value": 10
+    },
+    {
+      "id": "fact3_plaintiff",
+      "description": "Ambient noise level in bedroom (dB)",
+      "strengthens_side": "plaintiff",
+      "min_value": 20,
+      "max_value": 80
+    },
+    {
+      "id": "fact4_defendant",
+      "description": "Reading/story time minutes before bedtime",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 60
+    },
+    {
+      "id": "fact5_defendant",
+      "description": "Parental routine consistency rating",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 10
+    },
+    {
+      "id": "fact6_defendant",
+      "description": "Physical activity minutes during day",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 180
+    },
+    {
+      "id": "fact7_defendant",
+      "description": "Homework completion percentage",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 100
+    },
+    {
+      "id": "fact8_defendant",
+      "description": "Sibling cooperation incidents count",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 10
+    },
+    {
+      "id": "fact9_defendant",
+      "description": "Parental engagement minutes before bedtime",
+      "strengthens_side": "defendant",
+      "min_value": 0,
+      "max_value": 120
+    }
+  ],
+  "cases": [
+    {
+      "id": "case10_plaintiff",
+      "description": "A case where the plaintiff wins.",
+      "winning_side": "plaintiff",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 17,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 42,
+          "used_for_reason": true,
+          "reason_value": 42
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 3,
+          "used_for_reason": true,
+          "reason_value": 3
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 51,
+          "used_for_reason": true,
+          "reason_value": 51
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 8,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 9,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 62,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 52,
+          "used_for_reason": true,
+          "reason_value": 53
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 1,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 45,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case11_defendant",
+      "description": "A case where the defendant wins.",
+      "winning_side": "defendant",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 119,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 6,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 10,
+          "used_for_reason": true,
+          "reason_value": 11
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 45,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 51,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 3,
+          "used_for_reason": true,
+          "reason_value": 3
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 137,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 54,
+          "used_for_reason": true,
+          "reason_value": 54
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 7,
+          "used_for_reason": true,
+          "reason_value": 7
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 118,
+          "used_for_reason": true,
+          "reason_value": 118
+        }
+      ]
+    },
+    {
+      "id": "case12_plaintiff",
+      "description": "A case where the plaintiff wins.",
+      "winning_side": "plaintiff",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 140,
+          "used_for_reason": true,
+          "reason_value": 140
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 83,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 0,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 79,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 15,
+          "used_for_reason": true,
+          "reason_value": 16
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 7,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 102,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 21,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 6,
+          "used_for_reason": true,
+          "reason_value": 7
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 100,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case13_defendant",
+      "description": "A case where the defendant wins.",
+      "winning_side": "defendant",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 73,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 93,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 8,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 51,
+          "used_for_reason": true,
+          "reason_value": 52
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 18,
+          "used_for_reason": true,
+          "reason_value": 18
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 0,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 138,
+          "used_for_reason": true,
+          "reason_value": 138
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 40,
+          "used_for_reason": true,
+          "reason_value": 40
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 9,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 117,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case14_plaintiff",
+      "description": "A case where the plaintiff wins.",
+      "winning_side": "plaintiff",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 40,
+          "used_for_reason": true,
+          "reason_value": 40
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 65,
+          "used_for_reason": true,
+          "reason_value": 65
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 2,
+          "used_for_reason": true,
+          "reason_value": 2
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 24,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 15,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 9,
+          "used_for_reason": true,
+          "reason_value": 10
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 152,
+          "used_for_reason": true,
+          "reason_value": 153
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 10,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 9,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 40,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case15_defendant",
+      "description": "A case where the defendant wins.",
+      "winning_side": "defendant",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 52,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 40,
+          "used_for_reason": true,
+          "reason_value": 41
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 6,
+          "used_for_reason": true,
+          "reason_value": 7
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 61,
+          "used_for_reason": true,
+          "reason_value": 62
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 20,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 1,
+          "used_for_reason": true,
+          "reason_value": 1
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 159,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 12,
+          "used_for_reason": true,
+          "reason_value": 12
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 3,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 16,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case16_plaintiff",
+      "description": "A case where the plaintiff wins.",
+      "winning_side": "plaintiff",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 17,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 47,
+          "used_for_reason": true,
+          "reason_value": 47
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 7,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 65,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 51,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 0,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 141,
+          "used_for_reason": true,
+          "reason_value": 142
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 84,
+          "used_for_reason": true,
+          "reason_value": 85
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 2,
+          "used_for_reason": true,
+          "reason_value": 3
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 113,
+          "used_for_reason": true,
+          "reason_value": 114
+        }
+      ]
+    },
+    {
+      "id": "case17_defendant",
+      "description": "A case where the defendant wins.",
+      "winning_side": "defendant",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 141,
+          "used_for_reason": true,
+          "reason_value": 142
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 36,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 5,
+          "used_for_reason": true,
+          "reason_value": 6
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 60,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 32,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 0,
+          "used_for_reason": true,
+          "reason_value": 0
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 108,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 5,
+          "used_for_reason": true,
+          "reason_value": 5
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 2,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 33,
+          "used_for_reason": true,
+          "reason_value": 33
+        }
+      ]
+    },
+    {
+      "id": "case18_plaintiff",
+      "description": "A case where the plaintiff wins.",
+      "winning_side": "plaintiff",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 113,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 54,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 1,
+          "used_for_reason": true,
+          "reason_value": 1
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 76,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 9,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 5,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 37,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 5,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 0,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 26,
+          "used_for_reason": false
+        }
+      ]
+    },
+    {
+      "id": "case19_defendant",
+      "description": "A case where the defendant wins.",
+      "winning_side": "defendant",
+      "facts": [
+        {
+          "referenced_fact_id": "fact0_plaintiff",
+          "value": 170,
+          "used_for_reason": true,
+          "reason_value": 171
+        },
+        {
+          "referenced_fact_id": "fact1_plaintiff",
+          "value": 99,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact2_plaintiff",
+          "value": 6,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact3_plaintiff",
+          "value": 67,
+          "used_for_reason": true,
+          "reason_value": 68
+        },
+        {
+          "referenced_fact_id": "fact4_defendant",
+          "value": 59,
+          "used_for_reason": true,
+          "reason_value": 59
+        },
+        {
+          "referenced_fact_id": "fact5_defendant",
+          "value": 2,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact6_defendant",
+          "value": 45,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact7_defendant",
+          "value": 3,
+          "used_for_reason": true,
+          "reason_value": 3
+        },
+        {
+          "referenced_fact_id": "fact8_defendant",
+          "value": 5,
+          "used_for_reason": false
+        },
+        {
+          "referenced_fact_id": "fact9_defendant",
+          "value": 52,
+          "used_for_reason": false
+        }
+      ]
+    }
+  ]
+}
