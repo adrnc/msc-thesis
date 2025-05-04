@@ -14,6 +14,8 @@ def use_file(file_or_filename, mode, cb):
         with open(file_or_filename, mode) as file:
             return cb(file)
 
+        raise
+
     return cb(file_or_filename)
 
 
