@@ -22,23 +22,23 @@ def write_asp(input_json, output_file):
 
     output_file.write(f"\n{delim} CASE BASE {delim}\n\n")
 
-    for c in input_json["past_cases"]:
+    for c in input_json["cases"]:
         c_id = c["id"]
 
-        output_file.write(f"% CASE {c_id}: {c["description"]}\n")
+        output_file.write(f"% CASE \"{c_id}\": {c["description"]}\n")
         output_file.write(f"case({c_id}, {c["winning_side"]}).\n")
 
-        magnitude_output = []
+        magnitude_output_strings = []
 
-        for f in facts:
+        for f in c["facts"]:
             d_id = f["referenced_fact_id"]
 
             output_file.write(f"dimensional_fact({c_id}, {d_id}, {f["value"]}).\n")
 
             if f["used_for_reason"]:
-                magnitude_strings.append(f"reason_magnitude({c_id}, {d_id}, {m["reason_value"]}).\n")
+                magnitude_output_strings.append(f"reason_magnitude({c_id}, {d_id}, {f["reason_value"]}).\n")
 
-        for m in magnitude_output:
+        for m in magnitude_output_strings:
             output_file.write(m)
 
         output_file.write("\n")
