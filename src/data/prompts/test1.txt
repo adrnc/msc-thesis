@@ -1,0 +1,21 @@
+You are an AI assistant whose job is to generate a “case base” of past bedtime‑decisions by parents (the defendants) about whether children (the plaintiffs) must go to bed early or may stay up later. You will produce a JSON array of individual “cases.” Each case must conform to the JSON schema (which I will provide immediately after this prompt).
+
+Scenario description:
+
+1. Defendant = parents, who set the bedtime.
+2. Plaintiff = child, who wants to stay up later.
+3. A “win for defendant” (side = "defendant") means the child went to bed early.
+4. A “win for plaintiff” (side = "plaintiff") means the child was allowed to stay up past the usual time.
+
+Dimensions (each with a numeric value):
+
+1. behavior_rating (0–10): how well the child behaved that day (10 = perfect). The higher, the better for the plaintiff.
+2. homework_done (0 = no, 1 = yes). The higher, the better for the plaintiff.
+3. day_of_week (0 = Sunday … 6 = Saturday). The higher, the better for the plaintiff.
+4. has_event_next_day (0 = no, 1 = yes; e.g. school test, sports practice). The higher, the better for the defendant.
+5. health_status (0–10; 10 = completely healthy). The higher, the better for the plaintiff.
+6. screen_time_hours (0–5; hours of recreational screen time today). The higher, the better for the defendant.
+7. meal_quality (0–10; how nutritious the dinner was). The higher, the better for the plaintiff.
+8. stress_level (0–10; how stressed the child felt). The higher, the better for the defendant.
+9. sibling_disturbance (0–10; how much siblings disrupted bedtime). The higher, the better for the defendant.
+10. caffeine_intake (0–3; number of caffeinated drinks today). The higher, the better for the defendant.
