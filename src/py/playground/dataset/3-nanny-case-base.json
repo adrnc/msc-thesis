@@ -1,0 +1,188 @@
+{
+    "fact_definitions": [
+      {
+        "id": "fact1_plaintiff",
+        "description": "Child's behavior rating for the day",
+        "strengthens_side": "plaintiff",
+        "min_value": 0,
+        "max_value": 10
+      },
+      {
+        "id": "fact2_plaintiff",
+        "description": "Homework completed",
+        "strengthens_side": "plaintiff",
+        "min_value": 0,
+        "max_value": 1
+      },
+      {
+        "id": "fact3_plaintiff",
+        "description": "Day of the week (higher means later in the week)",
+        "strengthens_side": "plaintiff",
+        "min_value": 0,
+        "max_value": 6
+      },
+      {
+        "id": "fact4_defendant",
+        "description": "Has an event the next day",
+        "strengthens_side": "defendant",
+        "min_value": 0,
+        "max_value": 1
+      },
+      {
+        "id": "fact5_plaintiff",
+        "description": "Health status of the child",
+        "strengthens_side": "plaintiff",
+        "min_value": 0,
+        "max_value": 10
+      },
+      {
+        "id": "fact6_defendant",
+        "description": "Recreational screen time in hours",
+        "strengthens_side": "defendant",
+        "min_value": 0,
+        "max_value": 5
+      },
+      {
+        "id": "fact7_plaintiff",
+        "description": "Quality of dinner meal",
+        "strengthens_side": "plaintiff",
+        "min_value": 0,
+        "max_value": 10
+      },
+      {
+        "id": "fact8_defendant",
+        "description": "Child's stress level",
+        "strengthens_side": "defendant",
+        "min_value": 0,
+        "max_value": 10
+      },
+      {
+        "id": "fact9_defendant",
+        "description": "Sibling disturbance level at bedtime",
+        "strengthens_side": "defendant",
+        "min_value": 0,
+        "max_value": 10
+      },
+      {
+        "id": "fact10_defendant",
+        "description": "Caffeine intake today",
+        "strengthens_side": "defendant",
+        "min_value": 0,
+        "max_value": 3
+      }
+    ],
+    "cases": [
+      {
+        "id": "case1_defendant",
+        "description": "Child behaved moderately well but has a school test tomorrow and had a lot of screen time",
+        "winning_side": "defendant",
+        "facts": [
+          {
+            "referenced_fact_id": "fact1_plaintiff",
+            "value": 6,
+            "used_for_reason": false
+          },
+          {
+            "referenced_fact_id": "fact2_plaintiff",
+            "value": 1,
+            "used_for_reason": false
+          },
+          {
+            "referenced_fact_id": "fact4_defendant",
+            "value": 1,
+            "used_for_reason": true,
+            "reason_value": 1
+          },
+          {
+            "referenced_fact_id": "fact6_defendant",
+            "value": 4,
+            "used_for_reason": true,
+            "reason_value": 1
+          }
+        ]
+      },
+      {
+        "id": "case2_plaintiff",
+        "description": "It's Friday, the child finished all homework, had great behavior, and is feeling healthy",
+        "winning_side": "plaintiff",
+        "facts": [
+          {
+            "referenced_fact_id": "fact1_plaintiff",
+            "value": 10,
+            "used_for_reason": true,
+            "reason_value": 10
+          },
+          {
+            "referenced_fact_id": "fact2_plaintiff",
+            "value": 1,
+            "used_for_reason": true,
+            "reason_value": 1
+          },
+          {
+            "referenced_fact_id": "fact3_plaintiff",
+            "value": 5,
+            "used_for_reason": true,
+            "reason_value": 5
+          },
+          {
+            "referenced_fact_id": "fact5_plaintiff",
+            "value": 10,
+            "used_for_reason": false
+          }
+        ]
+      },
+      {
+        "id": "case3_defendant",
+        "description": "Child was sick and had multiple caffeinated drinks, even though it was Saturday",
+        "winning_side": "defendant",
+        "facts": [
+          {
+            "referenced_fact_id": "fact3_plaintiff",
+            "value": 6,
+            "used_for_reason": false
+          },
+          {
+            "referenced_fact_id": "fact5_plaintiff",
+            "value": 3,
+            "used_for_reason": true,
+            "reason_value": 1
+          },
+          {
+            "referenced_fact_id": "fact10_defendant",
+            "value": 2,
+            "used_for_reason": true,
+            "reason_value": 1
+          }
+        ]
+      },
+      {
+        "id": "case4_plaintiff",
+        "description": "Child had an average day but siblings caused some disturbance. Still, it was Saturday and no event next day",
+        "winning_side": "plaintiff",
+        "facts": [
+          {
+            "referenced_fact_id": "fact1_plaintiff",
+            "value": 7,
+            "used_for_reason": false
+          },
+          {
+            "referenced_fact_id": "fact3_plaintiff",
+            "value": 6,
+            "used_for_reason": true,
+            "reason_value": 6
+          },
+          {
+            "referenced_fact_id": "fact4_defendant",
+            "value": 0,
+            "used_for_reason": true,
+            "reason_value": 1
+          },
+          {
+            "referenced_fact_id": "fact9_defendant",
+            "value": 6,
+            "used_for_reason": false
+          }
+        ]
+      }
+    ]
+  }
