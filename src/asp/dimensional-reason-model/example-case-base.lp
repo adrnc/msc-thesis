@@ -37,7 +37,7 @@ dimension_definition(d2, defendant, -5, 5).
 %
 % Each fact present in the case is defined with
 % dimensional_fact(CASE_ID, DIMENSION_ID, DIMENSION_VALUE)
-% where DIMENSION_VALUE is within the the range of
+% where DIMENSION_VALUE is within the range of
 % the dimension configured with DIMENSION_ID.
 %
 % The reason that is used to rule for the winning side is defined
