@@ -89,17 +89,17 @@ case_proposal(C, S1) :- unsolved_case(C), opposite_side(S1, S2), not case_propos
 % value and F the sign for D and side S, as described earlier. Do note that this statement is
 % also the greatest performance bottleneck of the model, as exponentially many reasons have to
 % be checked in the worst case.
-{ magnitude_proposal(C, D, P) :
+{ reason_magnitude_proposal(C, D, P) :
     dimensional_fact(C, D, Q), dimension_value(D, P), dimension_sign(D, S, F), (P * F) <= (Q * F) }
         :- case_proposal(C, S).
 
 % Here we simply prevent that a case contains to magnitudes for the same dimension D that
 % have different values. That is, every magnitude can only occur at most once.
-:- case_proposal(C, S), magnitude_proposal(C, D, P1), magnitude_proposal(C, D, P2), P1 != P2.
+:- case_proposal(C, S), reason_magnitude_proposal(C, D, P1), reason_magnitude_proposal(C, D, P2), P1 != P2.
 
 % We consider a case proposal no different from a regular case.
 case(C, S) :- case_proposal(C, S).
-reason_magnitude(C, D, P) :- magnitude_proposal(C, D, P).
+reason_magnitude(C, D, P) :- reason_magnitude_proposal(C, D, P).
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
@@ -233,4 +233,4 @@ not_case_space_mod_consistent(CX, MX, DX, PX) :-
 % what reason was selected, only this information is output.
 
 #show case_proposal/2.
-#show magnitude_proposal/3.
+#show reason_magnitude_proposal/3.
