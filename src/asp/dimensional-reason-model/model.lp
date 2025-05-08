@@ -66,7 +66,7 @@ dimensional_fact_present(C, D) :- dimensional_fact(C, D, Q).
 % Consider a dimension D with value Q and a magnitude M with
 % value P. If the dimension strengthens side S, we the require
 % P <= Q to be satisfied. Likewise, if the dimension strengthens
-% the side opposite of S, we require P >= Q. By introducing a sign F
+% the side opposite of S, we require P >= Q. We introducing a sign F
 % that is 1 iff D strengthens S and -1 iff D strengthens the side
 % opposite of S. Thus, we can write (P * F) <= (Q * F) to capture
 % both conditions with one statement.
