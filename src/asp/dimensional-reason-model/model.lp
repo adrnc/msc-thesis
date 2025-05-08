@@ -137,7 +137,7 @@ not_case_entails_reason_magnitude(C1, C2, D) :-
     dimension_sign(D, S2, F), (P * F) > (Q * F).
 
 % Now we check if case C1 does not eintail the reason for case C2. This happens when we can
-% magnitude that is not entailed.
+% finda a magnitude that is not entailed.
 not_case_entails_reason(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude(C2, D, P), not_case_entails_reason_magnitude(C1, C2, D).
