@@ -114,6 +114,8 @@ reason_magnitude(C, D, P) :- reason_magnitude_proposal(C, D, P).
 % us to find one magnitude that is not satisfied by a dimensional fact.
 % For magnitudes not entailed there are to cases:
 % 1. The needed dimension for entailment is not present.
+%    Note that this actually should never happen in the dimensional reason model,
+%    because it assumes that every dimension is present in some way.
 % 2. The needed dimension for entailment is too weak.
 
 % This is the first NOT-entailment check, where we select two cases C1 and C2 and test if
