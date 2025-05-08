@@ -225,7 +225,7 @@ not_case_space_mod_consistent(CX, MX, DX, PX) :-
     case_space_mod(CX, MX, DX, PX), case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     not not_case_mod_entails_reason(C1, C2, CX, MX, DX, PX), not not_case_mod_entails_reason(C2, C1, CX, MX, DX, PX).
 
-% And most importantly, we require all modified case spaces to be inconsistent. This we way ensure
+% And most importantly, we require all modified case spaces to be inconsistent. This way we ensure
 % that we have found the weakest possible reason.
 :- case_space_mod(CX, MX, DX, PX), not not_case_space_mod_consistent(CX, MX, DX, PX).
 
