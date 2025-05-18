@@ -78,6 +78,9 @@ reason_magnitude_safe_proposal(C1, D, P) :-
 
 %%% OUTPUT %%%
 
+#show not_case_base_consistent/0.
+#show not_cases_consistent/2.
+
 #show case_proposal/2.
 %#show reason_magnitude_strongest_proposal/3.
 #show reason_magnitude_safe_proposal/3.
