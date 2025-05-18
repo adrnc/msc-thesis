@@ -14,4 +14,5 @@ reason_magnitude(c1, d1, 1).
 
 unsolved_case(c3).
 dimensional_fact(c3, d1, 1).
-dimensional_fact(c3, d2, 2). %dimensional_fact(c3, d2, 0).
+dimensional_fact(c3, d2, 2).
+%dimensional_fact(c3, d2, 0).
