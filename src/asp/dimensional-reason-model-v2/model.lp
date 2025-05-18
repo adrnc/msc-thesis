@@ -25,7 +25,7 @@ neighbour_value_relation(S, D, P, Q) :-
 
 % defines the dual of the value relation for the opposite side
 value_relation(S2, D, Q, P) :- value_relation(S1, D, P, Q), opposite_side(S1, S2).
-neighbour_value_relation(S2, D, Q, P) :- adjacent_value_relation(S1, D, P, Q), opposite_side(S1, S2).
+neighbour_value_relation(S2, D, Q, P) :- neighbour_value_relation(S1, D, P, Q), opposite_side(S1, S2).
 
 % defines the value relation for elements that are different from each other (ie., not reflexive)
 strict_value_relation(S, D, P, Q) :- value_relation(S, D, P, Q), P != Q.
