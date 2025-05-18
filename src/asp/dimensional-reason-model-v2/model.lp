@@ -8,8 +8,8 @@ dimension_value(D, P) :- reason_magnitude(C, D, P).
 dimension_value(D, P) :- dimensional_fact(C, D, P).
 
 % defines the dimension sign
-dimension_sign(D, S, 1) :- dimension_strengthens(D, S).
-dimension_sign(D, S2, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
+dimension_side_sign(S, D, 1) :- dimension_strengthens(D, S).
+dimension_side_sign(S2, D, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
 
 %%% DIMENSION VALUE RELATION %%%
 
@@ -84,18 +84,9 @@ case_proposal_potential_conflict(C1, C2) :-
 
 % we weaken the reason magnitudes such that consistency is preserved
 reason_magnitude_proposal(C1, D, P) :-
-    case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q), value_relation(S1, D, P, Q),
-    dimension_strengthens(D, S1),
-    P = #max { QX :
-        case_proposal_potential_conflict(C1, C2),
-        dimensional_fact(C2, D, PX),
-        neighbour_value_relation(S1, D, PX, QX) }.
-
-% the same but this time the dimension strengthens the opposite side
-reason_magnitude_proposal(C1, D, P) :-
-    case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q), value_relation(S1, D, P, Q),
-    dimension_strengthens(D, S2), opposite_side(S1, S2),
-    P = #min { QX :
+    case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q),
+    value_relation(S1, D, P, Q), dimension_side_sign(S1, D, F),
+    F * P = #max { F * QX :
         case_proposal_potential_conflict(C1, C2),
         dimensional_fact(C2, D, PX),
         neighbour_value_relation(S1, D, PX, QX) }.
