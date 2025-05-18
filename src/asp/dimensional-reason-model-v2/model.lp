@@ -28,12 +28,10 @@ neighbour_value_relation(S, D, P, Q) :- strict_value_relation(S, D, P, Q), not d
 
 %%% CHECK CONSISTENCY OF CASE SPACE %%%
 
-not_case_entails_reason_magnitude(C1, C2, D) :-
+not_case_entails_reason(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite_side(S1, S2),
     reason_magnitude(C2, D, P), dimensional_fact(C1, D, Q),
     not value_relation(S2, D, P, Q).
-
-not_case_entails_reason(C1, C2) :- not_case_entails_reason_magnitude(C1, C2, D).
 
 not_cases_consistent(C1, C2) :-
     case(C1, S1), case(C2, S2), opposite_side(S1, S2),
