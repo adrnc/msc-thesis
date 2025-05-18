@@ -11,14 +11,12 @@ dimension_value(D, P) :- dimensional_fact(C, D, P).
 
 % defines the value relation for all present dimensions
 value_relation(S, D, P, Q) :-
-    dimension_strengthens(D, S),
-    dimension_value(D, P), dimension_value(D, Q),
+    dimension_strengthens(D, S), dimension_value(D, P), dimension_value(D, Q),
     P <= Q.
 
 % defines the value relation for elements that have no element between them, i.e., they are neighbours
 neighbour_value_relation(S, D, P, Q) :-
-    dimension_strengthens(D, S),
-    dimension_value(D, P), dimension_value(D, Q),
+    dimension_strengthens(D, S), dimension_value(D, P),
     P < Q, Q = #min { V : dimension_value(D, V) }.
 
 % defines the dual of the value relation for the opposite side
