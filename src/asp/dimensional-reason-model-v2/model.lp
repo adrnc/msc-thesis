@@ -7,10 +7,6 @@ opposite_side(S2, S1) :- opposite_side(S1, S2).
 dimension_value(D, P) :- reason_magnitude(C, D, P).
 dimension_value(D, P) :- dimensional_fact(C, D, P).
 
-% defines the dimension sign
-dimension_side_sign(S, D, 1) :- dimension_strengthens(D, S).
-dimension_side_sign(S2, D, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
-
 %%% DIMENSION VALUE RELATION %%%
 
 % defines the value relation for all present dimensions
@@ -21,7 +17,7 @@ value_relation(S, D, P, Q) :-
 % defines the value relation for elements that are at max 1 apart
 neighbour_value_relation(S, D, P, Q) :-
     dimension_strengthens(D, S), dimension_value(D, P),
-    P < Q, Q = #min { V : dimension_value(D, V) }.
+    Q = #min { V : dimension_value(D, V), P < V }.
 
 % defines the dual of the value relation for the opposite side
 value_relation(S2, D, Q, P) :- value_relation(S1, D, P, Q), opposite_side(S1, S2).
@@ -82,19 +78,28 @@ case_proposal_potential_conflict(C1, C2) :-
     case_proposal(C1, S1), case(C2, S2), opposite_side(S1, S2),
     not not_case_proposal_entails_reason(C1, C2).
 
-% we weaken the reason magnitudes such that consistency is preserved
+% we weaken the reason magnitudes such that consistency is preserved, the dimension strengthens the winning side
 reason_magnitude_proposal(C1, D, P) :-
     case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q),
-    value_relation(S1, D, P, Q), dimension_side_sign(S1, D, F),
-    F * P = #max { F * QX :
-        case_proposal_potential_conflict(C1, C2),
-        dimensional_fact(C2, D, PX),
-        neighbour_value_relation(S1, D, PX, QX) }.
+    value_relation(S1, D, P, Q), dimension_strengthens(D, S1),
+    P = #max { QX :
+        case_proposal_potential_conflict(C1, CX),
+        dimensional_fact(CX, DX, PX), neighbour_value_relation(S1, DX, PX, QX) }.
+
+% we weaken the reason magnitudes such that consistency is preserved, the dimension weakens the winning side
+reason_magnitude_proposal(C1, D, P) :-
+    case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q),
+    value_relation(S1, D, P, Q), dimension_strengthens(D, S2), opposite_side(S1, S2),
+    P = #min { QX :
+        case_proposal_potential_conflict(C1, CX),
+        dimensional_fact(CX, DX, PX), neighbour_value_relation(S1, DX, PX, QX) }.
 
 %%% OUTPUT %%%
 
+% consistency check
 #show not_case_base_consistent/0.
 #show not_cases_consistent/2.
 
+% new case solution
 #show case_proposal/2.
 #show reason_magnitude_proposal/3.
