@@ -79,3 +79,7 @@ reason_magnitude_safe_proposal(C1, D, P) :-
         neighbour_value_relation(S1, D, V1, V2) }.
 
 %%% OUTPUT %%%
+
+#show case_proposal/2.
+%#show reason_magnitude_strongest_proposal/3.
+#show reason_magnitude_safe_proposal/3.
