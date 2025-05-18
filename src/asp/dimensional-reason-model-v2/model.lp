@@ -3,11 +3,15 @@
 opposite_side(plaintiff, defendant).
 opposite_side(S2, S1) :- opposite_side(S1, S2).
 
-%%% DIMENSION VALUE RELATION %%%
-
 % defines all values that are present for a dimension
 dimension_value(D, P) :- reason_magnitude(C, D, P).
 dimension_value(D, P) :- dimensional_fact(C, D, P).
+
+% defines the dimension sign
+dimension_sign(D, S, 1) :- dimension_strengthens(D, S).
+dimension_sign(D, S2, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
+
+%%% DIMENSION VALUE RELATION %%%
 
 % defines the value relation for all present dimensions
 value_relation(S, D, P, Q) :-
@@ -15,14 +19,13 @@ value_relation(S, D, P, Q) :-
     P <= Q.
 
 % defines the value relation for elements that are at max 1 apart
-adjacent_value_relation(S, D, P, P) :- dimension_value(D, P).
-adjacent_value_relation(S, D, P, Q) :-
+neighbour_value_relation(S, D, P, Q) :-
     dimension_strengthens(D, S), dimension_value(D, P),
-    P < Q, Q = #min { V : dimension_value(D, V) }.
+    P <= Q, Q = #min { V : dimension_value(D, V) }.
 
 % defines the dual of the value relation for the opposite side
 value_relation(S2, D, Q, P) :- value_relation(S1, D, P, Q), opposite_side(S1, S2).
-adjacent_value_relation(S2, D, Q, P) :- adjacent_value_relation(S1, D, P, Q), opposite_side(S1, S2).
+neighbour_value_relation(S2, D, Q, P) :- adjacent_value_relation(S1, D, P, Q), opposite_side(S1, S2).
 
 % defines the value relation for elements that are different from each other (ie., not reflexive)
 strict_value_relation(S, D, P, Q) :- value_relation(S, D, P, Q), P != Q.
@@ -86,7 +89,7 @@ reason_magnitude_proposal(C1, D, P) :-
     P = #max { QX :
         case_proposal_potential_conflict(C1, C2),
         dimensional_fact(C2, D, PX),
-        adjacent_value_relation(S1, D, PX, QX) }.
+        neighbour_value_relation(S1, D, PX, QX) }.
 
 % the same but this time the dimension strengthens the opposite side
 reason_magnitude_proposal(C1, D, P) :-
@@ -95,7 +98,7 @@ reason_magnitude_proposal(C1, D, P) :-
     P = #min { QX :
         case_proposal_potential_conflict(C1, C2),
         dimensional_fact(C2, D, PX),
-        adjacent_value_relation(S1, D, PX, QX) }.
+        neighbour_value_relation(S1, D, PX, QX) }.
 
 %%% OUTPUT %%%
 
