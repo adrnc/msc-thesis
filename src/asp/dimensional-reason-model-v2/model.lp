@@ -10,9 +10,6 @@ dimension_value(D, P) :- dimensional_fact(C, D, P).
 
 reason_value(D, P) :- reason_magnitude(C, D, P).
 
-dimension_sign(D, S, 1) :- dimension_strengthens(D, S).
-dimension_sign(D, S2, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
-
 %%% DIMENSION VALUE RELATION %%%
 
 value_relation(S, D, P, Q) :-
