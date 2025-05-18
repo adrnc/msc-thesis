@@ -8,6 +8,8 @@ opposite_side(S2, S1) :- opposite_side(S1, S2).
 dimension_value(D, P) :- reason_magnitude(C, D, P).
 dimension_value(D, P) :- dimensional_fact(C, D, P).
 
+reason_value(D, P) :- reason_magnitude(C, D, P).
+
 dimension_sign(D, S, 1) :- dimension_strengthens(D, S).
 dimension_sign(D, S2, -1) :- dimension_strengthens(D, S1), opposite_side(S1, S2).
 
@@ -70,8 +72,18 @@ reason_magnitude_safe_proposal(C1, D, P) :-
     case_proposal(C1, S1),
     reason_magnitude_strongest_proposal(C1, D, Q),
     value_relation(S1, D, P, Q),
-    dimension_sign(D, S1, F),
-    P = #max { F * V2 :
+    dimension_strengthens(D, S1),
+    P = #max { V2 :
+        case_proposal_potential_conflict(C1, C2),
+        dimensional_fact(C2, D, V1),
+        neighbour_value_relation(S1, D, V1, V2) }.
+
+reason_magnitude_safe_proposal(C1, D, P) :-
+    case_proposal(C1, S1), opposite_side(S1, S2),
+    reason_magnitude_strongest_proposal(C1, D, Q),
+    value_relation(S1, D, P, Q),
+    dimension_strengthens(D, S2),
+    P = #min { V2 :
         case_proposal_potential_conflict(C1, C2),
         dimensional_fact(C2, D, V1),
         neighbour_value_relation(S1, D, V1, V2) }.
