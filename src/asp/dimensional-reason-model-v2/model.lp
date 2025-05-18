@@ -21,7 +21,7 @@ value_relation(S, D, P, Q) :-
 % defines the value relation for elements that are at max 1 apart
 neighbour_value_relation(S, D, P, Q) :-
     dimension_strengthens(D, S), dimension_value(D, P),
-    P <= Q, Q = #min { V : dimension_value(D, V) }.
+    P < Q, Q = #min { V : dimension_value(D, V) }.
 
 % defines the dual of the value relation for the opposite side
 value_relation(S2, D, Q, P) :- value_relation(S1, D, P, Q), opposite_side(S1, S2).
