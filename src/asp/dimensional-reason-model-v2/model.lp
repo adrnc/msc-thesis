@@ -70,7 +70,7 @@ not_case_entails_reason_strongest_proposal(C1, C2) :-
     not not_case_proposal_entails_reason(C1, C2),
     not not_case_entails_reason_strongest_proposal(C2, C1).
 
-%%% SEARCH FOR SAFE WEAKER REASONS %%%
+%%% SEARCH FOR SAFE WEAKER REASON %%%
 
 % every case where the reason is entailed by the case proposal is a potential conflict,
 % because consistency now requires that the other case does not entail the case proposal reason
@@ -79,7 +79,7 @@ case_proposal_potential_conflict(C1, C2) :-
     not not_case_proposal_entails_reason(C1, C2).
 
 % we weaken the reason magnitudes such that consistency is preserved, the dimension strengthens the winning side
-reason_magnitude_proposal(C1, D, P) :-
+safe_reason_magnitude_proposal(C1, D, P) :-
     case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q),
     value_relation(S1, D, P, Q), dimension_strengthens(D, S1),
     P = #max { QX :
@@ -87,12 +87,15 @@ reason_magnitude_proposal(C1, D, P) :-
         dimensional_fact(CX, DX, PX), neighbour_value_relation(S1, DX, PX, QX) }.
 
 % we weaken the reason magnitudes such that consistency is preserved, the dimension weakens the winning side
-reason_magnitude_proposal(C1, D, P) :-
+safe_reason_magnitude_proposal(C1, D, P) :-
     case_proposal(C1, S1), reason_magnitude_strongest_proposal(C1, D, Q),
     value_relation(S1, D, P, Q), dimension_strengthens(D, S2), opposite_side(S1, S2),
     P = #min { QX :
         case_proposal_potential_conflict(C1, CX),
         dimensional_fact(CX, DX, PX), neighbour_value_relation(S1, DX, PX, QX) }.
+
+%%% FIND WEAKEST CONSISTENT REASON %%%
+
 
 %%% OUTPUT %%%
 
