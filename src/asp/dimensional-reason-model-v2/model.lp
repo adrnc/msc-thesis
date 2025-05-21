@@ -70,7 +70,7 @@ not_case_entails_reason_strongest_proposal(C1, C2) :-
     not not_case_proposal_entails_reason(C1, C2),
     not not_case_entails_reason_strongest_proposal(C2, C1).
 
-%%% SEARCH FOR SAFE WEAKER REASON %%%
+%%% GENERATE SAFE WEAKER REASON %%%
 
 % every case where the reason is entailed by the case proposal is a potential conflict,
 % because consistency now requires that the other case does not entail the case proposal reason
@@ -94,9 +94,9 @@ reason_magnitude_safe_proposal(C1, D, P) :-
         case_proposal_potential_conflict(C1, CX),
         dimensional_fact(CX, DX, PX), neighbour_value_relation(S1, DX, PX, QX) }.
 
-%%% FIND PROPOSAL WITH PRUNED MAGNITUDES %%%
+%%% SELECT REASON WITH PRUNED MAGNITUDES %%%
 
-%%% WEAKEN PRUNED MAGNITUDES
+%%% GENERATE WEAKEST CONSISTENT REASON %%%
 
 %%% OUTPUT %%%
 
