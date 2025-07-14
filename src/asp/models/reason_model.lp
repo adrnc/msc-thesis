@@ -160,7 +160,3 @@ not_case_decision_consistent_with_opposing_case(Case, Side, OppCase) :-
 
 not_case_decision_permissible(Case, Side) :-
     not_case_decision_consistent_with_opposing_case(Case, Side, OppCase).
-
-%%% OUTPUT %%%
-#show not_case_base_consistent/0.
-#show not_case_decision_permissible/2.
