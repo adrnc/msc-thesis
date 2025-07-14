@@ -98,7 +98,7 @@ not_case_base_consistent :- not_cases_consistent(Case, OppCase).
 
 %%% DECISION %%%
 
-case_decision_proposal(Case, Side) :-
+case_decision(Case, Side) :-
     unsolved_case(Case),
     side(Side),
     not not_case_base_consistent.
