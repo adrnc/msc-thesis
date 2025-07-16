@@ -1,0 +1,58 @@
+You are an AI assistant whose job is to generate a “case base” of past bedtime‑decisions by parents
+(the defendants) about whether children (the plaintiffs) must go to bed early or may stay up later.
+You will produce a JSON array of individual “cases”.
+Each case must conform to the JSON schema (which I will provide immediately after this prompt).
+
+Scenario description:
+1. Plaintiff = parents, who set the bedtime.
+2. Defendant = child, who wants to stay up later.
+3. A "win for plaintiff" (side = "plaintiff") means the child went to bed early.
+4. A "win for plaintiff" (side = "defendant") means the child was allowed to stay up past the usual time.
+
+Every case contains:
+- A set of dimensional facts.
+- A set of magnitudes used for the reason.
+- A winning side.
+
+Let us break these down. First, there are 5 dimensions which are present in every case.
+Every dimension either strengthens the plaintiff or the defendant. If the dimension
+strengthens the plaintiff, then the higher the value, the better for the plaintiff.
+Conversely, if it strengthens the defendant, the higher the value, the better for the defendant.
+
+The dimensions strengthening the plaintiff are:
+1. "screen": The minutes of screen time the child had.
+2. "protest": The level of protest by the child. It has exactly five values:
+    (5) the child screamed and got physical
+    (4) the child screamed
+    (3) the child cried
+    (2) the child complained but behaved
+    (1) the child did not protest
+
+The dimensions strengthening the defendant are:
+3. "activity": The minutes of physical activity the child had.
+4. "coop": The level of cooperation by the child with its sibling. It has exactly four values:
+    (4) the child played and cooperated
+    (3) the child ignored its sibling
+    (2) the child got into a verbal fight
+    (1) the child got into a physical fight
+5. "read": The number of pages a child has read throughout the day.
+
+In the set of facts, every dimension is assigned one of its allowed values.
+In the set of magnitudes. A subset of these dimensions is used to specify which
+facts influence the reason. It is important that the magnitude requires a fact
+that is "at most as strong" for the winning side, as the fact present.
+Note that you can and should use dimensions which strengthen the other side as magnitudes
+as well. When a bigger value strengthens the plaintiff, a smaller value strengthens
+the defendant and vice-verca. Therefore, all dimensions can be used for reasons.
+Also try to generate the magnitudes such that they are usually weaker for the winning side
+than the dimensional facts present. They can be equally strong or weaker, but not stronger!
+
+To reiterate, because this is the hardest part to understand:
+You need to generate the set of cases such that the reason values are sometimes weaker for the winning side.
+This means that if a dimension strengthens the plaintiff and the winning side is the plaintiff,
+the reason value needs to be smaller than or equal to the fact value.
+If the dimension strengthens the defendant and the winning side is the plaintiff,
+the reason value needs to be bigger than or equal to the fact value.
+The converse applies to the defendant.
+
+Please generate a case base of 20 cases according to the schema.

@@ -1,0 +1,244 @@
+{
+  "cases": [
+    {
+      "id": "case1_plaintiff",
+      "description": "After 90 min of screen time and moderate protest, with only 30 min of activity, the parents insisted on bedtime.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 90, "used_for_reason": true,  "reason_value": 80 },
+        { "dimension": "protest_plaintiff",  "value": 3,  "used_for_reason": true,  "reason_value": 2  },
+        { "dimension": "activity_defendant", "value": 30, "used_for_reason": true,  "reason_value": 35 },
+        { "dimension": "coop_defendant",     "value": 4,  "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 10, "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case2_plaintiff",
+      "description": "The child cried after 120 min of tablet use and only 5 pages read, so parents enforced early lights‑out.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 120, "used_for_reason": true,  "reason_value": 110 },
+        { "dimension": "activity_defendant", "value": 20,  "used_for_reason": true,  "reason_value": 25  },
+        { "dimension": "read_defendant",     "value": 5,   "used_for_reason": true,  "reason_value": 6   },
+        { "dimension": "protest_plaintiff",  "value": 3,   "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 2,   "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case3_plaintiff",
+      "description": "Low cooperation with sibling and high protest led to an early bedtime despite some activity.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "protest_plaintiff",  "value": 5,   "used_for_reason": true,  "reason_value": 4   },
+        { "dimension": "activity_defendant", "value": 60,  "used_for_reason": true,  "reason_value": 65  },
+        { "dimension": "coop_defendant",     "value": 1,   "used_for_reason": true,  "reason_value": 1   },
+        { "dimension": "screen_plaintiff",   "value": 45,  "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 15,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case4_plaintiff",
+      "description": "With 80 pages read but also 150 min of video games, the parents prioritized screen limits.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 150, "used_for_reason": true,  "reason_value": 140 },
+        { "dimension": "read_defendant",     "value": 80,  "used_for_reason": true,  "reason_value": 85  },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 25,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case5_plaintiff",
+      "description": "Despite excellent cooperation, the child’s prolonged screen and protest warranted bedtime.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 100, "used_for_reason": true,  "reason_value": 90  },
+        { "dimension": "protest_plaintiff",  "value": 4,   "used_for_reason": true,  "reason_value": 3   },
+        { "dimension": "activity_defendant", "value": 90,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 20,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case6_plaintiff",
+      "description": "High protest and low reading prompted an early bedtime even after a long bike ride.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "protest_plaintiff",  "value": 5,   "used_for_reason": true,  "reason_value": 4   },
+        { "dimension": "read_defendant",     "value": 2,   "used_for_reason": true,  "reason_value": 3   },
+        { "dimension": "screen_plaintiff",   "value": 30,  "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 120, "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case7_plaintiff",
+      "description": "Moderate screen use but very poor sibling cooperation led to bedtime enforcement.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "coop_defendant",     "value": 1,   "used_for_reason": true,  "reason_value": 1   },
+        { "dimension": "read_defendant",     "value": 12,  "used_for_reason": true,  "reason_value": 13  },
+        { "dimension": "screen_plaintiff",   "value": 60,  "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 2,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 40,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case8_plaintiff",
+      "description": "Extensive reading didn’t offset excessive tablet time and loud protest.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 110, "used_for_reason": true,  "reason_value": 100 },
+        { "dimension": "protest_plaintiff",  "value": 4,   "used_for_reason": true,  "reason_value": 4   },
+        { "dimension": "read_defendant",     "value": 60,  "used_for_reason": true,  "reason_value": 65  },
+        { "dimension": "activity_defendant", "value": 50,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case9_plaintiff",
+      "description": "Complained but behaved, yet low activity and high screen justified bedtime.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 95,  "used_for_reason": true,  "reason_value": 90  },
+        { "dimension": "protest_plaintiff",  "value": 2,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "activity_defendant", "value": 15,  "used_for_reason": true,  "reason_value": 18  },
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 25,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case10_plaintiff",
+      "description": "The child refused to read and had long screen hours, so bedtime was non‑negotiable.",
+      "winning_side": "plaintiff",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 85,  "used_for_reason": true,  "reason_value": 80  },
+        { "dimension": "read_defendant",     "value": 0,   "used_for_reason": true,  "reason_value": 1   },
+        { "dimension": "activity_defendant", "value": 35,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 2,   "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 3,   "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case11_defendant",
+      "description": "After a full day of soccer and only 20 min screen, the child earned a late bedtime.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "activity_defendant", "value": 100, "used_for_reason": true,  "reason_value": 95  },
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": true,  "reason_value": 4   },
+        { "dimension": "screen_plaintiff",   "value": 20,  "used_for_reason": true,  "reason_value": 25  },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 30,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case12_defendant",
+      "description": "Excellent cooperation and reading, with minimal screen time led to extended play.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": true,  "reason_value": 3   },
+        { "dimension": "screen_plaintiff",   "value": 15,  "used_for_reason": true,  "reason_value": 20  },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "activity_defendant", "value": 80,  "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 50,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case13_defendant",
+      "description": "Despite moderate screen use, strong activity and no protest justified staying up.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "activity_defendant", "value": 90,  "used_for_reason": true,  "reason_value": 85  },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "screen_plaintiff",   "value": 50,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 20,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case14_defendant",
+      "description": "High reading and good behavior earned the child an extra half‑hour up.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "read_defendant",     "value": 45,  "used_for_reason": true,  "reason_value": 40  },
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": true,  "reason_value": 4   },
+        { "dimension": "screen_plaintiff",   "value": 25,  "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 2,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 60,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case15_defendant",
+      "description": "No complaint plus a long bike ride justified letting the child stay up late.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "activity_defendant", "value": 110, "used_for_reason": true,  "reason_value": 100 },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "screen_plaintiff",   "value": 10,  "used_for_reason": false },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 25,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case16_defendant",
+      "description": "Sibling cooperation and reading success outweighed moderate screen use.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": true,  "reason_value": 3   },
+        { "dimension": "read_defendant",     "value": 35,  "used_for_reason": true,  "reason_value": 30  },
+        { "dimension": "screen_plaintiff",   "value": 40,  "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 2,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 50,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case17_defendant",
+      "description": "Minimal screen and strong playtime made parents stretch the bedtime.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 5,   "used_for_reason": true,  "reason_value": 6   },
+        { "dimension": "activity_defendant", "value": 95,  "used_for_reason": true,  "reason_value": 90  },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 15,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case18_defendant",
+      "description": "After helping siblings and finishing a book, the child stayed up past lights‑out.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "coop_defendant",     "value": 4,   "used_for_reason": true,  "reason_value": 3   },
+        { "dimension": "read_defendant",     "value": 55,  "used_for_reason": true,  "reason_value": 50  },
+        { "dimension": "screen_plaintiff",   "value": 30,  "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 70,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case19_defendant",
+      "description": "Moderate screen but enthusiastic activity convinced parents to allow extra time.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "activity_defendant", "value": 85,  "used_for_reason": true,  "reason_value": 80  },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "screen_plaintiff",   "value": 35,  "used_for_reason": false },
+        { "dimension": "protest_plaintiff",  "value": 2,   "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 20,  "used_for_reason": false }
+      ]
+    },
+    {
+      "id": "case20_defendant",
+      "description": "Quiet evening with reading and low protest unlocked a later bedtime.",
+      "winning_side": "defendant",
+      "facts": [
+        { "dimension": "screen_plaintiff",   "value": 25,  "used_for_reason": true,  "reason_value": 30  },
+        { "dimension": "protest_plaintiff",  "value": 1,   "used_for_reason": true,  "reason_value": 2   },
+        { "dimension": "coop_defendant",     "value": 3,   "used_for_reason": false },
+        { "dimension": "activity_defendant", "value": 40,  "used_for_reason": false },
+        { "dimension": "read_defendant",     "value": 30,  "used_for_reason": false }
+      ]
+    }
+  ]
+}

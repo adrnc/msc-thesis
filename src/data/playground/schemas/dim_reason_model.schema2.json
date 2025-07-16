@@ -1,0 +1,123 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/adrnc/msc-thesis/refs/heads/main/src/data/schema/dim_reason_model.schema.json",
+    "title": "DimReasonModel dataset",
+    "description": "",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["cases"],
+    "properties": {
+        "cases": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "description", "winner", "facts"],
+                "properties": {
+                    "id": { "type": "string", "pattern": "^case[0-9]+_(defendant|plaintiff)$" },
+                    "description": { "type": "string" },
+                    "winning_side": { "enum": ["defendant", "plaintiff"] },
+                    "facts": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["dimension", "value", "used_for_reason"],
+                            "properties": {
+                                "dimension": { "type": "string", "pattern": "^\\w_(defendant|plaintiff)$" },
+                                "value": { "type": "integer" },
+                                "used_for_reason": { "type": "boolean" }
+                            }
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "winning_side": { "const": "defendant" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "facts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "if": {
+                                        "properties": {
+                                            "used_for_reason": { "const": true }
+                                        }
+                                    },
+                                    "then": {
+                                        "required": ["reason_value"],
+                                        "if": {
+                                            "properties": {
+                                                "dimension": { "type": "string", "pattern": "_defendant$" }
+                                            }
+                                        },
+                                        "then": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "maximum": { "$data": "1/value" } }
+                                            }
+                                        },
+                                        "else": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "minimum": { "$data": "1/value" } }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "else": {
+                        "properties": {
+                            "facts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "if": {
+                                        "properties": {
+                                            "used_for_reason": { "const": true }
+                                        }
+                                    },
+                                    "then": {
+                                        "required": ["reason_value"],
+                                        "if": {
+                                            "properties": {
+                                                "dimension": { "type": "string", "pattern": "_defendant$" }
+                                            }
+                                        },
+                                        "then": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "minimum": { "$data": "1/value" } }
+                                            }
+                                        },
+                                        "else": {
+                                            "properties": {
+                                                "reason_value": { "type": "integer", "maximum": { "$data": "1/value" } }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "winning_side": { "const": "defendant" }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "id": { "type": "string", "pattern": "^_defendant$" }
+                    }
+                },
+                "else": {
+                    "properties": {
+                        "id": { "type": "string", "pattern": "_plaintiff$" }
+                    }
+                }
+            }
+        }
+    }
+}

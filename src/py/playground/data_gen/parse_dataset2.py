@@ -17,12 +17,6 @@ def write_asp(input_json, output_file):
 
     output_file.write(f"{delim} DIMENSION DEFINITIONS {delim}\n\n")
 
-    for d in input_json["fact_definitions"]:
-        d_id = d["id"]
-
-        output_file.write(f"% Dimension \"{d_id}\": {d["description"]}\n")
-        output_file.write(f"dimension_definition({d_id}, {d["strengthens_side"]}, {d["min_value"]}, {d["max_value"]}).\n\n")
-
     output_file.write(f"\n{delim} CASE BASE {delim}\n\n")
 
     for c in input_json["cases"]:
