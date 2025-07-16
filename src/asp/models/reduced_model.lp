@@ -10,6 +10,8 @@ opposite_side(defendant, plaintiff).
 
 dimension_value(Dimension, Value) :- fact(Case, Dimension, Value).
 dimension_value(Dimension, Value) :- magnitude(Case, Dimension, Value).
+dimension_value(Dimension, Value1) :- custom_dimension_ordering(Dimension, Value1, Value2).
+dimension_value(Dimension, Value2) :- custom_dimension_ordering(Dimension, Value1, Value2).
 
 value_relation(Side, Dimension, Value1, Value2) :-
     int_dimension_strengthens(Dimension, Side),
