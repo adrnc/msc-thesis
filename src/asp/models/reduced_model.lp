@@ -85,8 +85,7 @@ not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide) :-
 
 not_consistent(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide),
-    not not_facts_leq_opposing_facts(OppCase, OppSide, Case, Side).
+    not not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide).
 
 not_cases_consistent(Case, Side, OppCase, OppSide) :-
     case(Case, Side), case(OppCase, OppSide),
