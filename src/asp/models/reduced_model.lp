@@ -57,6 +57,7 @@ reduced_fact(Case, Dimension, Value) :-
 
 % use facts otherwise
 reduced_fact(Case, Dimension, Value) :-
+    case(Case, Side),
     fact(Case, Dimension, Value),
     not has_magnitude(Case, Dimension).
 
@@ -73,7 +74,7 @@ not_case_fact_leq_opposing_case_fact(Case, Side, OppCase, Dimension) :-
     % pick the reduced fact from the first case
     reduced_fact(Case, Dimension, Value1),
     % pick the reduced fact from the second case
-    reduced_fact(Case, Dimension, Value2),
+    reduced_fact(OppCase, Dimension, Value2),
     % check if the reduced fact from the first case is stronger
     strict_value_relation(Side, Dimension, Value2, Value1).
 
@@ -103,8 +104,8 @@ not_pending_case_fact_geq_other_case_fact(Case, SomeCase, SomeSide, Dimension) :
     % pick the fact from the case decision
     fact(Case, Dimension, Value1),
     % pick the reduced fact from the opposing case
-    reduced_fact(Case, Dimension, Value2),
-    % check if the reduced fact from the first case is stronger
+    reduced_fact(SomeCase, Dimension, Value2),
+    % check if the reduced fact from the first case is weaker
     strict_value_relation(SomeSide, Dimension, Value1, Value2).
 
 not_pending_case_facts_geq_other_case_facts(Case, SomeCase, SomeSide) :-
