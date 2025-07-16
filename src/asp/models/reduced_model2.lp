@@ -112,5 +112,4 @@ not_case_decision_consistent(Case, Side, OppCase, OppSide) :-
     not_consistent(Case, Side, OppCase, OppSide).
 
 not_case_decision_permissible(Case, Side) :-
-    case_decision(Case, Side),
     not_case_decision_consistent(Case, Side, OppCase, OppSide).
