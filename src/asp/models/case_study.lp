@@ -30,11 +30,7 @@ magnitude(c1, screen, 4).
 unsolved_case(c_un).
 fact(c_un, screen, 2).
 
-#show pending_case/1.
-#show reduced_fact/3.
 #show case_base_consistent/0.
 #show not_case_base_consistent/0.
 #show case_decision_permissible/2.
 #show not_case_decision_permissible/2.
-#show not_pending_case_fact_geq_other_case_fact/4.
-#show strict_value_relation/4.
