@@ -63,68 +63,53 @@ reduced_fact(Case, Dimension, Value) :-
 
 %%% CONSISTENCY %%%
 
-opposing_cases(Case, Side, OppCase, OppSide) :-
-    case(Case, Side),
-    case(OppCase, OppSide),
-    opposite_side(Side, OppSide).
+case_like(Case, Side) :- case(Case, Side).
+reduced_fact_like(Case, Dimension, Value) :- reduced_fact(Case, Dimension, Value).
 
-not_case_fact_leq_opposing_case_fact(Case, Side, OppCase, Dimension) :-
+opposing_case_likes(Case, Side, OppCase, OppSide) :-
+    case_like(Case, Side), case_like(OppCase, OppSide),
+    opposite_side(Side, OppSide),
+    Case != OppCase.
+
+not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
-    opposing_cases(Case, Side, OppCase, OppSide),
-    % pick the reduced fact from the first case
-    reduced_fact(Case, Dimension, Value1),
-    % pick the reduced fact from the second case
-    reduced_fact(OppCase, Dimension, Value2),
+    opposing_case_likes(Case, Side, OppCase, OppSide),
+    % pick the reduced fact from the first and second case
+    reduced_fact_like(Case, Dimension, Value1),
+    reduced_fact_like(OppCase, Dimension, Value2),
     % check if the reduced fact from the first case is stronger
     strict_value_relation(Side, Dimension, Value2, Value1).
 
-not_case_facts_leq_opposing_case_facts(Case, Side, OppCase) :-
-    not_case_fact_leq_opposing_case_fact(Case, Side, OppCase, Dimension).
+not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide) :-
+    not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension).
 
-not_cases_consistent(Case, OppCase) :-
-    opposing_cases(Case, Side, OppCase, OppSide),
-    not not_case_facts_leq_opposing_case_facts(Case, Side, OppCase),
-    not not_case_facts_leq_opposing_case_facts(OppCase, OppSide, Case).
+not_consistent(Case, Side, OppCase, OppSide) :-
+    opposing_case_likes(Case, Side, OppCase, OppSide),
+    not not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide),
+    not not_facts_leq_opposing_facts(OppCase, OppSide, Case, Side).
 
-not_case_base_consistent :- not_cases_consistent(Case, OppCase).
+not_cases_consistent(Case, Side, OppCase, OppSide) :-
+    case(Case, Side), case(OppCase, OppSide),
+    not_consistent(Case, Side, OppCase, OppSide).
 
-case_base_consistent :- not not_case_base_consistent.
+not_case_base_consistent :- not_cases_consistent(Case, Side, OppCase, OppSide).
 
 %%% DECISION %%%
 
-pending_case(Case) :-
+case_decision(Case, Side) :-
     unsolved_case(Case),
-    case_base_consistent.
+    side(Side),
+    not not_case_base_consistent.
 
-not_pending_case_fact_geq_other_case_fact(Case, SomeCase, SomeSide, Dimension) :-
-    % pick the pending case
-    pending_case(Case),
-    % pick some other solved case
-    case(SomeCase, SomeSide),
-    % pick the fact from the case decision
-    fact(Case, Dimension, Value1),
-    % pick the reduced fact from the opposing case
-    reduced_fact(SomeCase, Dimension, Value2),
-    % check if the reduced fact from the first case is weaker
-    strict_value_relation(SomeSide, Dimension, Value1, Value2).
+case_like(Case, Side) :- case_decision(Case, Side).
 
-not_pending_case_facts_geq_other_case_facts(Case, SomeCase, SomeSide) :-
-    not_pending_case_fact_geq_other_case_fact(Case, SomeCase, SomeSide, Dimension).
+reduced_fact_like(Case, Dimension, Value) :-
+    case_decision(Case, Side),
+    fact(Case, Dimension, Value).
 
-case_decision_constrainedby_other_case(Case, SomeCase, SomeSide) :-
-    pending_case(Case),
-    case(SomeCase, SomeSide),
-    not not_pending_case_facts_geq_other_case_facts(Case, SomeCase, SomeSide).
-
-case_decision_constraint(Case, Side) :-
-    case_decision_constrainedby_other_case(Case, SomeCase, Side).
+not_case_decision_consistent(Case, Side, OppCase, OppSide) :-
+    case_decision(Case, Side), case(OppCase, OppSide),
+    not_consistent(Case, Side, OppCase, OppSide).
 
 not_case_decision_permissible(Case, Side) :-
-    pending_case(Case),
-    opposite_side(Side, OppSide),
-    case_decision_constraint(Case, OppSide).
-
-case_decision_permissible(Case, Side) :-
-    pending_case(Case),
-    side(Side),
-    not not_case_decision_permissible(Case, Side).
+    not_case_decision_consistent(Case, Side, OppCase, OppSide).
