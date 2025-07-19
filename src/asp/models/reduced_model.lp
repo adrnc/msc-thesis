@@ -103,7 +103,8 @@ decision(Case, Side) :-
     side(Side),
     not not_case_base_consistent.
 
-case_like(Case, Side) :- decision(Case, Side).
+case_like(Case, Side) :-
+    decision(Case, Side).
 
 reduced_fact_like(Case, Dimension, Value) :-
     decision(Case, Side),
