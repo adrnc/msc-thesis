@@ -31,4 +31,4 @@ unsolved_case(c_un).
 fact(c_un, screen, 2).
 
 #show not_case_base_consistent/0.
-#show not_case_decision_permissible/2.
+#show not_decision_permissible/2.

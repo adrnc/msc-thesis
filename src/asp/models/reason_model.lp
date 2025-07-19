@@ -59,7 +59,7 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_fact_satisfy_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
     % pick a fact from the fact situation of the first case
@@ -88,7 +88,7 @@ not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_facts_satisfies_opposing_reason(Case, Side, OppCase, OppSide).
+    not not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide).
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
