@@ -102,20 +102,20 @@ not_case_base_consistent :- not_cases_consistent(Case, Side, OppCase, OppSide).
 
 %%% DECISION %%%
 
-case_decision(Case, Side) :-
+decision(Case, Side) :-
     unsolved_case(Case),
     side(Side),
     not not_case_base_consistent.
 
-case_like(Case, Side) :- case_decision(Case, Side).
+case_like(Case, Side) :- decision(Case, Side).
 
 magnitude_like(Case, Dimension, Value) :-
     case_decision(Case, Side),
     fact(Case, Dimension, Value).
 
-not_case_decision_consistent(Case, Side, OppCase, OppSide) :-
+not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
     case_decision(Case, Side), case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
-not_case_decision_permissible(Case, Side) :-
-    not_case_decision_consistent(Case, Side, OppCase, OppSide).
+not_decision_permissible(Case, Side) :-
+    not_decision_consistent_with_case(Case, Side, OppCase, OppSide).
