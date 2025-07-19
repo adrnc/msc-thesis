@@ -74,8 +74,9 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
 not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick the reduced fact from the first and second case
+    % pick the reduced fact from the first case
     reduced_fact_like(Case, Dimension, Value1),
+    % pick the matching reduced fact from the second case
     reduced_fact_like(OppCase, Dimension, Value2),
     % check if the reduced fact from the first case is stronger
     strict_value_relation(Side, Dimension, Value2, Value1).
