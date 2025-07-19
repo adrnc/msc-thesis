@@ -48,8 +48,11 @@ strict_value_relation(Side, Dimension, Value1, Value2) :-
 
 %%% CONSISTENCY %%%
 
-case_like(Case, Side) :- case(Case, Side).
-magnitude_like(Case, Dimension, ThresholdValue) :- magnitude(Case, Dimension, ThresholdValue).
+case_like(Case, Side) :-
+    case(Case, Side).
+
+magnitude_like(Case, Dimension, ThresholdValue) :-
+    magnitude(Case, Dimension, ThresholdValue).
 
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
     case_like(Case, Side), case_like(OppCase, OppSide),
@@ -99,7 +102,8 @@ not_cases_consistent(Case, Side, OppCase, OppSide) :-
     case(Case, Side), case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
-not_case_base_consistent :- not_cases_consistent(Case, Side, OppCase, OppSide).
+not_case_base_consistent :-
+    not_cases_consistent(Case, Side, OppCase, OppSide).
 
 %%% DECISION %%%
 
@@ -108,7 +112,8 @@ decision(Case, Side) :-
     side(Side),
     not not_case_base_consistent.
 
-case_like(Case, Side) :- decision(Case, Side).
+case_like(Case, Side) :-
+    decision(Case, Side).
 
 magnitude_like(Case, Dimension, Value) :-
     decision(Case, Side),

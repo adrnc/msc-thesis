@@ -93,7 +93,8 @@ not_cases_consistent(Case, Side, OppCase, OppSide) :-
     case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
-not_case_base_consistent :- not_cases_consistent(Case, Side, OppCase, OppSide).
+not_case_base_consistent :-
+    not_cases_consistent(Case, Side, OppCase, OppSide).
 
 %%% DECISION %%%
 
