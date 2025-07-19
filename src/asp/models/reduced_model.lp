@@ -107,7 +107,8 @@ reduced_fact_like(Case, Dimension, Value) :-
     fact(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
-    decision(Case, Side), case(OppCase, OppSide),
+    decision(Case, Side),
+    case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
 not_decision_permissible(Case, Side) :-

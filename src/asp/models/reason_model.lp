@@ -56,16 +56,17 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_fact_satisfy_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
     % pick a fact from the fact situation of the first case
-    % and a magnitude from the reason of the second case
-    fact(Case, Dimension, Value), magnitude_like(OppCase, Dimension, ThresholdValue),
-    % check that the fact does not satisfy the magnitude
+    fact(Case, Dimension, Value),
+    % pick the matching magnitude from the reason of the second case
+    magnitude_like(OppCase, Dimension, ThresholdValue),
+    % assert that the fact does not satisfy the magnitude
     strict_value_relation(OppSide, Dimension, Value, ThresholdValue).
 
-not_facts_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
+not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide) :-
     not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
 
 not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
@@ -73,7 +74,7 @@ not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide,
     opposing_case_likes(Case, Side, OppCase, OppSide),
     % pick a magnitude from the reason of the first case
     magnitude_like(Case, Dimension, ThresholdValue1),
-    % pick a magnitude from the reason of the second case
+    % pick the matching magnitude from the reason of the second case
     magnitude_like(OppCase, Dimension, ThresholdValue2),
     % check that the magnitude in the first case is weaker
     % than the magnitude in the second case
@@ -110,11 +111,11 @@ decision(Case, Side) :-
 case_like(Case, Side) :- decision(Case, Side).
 
 magnitude_like(Case, Dimension, Value) :-
-    case_decision(Case, Side),
+    decision(Case, Side),
     fact(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
-    case_decision(Case, Side), case(OppCase, OppSide),
+    decision(Case, Side), case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
 not_decision_permissible(Case, Side) :-
