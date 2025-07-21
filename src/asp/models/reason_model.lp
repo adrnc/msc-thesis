@@ -54,8 +54,12 @@ case_like(Case, Side) :-
 magnitude_like(Case, Dimension, ThresholdValue) :-
     magnitude(Case, Dimension, ThresholdValue).
 
+has_magnitude_like(Case, Dimension) :-
+    magnitude_like(Case, Dimension, ThresholdValue).
+
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
-    case_like(Case, Side), case_like(OppCase, OppSide),
+    case_like(Case, Side),
+    case_like(OppCase, OppSide),
     opposite_side(Side, OppSide),
     Case != OppCase.
 
@@ -72,6 +76,14 @@ not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :
 not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide) :-
     not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
 
+not_negated_magnitude_present_for_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+    % pick two opposing cases
+    opposing_case_likes(Case, Side, OppCase, OppSide),
+    % ensure that the magnitude from the second case is present
+    has_magnitude_like(OppCase, Dimension),
+    % ensure that the magnitude from the first case is not present
+    not has_magnitude_like(Case, Dimension).
+
 not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
@@ -82,6 +94,9 @@ not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide,
     % check that the magnitude in the first case is weaker
     % than the magnitude in the second case
     strict_value_relation(OppSide, Dimension, ThresholdValue1, ThresholdValue2).
+
+not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
+    not_negated_magnitude_present_for_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
 
 not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
     not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
@@ -99,7 +114,8 @@ not_consistent(Case, Side, OppCase, OppSide) :-
     not_consistent_cross_condition(OppCase, OppSide, Case, Side).
 
 not_cases_consistent(Case, Side, OppCase, OppSide) :-
-    case(Case, Side), case(OppCase, OppSide),
+    case(Case, Side),
+    case(OppCase, OppSide),
     not_consistent(Case, Side, OppCase, OppSide).
 
 not_case_base_consistent :-
