@@ -67,7 +67,8 @@ case_like(Case, Side) :- case(Case, Side).
 reduced_fact_like(Case, Dimension, Value) :- reduced_fact(Case, Dimension, Value).
 
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
-    case_like(Case, Side), case_like(OppCase, OppSide),
+    case_like(Case, Side),
+    case_like(OppCase, OppSide),
     opposite_side(Side, OppSide),
     Case != OppCase.
 
