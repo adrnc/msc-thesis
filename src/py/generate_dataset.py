@@ -3,7 +3,6 @@ import random
 ### INPUT ###
 
 case_number = 20
-output_type = "asp"
 
 def value_list(start, stop, step):
     return list(range(start, stop + 1, step))
