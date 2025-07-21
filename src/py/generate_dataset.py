@@ -62,73 +62,79 @@ for case_id in range(1, case_number + 1):
         if dim["strengthens"] == "defendant":
             index = values_len - index
 
-        plaintiff_probs.append(index / values_len)
+        plaintiff_prob = index / values_len
+        plaintiff_probs.append(plaintiff_prob)
 
         facts.append({
             "name": dim["name"],
-            "value": value
+            "value": value,
+            "plaintiff_prob": plaintiff_prob
         })
 
-    plaintiff_prob = sum(plaintiff_probs) / dimensions_len
-    side = "plaintiff" if random.random() >= plaintiff_prob else "defendant"
+    plaintiff_total_prob = sum(plaintiff_probs) / dimensions_len
+    side = "plaintiff" if random.random() >= plaintiff_total_prob else "defendant"
 
     magnitudes = []
 
-    fixed_fact = random.choice(facts)
+    while len(magnitudes) == 0:
+        for fact in facts:
+            threshold = fact["plaintiff_prob"]
 
-    for fact in facts:
-        if random.random() < 0.5 and fixed_fact != fact:
-            continue
+            if side == "defendant":
+                threshold = 1 - threshold
 
-        fact_name = fact["name"]
-        fact_value = fact["value"]
+            if random.random() >= threshold:
+                continue
 
-        dim = dimensions_dict[fact_name]
-        dim_values = dim["values"]
-        dim_magnitude_values =  dim["magnitude_values"] if "magnitude_values" in dim else dim_values
+            fact_name = fact["name"]
+            fact_value = fact["value"]
 
-        dim_allowed_values = []
+            dim = dimensions_dict[fact_name]
+            dim_values = dim["values"]
+            dim_magnitude_values =  dim["magnitude_values"] if "magnitude_values" in dim else dim_values
 
-        if side == dim["strengthens"]:
-            for value in dim_values:
-                dim_allowed_values.append(value)
+            dim_allowed_values = []
 
-                if value == fact_value:
-                    break
-        else:
-            value_reached = False
-
-            for value in dim_values:
-                if value == fact_value:
-                    value_reached = True
-
-                if value_reached:
+            if side == dim["strengthens"]:
+                for value in dim_values:
                     dim_allowed_values.append(value)
 
-            dim_allowed_values.reverse()
+                    if value == fact_value:
+                        break
+            else:
+                value_reached = False
 
-        dim_allowed_magnitude_values = []
+                for value in dim_values:
+                    if value == fact_value:
+                        value_reached = True
 
-        for value in dim_allowed_values:
-            if value in dim_magnitude_values:
-                dim_allowed_magnitude_values.append(value)
+                    if value_reached:
+                        dim_allowed_values.append(value)
 
-        dim_scaled_allowed_magnitude_values = []
+                dim_allowed_values.reverse()
 
-        i = 1
-        for value in dim_allowed_magnitude_values:
-            for _ in range(i):
-                dim_scaled_allowed_magnitude_values.append(value)
+            dim_allowed_magnitude_values = []
 
-            i += 1
+            for value in dim_allowed_values:
+                if value in dim_magnitude_values:
+                    dim_allowed_magnitude_values.append(value)
 
-        random.shuffle(dim_scaled_allowed_magnitude_values)
-        value = random.choice(dim_scaled_allowed_magnitude_values)
+            dim_scaled_allowed_magnitude_values = []
 
-        magnitudes.append({
-            "name": fact_name,
-            "value": value
-        })
+            i = 1
+            for value in dim_allowed_magnitude_values:
+                for _ in range(i):
+                    dim_scaled_allowed_magnitude_values.append(value)
+
+                i += 1
+
+            random.shuffle(dim_scaled_allowed_magnitude_values)
+            value = random.choice(dim_scaled_allowed_magnitude_values)
+
+            magnitudes.append({
+                "name": fact_name,
+                "value": value
+            })
 
 
     cases.append({
@@ -138,8 +144,29 @@ for case_id in range(1, case_number + 1):
         "magnitudes": magnitudes
     })
 
+sep = r"%%%"
+
+print(f"{sep} DIMENSIONS {sep}\n")
+
+for dim in dimensions:
+    dim_name = dim["name"]
+    dim_strengthens = dim["strengthens"]
+    dim_values = dim["values"]
+
+    if isinstance(dim_values[0], int):
+        print(f"int_dimension_strengthens({dim_name}, {dim_strengthens}).")
+    else:
+        print(f"custom_dimension_strengthens({dim_name}, {dim_strengthens}).")
+
+        for i in range(1, len(dim_values)):
+            print(f"custom_dimension_ordering({dim_name}, {dim_values[i - 1]}, {dim_values[i]}).")
+
+    print()
+
+print(f"{sep} CASES {sep}\n")
+
 for case in cases:
-    case_name = f"case_{case["id"]}"
+    case_name = f"{case["id"]}"
 
     print(f"case({case_name}, {case["side"]}).")
 
