@@ -80,6 +80,42 @@ magnitude(10, protest, screamed).
 magnitude(10, activity, 240).
 magnitude(10, coop, physical).
 
+case(13, defendant).
+fact(13, screen, 210).
+fact(13, protest, screamed).
+fact(13, activity, 150).
+fact(13, coop, verbal).
+fact(13, read, 85).
+magnitude(13, read, 60).
+
+case(14, defendant).
+fact(14, screen, 255).
+fact(14, protest, none).
+fact(14, activity, 75).
+fact(14, coop, played).
+fact(14, read, 5).
+magnitude(14, protest, none).
+magnitude(14, coop, played).
+
+case(17, defendant).
+fact(17, screen, 195).
+fact(17, protest, none).
+fact(17, activity, 75).
+fact(17, coop, verbal).
+fact(17, read, 0).
+magnitude(17, protest, cried).
+
+case(18, defendant).
+fact(18, screen, 165).
+fact(18, protest, none).
+fact(18, activity, 285).
+fact(18, coop, verbal).
+fact(18, read, 100).
+magnitude(18, screen, 180).
+magnitude(18, protest, none).
+magnitude(18, activity, 90).
+magnitude(18, read, 90).
+
 %%% UNSOLVED CASES %%%
 
 unsolved_case(1).
