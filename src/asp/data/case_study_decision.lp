@@ -80,15 +80,6 @@ magnitude(10, protest, screamed).
 magnitude(10, activity, 240).
 magnitude(10, coop, physical).
 
-case(12, defendant).
-fact(12, screen, 150).
-fact(12, protest, kicked).
-fact(12, activity, 60).
-fact(12, coop, verbal).
-fact(12, read, 35).
-magnitude(12, screen, 270).
-magnitude(12, read, 10).
-
 case(13, defendant).
 fact(13, screen, 210).
 fact(13, protest, screamed).
@@ -133,13 +124,6 @@ fact(1, protest, screamed).
 fact(1, activity, 285).
 fact(1, coop, physical).
 fact(1, read, 30).
-
-unsolved_case(2).
-fact(2, screen, 90).
-fact(2, protest, screamed).
-fact(2, activity, 75).
-fact(2, coop, ignored).
-fact(2, read, 10).
 
 unsolved_case(4).
 fact(4, screen, 165).
