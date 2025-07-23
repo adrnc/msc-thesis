@@ -80,6 +80,15 @@ magnitude(10, protest, screamed).
 magnitude(10, activity, 240).
 magnitude(10, coop, physical).
 
+case(12, defendant).
+fact(12, screen, 150).
+fact(12, protest, kicked).
+fact(12, activity, 60).
+fact(12, coop, verbal).
+fact(12, read, 35).
+magnitude(12, screen, 270).
+magnitude(12, read, 10).
+
 case(13, defendant).
 fact(13, screen, 210).
 fact(13, protest, screamed).
