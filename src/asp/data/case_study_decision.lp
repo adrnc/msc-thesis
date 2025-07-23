@@ -136,7 +136,7 @@ fact(6, activity, 30).
 fact(6, coop, verbal).
 fact(6, read, 60).
 
-unsolved_case(7).
+unsolved_case(8).
 fact(8, screen, 255).
 fact(8, protest, complained).
 fact(8, activity, 105).
