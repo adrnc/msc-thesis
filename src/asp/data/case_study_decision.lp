@@ -19,16 +19,6 @@ int_dimension_strengthens(read, defendant).
 
 %%% CASES %%%
 
-case(1, plaintiff).
-fact(1, screen, 105).
-fact(1, protest, screamed).
-fact(1, activity, 285).
-fact(1, coop, physical).
-fact(1, read, 30).
-magnitude(1, protest, cried).
-magnitude(1, coop, physical).
-magnitude(1, read, 30).
-
 case(2, plaintiff).
 fact(2, screen, 90).
 fact(2, protest, screamed).
