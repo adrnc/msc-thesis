@@ -173,7 +173,7 @@ fact(17, activity, 75).
 fact(17, coop, verbal).
 fact(17, read, 0).
 
-unsolved_case(19, defendant).
+unsolved_case(19).
 fact(19, screen, 180).
 fact(19, protest, kicked).
 fact(19, activity, 60).
