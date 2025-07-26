@@ -9,15 +9,15 @@ def value_list(start, stop, step):
 
 dimensions = [
     {
+        "name": "protest",
+        "strengthens": "plaintiff",
+        "values": ["none", "complained", "cried", "screamed", "kicked"]
+    },
+    {
         "name": "screen",
         "strengthens": "plaintiff",
         "values": value_list(0, 300, 15),
         "magnitude_values": value_list(0, 300, 30)
-    },
-    {
-        "name": "protest",
-        "strengthens": "plaintiff",
-        "values": ["none", "complained", "cried", "screamed", "kicked"]
     },
     {
         "name": "activity",
