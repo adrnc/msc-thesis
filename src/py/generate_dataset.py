@@ -140,7 +140,6 @@ for case_id in range(1, case_number + 1):
 
 
     cases.append({
-        "id": case_id,
         "side": side,
         "facts": facts,
         "magnitudes": magnitudes
@@ -167,15 +166,19 @@ for dim in dimensions:
 
 print(f"{sep} CASES {sep}\n")
 
-for case in cases:
-    case_name = f"{case["id"]}"
+cases.sort(key=lambda x: 0 if x["side"] == "plaintiff" else 1)
 
-    print(f"case({case_name}, {case["side"]}).")
+case_id = 1
+
+for case in cases:
+    print(f"case({case_id}, {case["side"]}).")
 
     for fact in case["facts"]:
-        print(f"fact({case_name}, {fact["name"]}, {fact["value"]}).")
+        print(f"fact({case_id}, {fact["name"]}, {fact["value"]}).")
 
     for magnitude in case["magnitudes"]:
-        print(f"magnitude({case_name}, {magnitude["name"]}, {magnitude["value"]}).")
+        print(f"magnitude({case_id}, {magnitude["name"]}, {magnitude["value"]}).")
 
     print()
+
+    case_id += 1
