@@ -3,7 +3,6 @@ import random
 ### INPUT ###
 
 case_number = 20
-probability_skew = 0
 
 def value_list(start, stop, step):
     return list(range(start, stop + 1, step))
@@ -64,7 +63,7 @@ for case_id in range(1, case_number + 1):
             index = values_len - index
 
         plaintiff_prob = index / values_len
-        plaintiff_prob = max(0, min(1, plaintiff_prob + (probability_skew * (1 if plaintiff_prob >= 0.5 else -1))))
+        plaintiff_prob = max(0, min(1, plaintiff_prob))
 
         plaintiff_probs.append(plaintiff_prob)
 
