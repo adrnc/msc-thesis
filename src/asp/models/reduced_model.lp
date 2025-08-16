@@ -37,6 +37,12 @@ value_relation(Side, Dimension, Value1, Value3) :-
     value_relation(Side, Dimension, Value1, Value2),
     value_relation(Side, Dimension, Value2, Value3).
 
+% antisymmetry
+:-
+    value_relation(Side, Dimension, Value1, Value2),
+    value_relation(Side, Dimension, Value2, Value1),
+    Value1 != Value2.
+
 % duality
 value_relation(OppositeSide, Dimension, Value2, Value1) :-
     value_relation(Side, Dimension, Value1, Value2),
