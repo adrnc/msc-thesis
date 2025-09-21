@@ -8,7 +8,7 @@ opposite_side(defendant, plaintiff).
 
 %%% VALUE RELATION %%%
 
-dimension_value(Dimension, Value) :- factor(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- fact(Case, Dimension, Value).
 dimension_value(Dimension, Value) :- magnitude(Case, Dimension, Value).
 
 value_relation(Side, Dimension, Value1, Value2) :-
@@ -58,19 +58,19 @@ has_magnitude(Case, Dimension) :-
     magnitude(Case, Dimension, ThresholdValue).
 
 % use magnitudes if present
-reduced_factor(Case, Dimension, Value) :-
+reduced_fact(Case, Dimension, Value) :-
     magnitude(Case, Dimension, Value).
 
-% use factors otherwise
-reduced_factor(Case, Dimension, Value) :-
+% use facts otherwise
+reduced_fact(Case, Dimension, Value) :-
     case(Case, Side),
-    factor(Case, Dimension, Value),
+    fact(Case, Dimension, Value),
     not has_magnitude(Case, Dimension).
 
 %%% CONSISTENCY %%%
 
 case_like(Case, Side) :- case(Case, Side).
-reduced_factor_like(Case, Dimension, Value) :- reduced_factor(Case, Dimension, Value).
+reduced_fact_like(Case, Dimension, Value) :- reduced_fact(Case, Dimension, Value).
 
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
     case_like(Case, Side),
@@ -78,22 +78,22 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_factor_leq_opposing_factor(Case, Side, OppCase, OppSide, Dimension) :-
+not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick the reduced factor from the first case
-    reduced_factor_like(Case, Dimension, Value1),
-    % pick the matching reduced factor from the second case
-    reduced_factor_like(OppCase, Dimension, Value2),
-    % check if the reduced factor from the first case is stronger
+    % pick the reduced fact from the first case
+    reduced_fact_like(Case, Dimension, Value1),
+    % pick the matching reduced fact from the second case
+    reduced_fact_like(OppCase, Dimension, Value2),
+    % check if the reduced fact from the first case is stronger
     strict_value_relation(Side, Dimension, Value2, Value1).
 
-not_factors_leq_opposing_factors(Case, Side, OppCase, OppSide) :-
-    not_factor_leq_opposing_factor(Case, Side, OppCase, OppSide, Dimension).
+not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide) :-
+    not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension).
 
 not_consistent(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_factors_leq_opposing_factors(Case, Side, OppCase, OppSide).
+    not not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide).
 
 not_cases_consistent(Case, Side, OppCase, OppSide) :-
     case(Case, Side),
@@ -113,9 +113,9 @@ decision(Case, Side) :-
 case_like(Case, Side) :-
     decision(Case, Side).
 
-reduced_factor_like(Case, Dimension, Value) :-
+reduced_fact_like(Case, Dimension, Value) :-
     decision(Case, Side),
-    factor(Case, Dimension, Value).
+    fact(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
     decision(Case, Side),
