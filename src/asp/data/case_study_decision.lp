@@ -20,162 +20,162 @@ int_dimension_strengthens(read, defendant).
 %%% CASES %%%
 
 case(1, plaintiff).
-fact(1, protest, screamed).
-fact(1, screen, 105).
-fact(1, activity, 285).
-fact(1, coop, physical).
-fact(1, read, 30).
+factor(1, protest, screamed).
+factor(1, screen, 105).
+factor(1, activity, 285).
+factor(1, coop, physical).
+factor(1, read, 30).
 magnitude(1, protest, cried).
 magnitude(1, coop, physical).
 magnitude(1, read, 30).
 
 case(3, plaintiff).
-fact(3, protest, kicked).
-fact(3, screen, 135).
-fact(3, activity, 255).
-fact(3, coop, played).
-fact(3, read, 20).
+factor(3, protest, kicked).
+factor(3, screen, 135).
+factor(3, activity, 255).
+factor(3, coop, played).
+factor(3, read, 20).
 magnitude(3, protest, kicked).
 magnitude(3, coop, played).
 magnitude(3, read, 80).
 
 case(5, plaintiff).
-fact(5, protest, cried).
-fact(5, screen, 75).
-fact(5, activity, 285).
-fact(5, coop, physical).
-fact(5, read, 45).
+factor(5, protest, cried).
+factor(5, screen, 75).
+factor(5, activity, 285).
+factor(5, coop, physical).
+factor(5, read, 45).
 magnitude(5, coop, verbal).
 magnitude(5, read, 50).
 
 case(10, plaintiff).
-fact(10, protest, kicked).
-fact(10, screen, 15).
-fact(10, activity, 150).
-fact(10, coop, physical).
-fact(10, read, 95).
+factor(10, protest, kicked).
+factor(10, screen, 15).
+factor(10, activity, 150).
+factor(10, coop, physical).
+factor(10, read, 95).
 magnitude(10, protest, screamed).
 magnitude(10, activity, 240).
 magnitude(10, coop, physical).
 
 case(13, defendant).
-fact(13, screen, 210).
-fact(13, protest, screamed).
-fact(13, activity, 150).
-fact(13, coop, verbal).
-fact(13, read, 85).
+factor(13, screen, 210).
+factor(13, protest, screamed).
+factor(13, activity, 150).
+factor(13, coop, verbal).
+factor(13, read, 85).
 magnitude(13, read, 60).
 
 case(14, defendant).
-fact(14, protest, none).
-fact(14, screen, 255).
-fact(14, activity, 75).
-fact(14, coop, played).
-fact(14, read, 5).
+factor(14, protest, none).
+factor(14, screen, 255).
+factor(14, activity, 75).
+factor(14, coop, played).
+factor(14, read, 5).
 magnitude(14, protest, none).
 magnitude(14, coop, played).
 
 case(18, defendant).
-fact(18, protest, none).
-fact(18, screen, 165).
-fact(18, activity, 285).
-fact(18, coop, verbal).
-fact(18, read, 100).
+factor(18, protest, none).
+factor(18, screen, 165).
+factor(18, activity, 285).
+factor(18, coop, verbal).
+factor(18, read, 100).
 magnitude(18, protest, none).
 magnitude(18, screen, 180).
 magnitude(18, activity, 90).
 magnitude(18, read, 90).
 
 case(20, defendant).
-fact(20, protest, screamed).
-fact(20, screen, 240).
-fact(20, activity, 15).
-fact(20, coop, ignored).
-fact(20, read, 100).
+factor(20, protest, screamed).
+factor(20, screen, 240).
+factor(20, activity, 15).
+factor(20, coop, ignored).
+factor(20, read, 100).
 magnitude(20, read, 10).
 
 %%% UNSOLVED CASES %%%
 
 unsolved_case(2).
-fact(2, protest, screamed).
-fact(2, screen, 90).
-fact(2, activity, 75).
-fact(2, coop, ignored).
-fact(2, read, 10).
+factor(2, protest, screamed).
+factor(2, screen, 90).
+factor(2, activity, 75).
+factor(2, coop, ignored).
+factor(2, read, 10).
 
 unsolved_case(4).
-fact(4, protest, cried).
-fact(4, screen, 165).
-fact(4, activity, 285).
-fact(4, coop, played).
-fact(4, read, 25).
+factor(4, protest, cried).
+factor(4, screen, 165).
+factor(4, activity, 285).
+factor(4, coop, played).
+factor(4, read, 25).
 
 unsolved_case(6).
-fact(6, protest, complained).
-fact(6, screen, 120).
-fact(6, activity, 30).
-fact(6, coop, verbal).
-fact(6, read, 60).
+factor(6, protest, complained).
+factor(6, screen, 120).
+factor(6, activity, 30).
+factor(6, coop, verbal).
+factor(6, read, 60).
 
 unsolved_case(7).
-fact(7, protest, kicked).
-fact(7, screen, 45).
-fact(7, activity, 90).
-fact(7, coop, played).
-fact(7, read, 15).
+factor(7, protest, kicked).
+factor(7, screen, 45).
+factor(7, activity, 90).
+factor(7, coop, played).
+factor(7, read, 15).
 
 unsolved_case(8).
-fact(8, protest, complained).
-fact(8, screen, 255).
-fact(8, activity, 105).
-fact(8, coop, played).
-fact(8, read, 55).
+factor(8, protest, complained).
+factor(8, screen, 255).
+factor(8, activity, 105).
+factor(8, coop, played).
+factor(8, read, 55).
 
 unsolved_case(9).
-fact(9, protest, cried).
-fact(9, screen, 210).
-fact(9, activity, 15).
-fact(9, coop, played).
-fact(9, read, 100).
+factor(9, protest, cried).
+factor(9, screen, 210).
+factor(9, activity, 15).
+factor(9, coop, played).
+factor(9, read, 100).
 
 unsolved_case(11).
-fact(11, protest, screamed).
-fact(11, screen, 210).
-fact(11, activity, 90).
-fact(11, coop, ignored).
-fact(11, read, 95).
+factor(11, protest, screamed).
+factor(11, screen, 210).
+factor(11, activity, 90).
+factor(11, coop, ignored).
+factor(11, read, 95).
 
 unsolved_case(12).
-fact(12, protest, kicked).
-fact(12, screen, 150).
-fact(12, activity, 60).
-fact(12, coop, verbal).
-fact(12, read, 35).
+factor(12, protest, kicked).
+factor(12, screen, 150).
+factor(12, activity, 60).
+factor(12, coop, verbal).
+factor(12, read, 35).
 
 unsolved_case(15).
-fact(15, protest, complained).
-fact(15, screen, 60).
-fact(15, activity, 150).
-fact(15, coop, played).
-fact(15, read, 25).
+factor(15, protest, complained).
+factor(15, screen, 60).
+factor(15, activity, 150).
+factor(15, coop, played).
+factor(15, read, 25).
 
 unsolved_case(16).
-fact(16, protest, kicked).
-fact(16, screen, 180).
-fact(16, activity, 30).
-fact(16, coop, physical).
-fact(16, read, 85).
+factor(16, protest, kicked).
+factor(16, screen, 180).
+factor(16, activity, 30).
+factor(16, coop, physical).
+factor(16, read, 85).
 
 unsolved_case(17).
-fact(17, protest, none).
-fact(17, screen, 195).
-fact(17, activity, 75).
-fact(17, coop, verbal).
-fact(17, read, 0).
+factor(17, protest, none).
+factor(17, screen, 195).
+factor(17, activity, 75).
+factor(17, coop, verbal).
+factor(17, read, 0).
 
 unsolved_case(19).
-fact(19, protest, kicked).
-fact(19, screen, 180).
-fact(19, activity, 60).
-fact(19, coop, verbal).
-fact(19, read, 50).
+factor(19, protest, kicked).
+factor(19, screen, 180).
+factor(19, activity, 60).
+factor(19, coop, verbal).
+factor(19, read, 50).

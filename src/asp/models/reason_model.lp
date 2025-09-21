@@ -8,7 +8,7 @@ opposite_side(defendant, plaintiff).
 
 %%% VALUE RELATION %%%
 
-dimension_value(Dimension, Value) :- fact(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- factor(Case, Dimension, Value).
 dimension_value(Dimension, Value) :- magnitude(Case, Dimension, Value).
 
 value_relation(Side, Dimension, Value1, Value2) :-
@@ -69,18 +69,18 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_factor_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick a fact from the fact situation of the first case
-    fact(Case, Dimension, Value),
+    % pick a factor from the factor situation of the first case
+    factor(Case, Dimension, Value),
     % pick the matching magnitude from the reason of the second case
     magnitude_like(OppCase, Dimension, ThresholdValue),
-    % assert that the fact does not satisfy the magnitude
+    % assert that the factor does not satisfy the magnitude
     strict_value_relation(OppSide, Dimension, Value, ThresholdValue).
 
-not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide) :-
-    not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
+not_factors_satisfy_opposing_reason(Case, Side, OppCase, OppSide) :-
+    not_factor_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
 
 not_negated_magnitude_present_for_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
@@ -109,7 +109,7 @@ not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide).
+    not not_factors_satisfy_opposing_reason(Case, Side, OppCase, OppSide).
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
@@ -139,7 +139,7 @@ case_like(Case, Side) :-
 
 magnitude_like(Case, Dimension, Value) :-
     decision(Case, Side),
-    fact(Case, Dimension, Value).
+    factor(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
     decision(Case, Side),
