@@ -3,7 +3,7 @@ case_base_consistent :-
 
 decision_permissible(Case, Side) :-
     decision(Case, Side),
-    not decision_permissible(Case, Side).
+    not not_decision_permissible(Case, Side).
 
 cases_consistent(Case, Side, OppCase, OppSide) :-
     case(Case, Side),
