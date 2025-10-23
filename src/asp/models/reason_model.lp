@@ -8,8 +8,8 @@ opposite_side(defendant, plaintiff).
 
 %%% VALUE RELATION %%%
 
-dimension_value(Dimension, Value) :- fact(Case, Dimension, Value).
-dimension_value(Dimension, Value) :- magnitude(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- value_assignment(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- magnitude_factor(Case, Dimension, Value).
 
 value_relation(Side, Dimension, Value1, Value2) :-
     int_dimension_strengthens(Dimension, Side),
@@ -57,11 +57,11 @@ strict_value_relation(Side, Dimension, Value1, Value2) :-
 case_like(Case, Side) :-
     case(Case, Side).
 
-magnitude_like(Case, Dimension, ThresholdValue) :-
-    magnitude(Case, Dimension, ThresholdValue).
+magnitude_factor_like(Case, Dimension, ThresholdValue) :-
+    magnitude_factor(Case, Dimension, ThresholdValue).
 
-has_magnitude_like(Case, Dimension) :-
-    magnitude_like(Case, Dimension, ThresholdValue).
+has_magnitude_factor_like(Case, Dimension) :-
+    magnitude_factor_like(Case, Dimension, ThresholdValue).
 
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
     case_like(Case, Side),
@@ -69,47 +69,47 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_value_assignment_satisfies_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick a fact from the fact situation of the first case
-    fact(Case, Dimension, Value),
-    % pick the matching magnitude from the reason of the second case
-    magnitude_like(OppCase, Dimension, ThresholdValue),
-    % assert that the fact does not satisfy the magnitude
+    % pick a value assignment from the fact situation of the first case
+    value_assignment(Case, Dimension, Value),
+    % pick the matching magnitude factor from the reason of the second case
+    magnitude_factor_like(OppCase, Dimension, ThresholdValue),
+    % assert that the value assignment does not satisfy the magnitude factor
     strict_value_relation(OppSide, Dimension, Value, ThresholdValue).
 
-not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide) :-
-    not_fact_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
+not_fact_situation_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
+    not_value_assignment_satisfies_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension).
 
-not_negated_magnitude_present_for_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_negated_magnitude_factor_present_for_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % ensure that the magnitude from the second case is present
-    has_magnitude_like(OppCase, Dimension),
-    % ensure that the magnitude from the first case is not present
-    not has_magnitude_like(Case, Dimension).
+    % ensure that the magnitude factor from the second case is present
+    has_magnitude_factor_like(OppCase, Dimension),
+    % ensure that the magnitude factor from the first case is not present
+    not has_magnitude_factor_like(Case, Dimension).
 
-not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension) :-
+not_negated_magnitude_factor_satisfies_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick a magnitude from the reason of the first case
-    magnitude_like(Case, Dimension, ThresholdValue1),
-    % pick the matching magnitude from the reason of the second case
-    magnitude_like(OppCase, Dimension, ThresholdValue2),
+    % pick a magnitude factor from the reason of the first case
+    magnitude_factor_like(Case, Dimension, ThresholdValue1),
+    % pick the matching magnitude factor from the reason of the second case
+    magnitude_factor_like(OppCase, Dimension, ThresholdValue2),
     % check that the magnitude in the first case is weaker
     % than the magnitude in the second case
     strict_value_relation(OppSide, Dimension, ThresholdValue1, ThresholdValue2).
 
 not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
-    not_negated_magnitude_present_for_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
+    not_negated_magnitude_factor_present_for_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension).
 
 not_negated_reason_satisfies_opposing_reason(Case, Side, OppCase, OppSide) :-
-    not_negated_magnitude_satisfies_opposing_magnitude(Case, Side, OppCase, OppSide, Dimension).
+    not_negated_magnitude_factor_satisfies_opposing_magnitude_factor(Case, Side, OppCase, OppSide, Dimension).
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_facts_satisfy_opposing_reason(Case, Side, OppCase, OppSide).
+    not not_fact_situation_satisfies_opposing_reason(Case, Side, OppCase, OppSide).
 
 not_consistent_cross_condition(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
@@ -137,9 +137,9 @@ decision(Case, Side) :-
 case_like(Case, Side) :-
     decision(Case, Side).
 
-magnitude_like(Case, Dimension, Value) :-
+magnitude_factor_like(Case, Dimension, Value) :-
     decision(Case, Side),
-    fact(Case, Dimension, Value).
+    value_assignment(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
     decision(Case, Side),

@@ -174,10 +174,10 @@ for case in cases:
     print(f"case({case_id}, {case["side"]}).")
 
     for fact in case["facts"]:
-        print(f"fact({case_id}, {fact["name"]}, {fact["value"]}).")
+        print(f"value_assignment({case_id}, {fact["name"]}, {fact["value"]}).")
 
     for magnitude in case["magnitudes"]:
-        print(f"magnitude({case_id}, {magnitude["name"]}, {magnitude["value"]}).")
+        print(f"magnitude_factor({case_id}, {magnitude["name"]}, {magnitude["value"]}).")
 
     print()
 

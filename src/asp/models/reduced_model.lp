@@ -8,8 +8,8 @@ opposite_side(defendant, plaintiff).
 
 %%% VALUE RELATION %%%
 
-dimension_value(Dimension, Value) :- fact(Case, Dimension, Value).
-dimension_value(Dimension, Value) :- magnitude(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- value_assignment(Case, Dimension, Value).
+dimension_value(Dimension, Value) :- magnitude_factor(Case, Dimension, Value).
 
 value_relation(Side, Dimension, Value1, Value2) :-
     int_dimension_strengthens(Dimension, Side),
@@ -54,23 +54,24 @@ strict_value_relation(Side, Dimension, Value1, Value2) :-
 
 %%% TRANSLATION %%%
 
-has_magnitude(Case, Dimension) :-
-    magnitude(Case, Dimension, ThresholdValue).
+has_magnitude_factor(Case, Dimension) :-
+    magnitude_factor(Case, Dimension, ThresholdValue).
 
-% use magnitudes if present
-reduced_fact(Case, Dimension, Value) :-
-    magnitude(Case, Dimension, Value).
+% use magnitude factors if present
+reduced_value_assignment(Case, Dimension, Value) :-
+    magnitude_factor(Case, Dimension, Value).
 
-% use facts otherwise
-reduced_fact(Case, Dimension, Value) :-
+% use value assignments otherwise
+reduced_value_assignment(Case, Dimension, Value) :-
     case(Case, Side),
-    fact(Case, Dimension, Value),
-    not has_magnitude(Case, Dimension).
+    value_assignment(Case, Dimension, Value),
+    not has_magnitude_factor(Case, Dimension).
 
 %%% CONSISTENCY %%%
 
 case_like(Case, Side) :- case(Case, Side).
-reduced_fact_like(Case, Dimension, Value) :- reduced_fact(Case, Dimension, Value).
+reduced_value_assignment_like(Case, Dimension, Value) :-
+    reduced_value_assignment(Case, Dimension, Value).
 
 opposing_case_likes(Case, Side, OppCase, OppSide) :-
     case_like(Case, Side),
@@ -78,22 +79,22 @@ opposing_case_likes(Case, Side, OppCase, OppSide) :-
     opposite_side(Side, OppSide),
     Case != OppCase.
 
-not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension) :-
+not_value_assignment_leq_opposing_value_assignment(Case, Side, OppCase, OppSide, Dimension) :-
     % pick two opposing cases
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    % pick the reduced fact from the first case
-    reduced_fact_like(Case, Dimension, Value1),
-    % pick the matching reduced fact from the second case
-    reduced_fact_like(OppCase, Dimension, Value2),
-    % check if the reduced fact from the first case is stronger
+    % pick the reduced value assignment from the first case
+    reduced_value_assignment_like(Case, Dimension, Value1),
+    % pick the matching reduced value assignment from the second case
+    reduced_value_assignment_like(OppCase, Dimension, Value2),
+    % check if the reduced value assignment from the first case is stronger
     strict_value_relation(Side, Dimension, Value2, Value1).
 
-not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide) :-
-    not_fact_leq_opposing_fact(Case, Side, OppCase, OppSide, Dimension).
+not_fact_situation_leq_opposing_fact_situation(Case, Side, OppCase, OppSide) :-
+    not_value_assignment_leq_opposing_value_assignment(Case, Side, OppCase, OppSide, Dimension).
 
 not_consistent(Case, Side, OppCase, OppSide) :-
     opposing_case_likes(Case, Side, OppCase, OppSide),
-    not not_facts_leq_opposing_facts(Case, Side, OppCase, OppSide).
+    not not_fact_situation_leq_opposing_fact_situation(Case, Side, OppCase, OppSide).
 
 not_cases_consistent(Case, Side, OppCase, OppSide) :-
     case(Case, Side),
@@ -113,9 +114,9 @@ decision(Case, Side) :-
 case_like(Case, Side) :-
     decision(Case, Side).
 
-reduced_fact_like(Case, Dimension, Value) :-
+reduced_value_assignment_like(Case, Dimension, Value) :-
     decision(Case, Side),
-    fact(Case, Dimension, Value).
+    value_assignment(Case, Dimension, Value).
 
 not_decision_consistent_with_case(Case, Side, OppCase, OppSide) :-
     decision(Case, Side),
