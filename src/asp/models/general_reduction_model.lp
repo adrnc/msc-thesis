@@ -77,7 +77,7 @@ case_and_decision_like(Case, Side, Decision) :-
     % require that the decision-like is not the case itself
     Case != Decision.
 
-% check if a case constraints a decision-like
+% check if a case does not partially constrain a decision-like
 not_case_partially_constrains_decision_like(Case, Side, Decision) :-
     % pick a case and a decision-like
     case_and_decision_like(Case, Side, Decision),
@@ -88,31 +88,30 @@ not_case_partially_constrains_decision_like(Case, Side, Decision) :-
     % if so, the decision cannot be constrained
     strict_value_relation(Side, Dimension, Value2, Value1).
 
-decision_like_dimension_covered(Decision, Dimension) :-
+% check which dimensions are covered by precedents
+decision_like_side_has_dimension_covered(Decision, Side, Dimension) :-
     % pick a case and a decision-like
     case_and_decision_like(Case, Side, Decision),
     % check if the case partially constrains the decision-like
     not not_case_partially_constrains_decision_like(Case, Side, Decision),
     % if it does, all dimensions in the case cover the dimensions in the decision-like
-    reduced_value_assignment(Case, Dimension, Value),
+    reduced_value_assignment(Case, Dimension, Value).
 
 not_decision_like_constrained(Decision, Side) :-
-    % pick a decision-like
-    decision_like(Decision),
+    % pick a decision-like and a side
+    decision_like(Decision), side(Side),
     % pick a dimension in the decision
     has_reduced_value_assignment(Decision, Dimension),
     % check if the dimension is not covered
-    not decision_like_dimension_covered(Decision, Dimension).
+    not decision_like_side_has_dimension_covered(Decision, Side, Dimension).
 
 %%% CHECK CONSISTENCY %%%
 
 decision_like(Case) :- case(Case, Side).
 
 not_case_consistent_with_case_base(Case, Side) :-
-    % pick a case
-    case(Case, Side),
-    % pick the opposite side
-    opposite_side(Side, OppSide),
+    % pick a case and its opposite side
+    case(Case, Side), opposite_side(Side, OppSide),
     % check if the case is constrained to the opposite side
     not not_decision_like_constrained(Case, OppSide).
 
@@ -121,15 +120,11 @@ not_case_base_consistent :- not_case_consistent_with_case_base(Case, Side).
 %%% CHECK DECISION CONSTRAINTS %%%
 
 decision_like(Case) :-
-    % pick an unsolved case
-    unsolved_case(Case)
-    % require that the case base is consistent
+    unsolved_case(Case),
     not not_case_base_consistent.
 
-decision_constraint(Decision, Side) :-
-    % pick an unsolved case
-    unsolved_case(Decision),
-    % pick a side
-    side(Side),
+decision_constrained(Decision, Side) :-
+    % pick an unsolved case and a side
+    unsolved_case(Decision), side(Side),
     % check if the decision is constrained
     not not_decision_like_constrained(Decision, Side).
