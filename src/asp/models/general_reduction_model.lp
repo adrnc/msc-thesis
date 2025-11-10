@@ -83,7 +83,7 @@ not_case_partially_constrains_decision_like(Case, Side, Decision) :-
     case_and_decision_like(Case, Side, Decision),
     % pick the value assignments of the shared dimension
     reduced_value_assignment(Case, Dimension, Value1),
-    reduced_value_assignment(Decision, Dimension, Value2),
+    reduced_value_assignment_like(Decision, Dimension, Value2),
     % check if the value of the decision is weaker than the value of the case,
     % if so, the decision cannot be constrained
     strict_value_relation(Side, Dimension, Value2, Value1).
@@ -101,13 +101,17 @@ not_decision_like_constrained(Decision, Side) :-
     % pick a decision-like and a side
     decision_like(Decision), side(Side),
     % pick a dimension in the decision
-    has_reduced_value_assignment(Decision, Dimension),
+    reduced_value_assignment_like(Decision, Dimension, Value),
     % check if the dimension is not covered
     not decision_like_side_has_dimension_covered(Decision, Side, Dimension).
 
 %%% CHECK CONSISTENCY %%%
 
 decision_like(Case) :- case(Case, Side).
+
+reduced_value_assignment_like(Case, Dimension, Value) :-
+    case(Case, Side),
+    reduced_value_assignment(Case, Dimension, Value).
 
 not_case_consistent_with_case_base(Case, Side) :-
     % pick a case and its opposite side
@@ -119,8 +123,13 @@ not_case_base_consistent :- not_case_consistent_with_case_base(Case, Side).
 
 %%% CHECK DECISION CONSTRAINTS %%%
 
-decision_like(Case) :-
+decision_like(Decision) :-
+    unsolved_case(Decision),
+    not not_case_base_consistent.
+
+reduced_value_assignment_like(Case, Dimension, Value) :-
     unsolved_case(Case),
+    value_assignment(Case, Dimension, Value),
     not not_case_base_consistent.
 
 decision_constrained(Decision, Side) :-
