@@ -14,3 +14,8 @@ magnitude_factor(c2, d2, 90).
 unsolved_case(c3).
 value_assignment(c3, d1, 17).
 value_assignment(c3, d2, 95).
+
+unsolved_case(c4).
+value_assignment(c4, d1, 17).
+value_assignment(c4, d2, 95).
+value_assignment(c4, d3, 100).

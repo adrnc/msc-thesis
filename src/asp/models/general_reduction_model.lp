@@ -77,7 +77,22 @@ case_and_decision_like(Case, Side, Decision) :-
     % require that the decision-like is not the case itself
     Case != Decision.
 
-% check if a case does not partially constrain a decision-like
+has_reduced_value_assignment_like(Case, Dimension) :-
+    reduced_value_assignment_like(Case, Dimension, Value).
+
+% check if a case does not partially constrain a decision-like,
+% because some dimension in the decision is missing
+not_case_partially_constrains_decision_like(Case, Side, Decision) :-
+    % pick a case and a decision-like
+    case_and_decision_like(Case, Side, Decision),
+    % check if a value assignment is present in the case
+    reduced_value_assignment(Case, Dimension, Value),
+    % but not in the decision,
+    % if so, the decision cannot be constrained
+    not has_reduced_value_assignment_like(Decision, Dimension).
+
+% check if a case does not partially constrain a decision-like,
+% because some dimension in the decision is weaker
 not_case_partially_constrains_decision_like(Case, Side, Decision) :-
     % pick a case and a decision-like
     case_and_decision_like(Case, Side, Decision),
@@ -88,8 +103,15 @@ not_case_partially_constrains_decision_like(Case, Side, Decision) :-
     % if so, the decision cannot be constrained
     strict_value_relation(Side, Dimension, Value2, Value1).
 
+% check if a decision-like is partially constrained at all
+decision_like_partially_constrained(Decision, Side) :-
+    % pick a case and a decision-like
+    case_and_decision_like(Case, Side, Decision),
+    % check if the decision is partially constrained
+    not not_case_partially_constrains_decision_like(Case, Side, Decision).
+
 % check which dimensions are covered by precedents
-decision_like_side_has_dimension_covered(Decision, Side, Dimension) :-
+decision_like_has_dimension_covered(Decision, Side, Dimension) :-
     % pick a case and a decision-like
     case_and_decision_like(Case, Side, Decision),
     % check if the case partially constrains the decision-like
@@ -97,13 +119,23 @@ decision_like_side_has_dimension_covered(Decision, Side, Dimension) :-
     % if it does, all dimensions in the case cover the dimensions in the decision-like
     reduced_value_assignment(Case, Dimension, Value).
 
+% check if the decision-like is not constrained,
+% because there is no case that constrains it
+not_decision_like_constrained(Decision, Side) :-
+    % pick a decision-like and a side
+    decision_like(Decision), side(Side),
+    % check if there is no partial constraint
+    not decision_like_partially_constrained(Decision, Side).
+
+% check if the decision-like is not constrained,
+% because there is some dimension that is not covered partially
 not_decision_like_constrained(Decision, Side) :-
     % pick a decision-like and a side
     decision_like(Decision), side(Side),
     % pick a dimension in the decision
     reduced_value_assignment_like(Decision, Dimension, Value),
     % check if the dimension is not covered
-    not decision_like_side_has_dimension_covered(Decision, Side, Dimension).
+    not decision_like_has_dimension_covered(Decision, Side, Dimension).
 
 %%% CHECK CONSISTENCY %%%
 
