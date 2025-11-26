@@ -154,11 +154,6 @@ decision_like(Decision) :-
     unsolved_case(Decision),
     not not_case_base_consistent.
 
-reduced_value_assignment_like(Case, Dimension, Value) :-
-    unsolved_case(Case),
-    value_assignment(Case, Dimension, Value),
-    not not_case_base_consistent.
-
 decision_constrained(Decision, Side) :-
     % pick an unsolved case and a side
     unsolved_case(Decision), side(Side),
