@@ -29,21 +29,21 @@ test_pair(T, C, S) :- test_case(T), case(C, S), T != C.
 
 has_dim(C, D) :- rval(C, D, P).
 
--dims_cover(T, C, S) :-
+-domain_superset_or_equal(T, C, S) :-
     test_pair(T, C, S), has_dim(C, D), not has_dim(T, D).
 
--dims_stronger_equal(T, C, S) :-
+-dims_stronger_or_equal(T, C, S) :-
     test_pair(T, C, S), rval(C, D, P), rval(T, D, Q),
     not ord(S, D, P, Q).
 
-dim_covered(T, S, D) :-
+dim_constraint(T, S, D) :-
     test_pair(T, C, S), has_dim(C, D),
     not -dims_cover(T, C, S),
     not -dims_stronger_equal(T, C, S).
 
 -constraint(T, S) :-
     test_case(T), side(S),
-    has_dim(T, D), not dim_covered(T, S, D).
+    has_dim(T, D), not dim_constraint(T, S, D).
 
 %%% CONSISTENCY %%%
 
