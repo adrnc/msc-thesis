@@ -38,7 +38,7 @@ has_dim(C, D) :- rval(C, D, P).
 
 dim_constraint(T, S, D) :-
     test_pair(T, C, S), has_dim(C, D),
-    not -dims_cover(T, C, S),
+    not -domain_superset_or_equal(T, C, S),
     not -dims_stronger_equal(T, C, S).
 
 -constraint(T, S) :-
