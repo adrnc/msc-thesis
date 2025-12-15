@@ -49,17 +49,18 @@ dim_constraint(T, S, D) :-
 
 test_case(C) :- case(C, S).
 
--consistent_with_case_base(C, S) :-
+case_consistent(C, S) :-
     case(C, S), opposite(S, S'),
-    not -constraint(C, S').
+    -constraint(C, S').
 
--case_base_consistent :- -consistent_with_case_base(C, S).
+-case_base_consistent :-
+    case(C, S), not case_consistent(C, S).
 
 %%% DECISION CONSTRAINTS %%%
 
 test_case(C) :- focus_case(C).
 
-decision_constraint(C, S) :-
-    focus_case(C), side(S),
-    not -constraint(C, S),
+decision_permitted(C, S) :-
+    focus_case(C), opposite(S, S'),
+    -constraint(C, S'),
     not -case_base_consistent.
