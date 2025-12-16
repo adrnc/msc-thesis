@@ -45,13 +45,15 @@ dim_constraint(T, S, D) :-
     test_case(T), side(S),
     has_dim(T, D), not dim_constraint(T, S, D).
 
+permission(T, S) :-
+    test_case(T), opposite(S, S'),
+    -constraint(T, S').
+
 %%% CONSISTENCY %%%
 
 test_case(C) :- case(C, S).
 
-case_consistent(C, S) :-
-    case(C, S), opposite(S, S'),
-    -constraint(C, S').
+case_consistent(C, S) :- case(C, S), permission(C, S).
 
 -case_base_consistent :-
     case(C, S), not case_consistent(C, S).
@@ -60,7 +62,6 @@ case_consistent(C, S) :-
 
 test_case(C) :- focus_case(C).
 
-decision_permitted(C, S) :-
-    focus_case(C), opposite(S, S'),
-    -constraint(C, S'),
+decision_permission(C, S) :-
+    focus_case(C), permission(C, S),
     not -case_base_consistent.
