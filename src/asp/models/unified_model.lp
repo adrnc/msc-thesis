@@ -41,6 +41,11 @@ dim_constraint(T, S, D) :-
     not -domain_superset_or_equal(T, C, S),
     not -dims_stronger_equal(T, C, S).
 
+% TODO: discuss, add to paper
+dim_constraint(T, S, D) :-
+    test_case(T), rval(T, D, P),
+    max_val(D, S, M), P = M.
+
 -constraint(T, S) :-
     test_case(T), side(S),
     has_dim(T, D), not dim_constraint(T, S, D).
