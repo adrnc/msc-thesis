@@ -27,7 +27,7 @@ has_dim(C, D) :- rval(C, D, P).
     case(C, S), focus_case(F),
     has_dim(C, D), not has_dim(F, D).
 
--dims_are_weaker_or_equal(C, S, F) :-
+-all_dims_are_weaker_or_equal(C, S, F) :-
     case(C, S), focus_case(F),
     rval(C, D, P), rval(T, D, Q),
     not ord(S, D, P, Q).
@@ -35,7 +35,7 @@ has_dim(C, D) :- rval(C, D, P).
 dim_constraint(F, D, S) :-
     case(C, S), focus_case(F), has_dim(C, D),
     not -dim_domain_is_subset(C, S, F),
-    not -dims_are_weaker_or_equal(C, S, F).
+    not -all_dims_are_weaker_or_equal(C, S, F).
 
 dim_constraint(F, D, S) :-
     focus_case(F), rval(F, D, P),
