@@ -21,11 +21,11 @@ ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
 %%% CONSTRAINT RELATION %%%
 
-has_dim(C, D) :- rval(C, D, P).
+has_rval(C, D) :- rval(C, D, P).
 
 -dim_domain_is_subset(C, S, F) :-
     case(C, S), focus_case(F),
-    has_dim(C, D), not has_dim(F, D).
+    has_rval(C, D), not has_rval(F, D).
 
 -all_dims_are_weaker_or_equal(C, S, F) :-
     case(C, S), focus_case(F),
@@ -33,7 +33,7 @@ has_dim(C, D) :- rval(C, D, P).
     not ord(S, D, P, Q).
 
 dim_constraint(F, D, S) :-
-    case(C, S), focus_case(F), has_dim(C, D),
+    case(C, S), focus_case(F), has_rval(C, D),
     not -dim_domain_is_subset(C, S, F),
     not -all_dims_are_weaker_or_equal(C, S, F).
 
