@@ -43,7 +43,7 @@ dim_constraint(F, D, S) :-
 
 permission(F, S) :-
     focus_case(F), opposite(S, S'),
-    has_dim(F, D), not dim_constraint(F, S', D).
+    has_rval(F, D), not dim_constraint(F, S', D).
 
 constraint(F, S')
     focus_case(F), opposite(S, S'),
