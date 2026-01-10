@@ -29,7 +29,7 @@ has_dim(C, D) :- rval(C, D, P).
 
 -all_dims_are_weaker_or_equal(C, S, F) :-
     case(C, S), focus_case(F),
-    rval(C, D, P), rval(T, D, Q),
+    rval(C, D, P), rval(F, D, Q),
     not ord(S, D, P, Q).
 
 dim_constraint(F, D, S) :-
