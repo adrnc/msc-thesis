@@ -17,7 +17,7 @@ ival(F, D, P) :- focus_case(F), val(F, D, P).
 %%% VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
-    ival(C, D, P), ival(C', D, Q),
+    ival(X, D, P), ival(Y, D, Q),
     strengthens(D, S), P <= Q.
 
 % duality
@@ -25,17 +25,18 @@ ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
 %%% HELPERS %%%
 
-item(C) :- ival(C, D, P).
-has_ival(C, D) :- ival(C, D, P).
+iset(X) :- ival(X, D, P).
 
--domain_subseteq(C, C') :-
-    has_ival(C, D), item(C'), not has_ival(C', D).
+has_ival(X, D) :- ival(X, D, P).
 
--domain_disjoint(C, C') :-
-    has_ival(C, D), has_ival(C', D).
+-domain_subseteq(X, Y) :-
+    has_ival(X, D), iset(Y), not has_ival(Y, D).
 
--dims_leq(S, C, C') :-
-    ival(C, D, P), ival(C', D, Q),
+-domain_disjoint(X, Y) :-
+    has_ival(X, D), has_ival(Y, D).
+
+-dims_leq(S, X, Y) :-
+    ival(X, D, P), ival(Y, D, Q),
     ord(S, D, Q, P), P != Q.
 
 %%% POOL %%%
@@ -45,53 +46,53 @@ pooled(reason(C), S) :- case(C, S).
 
 %%% PRUNE %%%
 
-pruned(C', S) :-
-    pooled(C, S), pooled(C', S), C < C',
-    not -domain_subseteq(C, C'),
-    not -domain_subseteq(C', C),
-    not -dims_leq(S, C, C').
+pruned(Y, S) :-
+    pooled(X, S), pooled(Y, S), X < Y,
+    not -domain_subseteq(X, Y),
+    not -domain_subseteq(Y, X),
+    not -dims_leq(S, X, Y).
 
 %%% RESIDUALS %%%
 
-pooled(residual(C', C), S) :-
-    pooled(C', S'), pooled(C, S), opposite(S, S'),
-    not pruned(C', S'), not pruned(C, S),
-    not -domain_subseteq(C', C), not -dims_leq(S, C, C'),
-    not has_ival(C', D), has_ival(C, D).
+pooled(residual(X, Y), S) :-
+    pooled(X, S'), pooled(Y, S), opposite(S, S'),
+    not pruned(X, S'), not pruned(Y, S),
+    not -domain_subseteq(X, Y), not -dims_leq(S, Y, X),
+    not has_ival(X, D), has_ival(Y, D).
 
-ival(residual(C', C), D, P) :-
-    pooled(residual(C', C), S),
-    not has_ival(C', D), ival(C, D, P).
+ival(residual(X, Y), D, P) :-
+    pooled(residual(X, Y), S),
+    not has_ival(X, D), ival(Y, D, P).
 
 %%% GENERATE UNION CASES %%%
 
-fixpoint(C, S) :- pooled(C, S), not pruned(C, S).
+fixpoint(X, S) :- pooled(X, S), not pruned(X, S).
 
-ground_partial_precedent(C, S, F) :-
-    fixpoint(C, S), focus_case(F),
-    not -domain_subseteq(C, F),
-    not -dims_leq(S, C, F).
+ground_partial_precedent(X, S, F) :-
+    fixpoint(X, S), focus_case(F),
+    not -domain_subseteq(X, F),
+    not -dims_leq(S, X, F).
 
-partial_precedent(union(C, C'), S, F) :-
-    ground_partial_precedent(C, S, F),
-    ground_partial_precedent(C', S, F),
-    C < C', not -domain_disjoint(C, C').
+partial_precedent(union(X, Y), S, F) :-
+    ground_partial_precedent(X, S, F),
+    ground_partial_precedent(Y, S, F),
+    X < Y, not -domain_disjoint(X, Y).
 
-partial_precedent(union(union(C1, C2), C3), S, F) :-
-    partial_precedent(union(C1, C2), S, F),
-    ground_partial_precedent(C3, S, F),
-    C2 < C3, not -domain_disjoint(union(C1, C2), C3).
+partial_precedent(union(union(X, Y), Z), S, F) :-
+    partial_precedent(union(X, Y), S, F),
+    ground_partial_precedent(Z, S, F),
+    Y < Z, not -domain_disjoint(union(X, Y), Z).
 
-ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C, D, P).
-ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C', D, P).
+ival(union(X, Y), D, P) :- partial_precedent(union(X, Y), S, F), ival(X, D, P).
+ival(union(X, Y), D, P) :- partial_precedent(union(X, Y), S, F), ival(Y, D, P).
 
--precedent(C, S, F) :-
-    partial_precedent(C, S, F),
-    has_ival(F, D), not has_ival(C, D).
+-precedent(X, S, F) :-
+    partial_precedent(X, S, F),
+    has_ival(F, D), not has_ival(X, D).
 
 constraint(F, S) :-
-    partial_precedent(C, S, F),
-    not -precedent(C, S, F).
+    partial_precedent(X, S, F),
+    not -precedent(X, S, F).
 
 %%% EXAMPLE %%%
 
@@ -106,3 +107,5 @@ val(c2, d2, 20). mf(c2, d2, 10).
 
 focus_case(c3).
 val(c3, d1, 15). val(c3, d2, 15).
+
+#show fixpoint/2.
