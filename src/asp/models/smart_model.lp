@@ -73,6 +73,9 @@ ground_partial_precedent(X, S, F) :-
     not -domain_subseteq(X, F),
     not -dims_leq(S, X, F).
 
+partial_precedent(X, S, F) :-
+    ground_partial_precedent(X, S, F).
+
 partial_precedent(union(X, Y), S, F) :-
     ground_partial_precedent(X, S, F),
     ground_partial_precedent(Y, S, F),
@@ -105,9 +108,11 @@ case(c1, defendant).
 val(c1, d1, 20). mf(c1, d1, 10).
 
 case(c2, defendant).
+val(c2, d1, 20). mf(c2, d1, 10).
 val(c2, d2, 20). mf(c2, d2, 10).
 
 focus_case(c3).
 val(c3, d1, 15). val(c3, d2, 15).
 
+#show pruned/2.
 #show constraint/2.
