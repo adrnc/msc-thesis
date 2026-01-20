@@ -77,13 +77,13 @@ partial_precedent(union(C, C'), S, F) :-
     ground_partial_precedent(C', S, F),
     C < C', not -domain_disjoint(C, C').
 
-ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C, D, P).
-ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C', D, P).
-
 partial_precedent(union(union(C1, C2), C3), S, F) :-
     partial_precedent(union(C1, C2), S, F),
     ground_partial_precedent(C3, S, F),
     C2 < C3, not -domain_disjoint(union(C1, C2), C3).
+
+ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C, D, P).
+ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C', D, P).
 
 -precedent(C, S, F) :-
     partial_precedent(C, S, F),
