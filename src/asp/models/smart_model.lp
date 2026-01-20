@@ -108,7 +108,6 @@ case(c1, defendant).
 val(c1, d1, 20). mf(c1, d1, 10).
 
 case(c2, defendant).
-val(c2, d1, 20). mf(c2, d1, 10).
 val(c2, d2, 20). mf(c2, d2, 10).
 
 focus_case(c3).
