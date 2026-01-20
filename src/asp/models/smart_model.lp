@@ -14,6 +14,11 @@ ival(reason(C), D, P) :- case(C, S), mf(C, D, P).
 
 ival(F, D, P) :- focus_case(F), val(F, D, P).
 
+%%% POOL %%%
+
+pooled(reduct(C), S) :- case(C, S).
+pooled(reason(C), S) :- case(C, S).
+
 %%% VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
@@ -38,11 +43,6 @@ has_ival(X, D) :- ival(X, D, P).
 -dims_leq(S, X, Y) :-
     ival(X, D, P), ival(Y, D, Q),
     ord(S, D, Q, P), P != Q.
-
-%%% POOL %%%
-
-pooled(reduct(C), S) :- case(C, S).
-pooled(reason(C), S) :- case(C, S).
 
 %%% PRUNE %%%
 
