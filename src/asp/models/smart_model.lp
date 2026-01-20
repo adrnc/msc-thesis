@@ -23,59 +23,38 @@ ord(S, D, P, Q) :-
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-%%% GENERATE INITIAL POOL OF CASES %%%
+%%% HELPERS %%%
 
 has_rval(C, D) :- rval(C, D, P).
 
--outcome_flip_pair(C, S, C', S') :-
-    rcase(C, S), rcase(C', S'), opposite(S, S'),
+-domain_subseteq(C, C') :-
     has_rval(C, D), not has_rval(C', D).
 
--outcome_flip_pair(C, S, C', S') :-
-    rcase(C, S), rcase(C', S'), opposite(S, S'),
+-dims_leq(S, C, C') :-
     rval(C, D, P), rval(C', D, Q),
-    not ord(S', D, Q, P).
+    opposite(S, S'), not ord(S, D, P, Q).
 
-residual_pair(C, C', S') :-
-    rcase(C, S), rcase(C', S'), opposite(S, S'),
-    not has_rval(C, D), has_rval(C', D),
-    not -outcome_flip_pair(C, S, C', S').
+%%% PRUNE CASES %%%
 
-pool_rcase(residual(C, C'), S') :-
-    residual_pair(C, C', S').
+pruned_rcase(C', S) :-
+    rcase(C, S), rcase(C', S), C != C',
+    not -domain_subseteq(C, C'),
+    not -domain_subseteq(C', C),
+    not -dims_leq(S, C, C').
 
-pool_rval(residual(C, C'), D, P) :-
-    residual_pair(C, C', S'),
-    not has_rval(C, D), rval(C', D, P).
+%%% GENERATE RESIDUALS %%%
 
-pool_rcase(C, S) :- rcase(C, S).
-pool_rval(C, D, P) :- rval(C, D, P).
+rcase(residual(C', C), S) :-
+    rcase(C', S'), rcase(C, S), opposite(S, S'),
+    not pruned_rcase(C', S'), not pruned_rcase(C, S),
+    not -domain_subseteq(C', C), not -dims_leq(S, C, C'),
+    not has_rval(C', D), has_rval(C, D).
 
-%%% ADD POOL CASES %%%
+rval(residual(C', C), D, P) :-
+    rcase(residual(C', C), S),
+    not has_rval(C', D), rval(C, D, P).
 
+%%% FILTER PRECEDENT CASES %%%
 
-
-%%% PRUNE POOL CASES %%%
-
-has_pool_rval(C, D) :- pool_rval(C, D, P).
-
--are_domains_identical(C, C', S) :-
-    pool_rcase(C, S), pool_rcase(C', S), C != C',
-    has_pool_rval(C, D), not has_pool_rval(C', D).
-
--are_domains_identical(C, C', S) :-
-    pool_rcase(C, S), pool_rcase(C', S), C != C',
-    not has_pool_rval(C, D), has_pool_rval(C', D).
-
--are_all_dims_stronger(C, C', S) :-
-    pool_rcase(C, S), pool_rcase(C', S), C != C',
-    pool_rval(C, D, P), pool_rval(C', D, Q),
-    not ord(S, D, P, Q).
-
-pruned_rcase(C, S) :-
-    pool_rcase(C, S), pool_rcase(C', S), C != C',
-    not -are_domains_identical(C, C', S),
-    not -are_all_dims_stronger(C, C', S).
-
-precedent_rcase(C, S) :-
-    pool_rcase(C, S), not pruned_rcase(C, S).
+fixed_rcase(C, S) :-
+    rcase(C, S), not pruned_rcase(C, S).
