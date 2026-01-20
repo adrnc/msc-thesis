@@ -114,5 +114,4 @@ val(c2, d2, 20). mf(c2, d2, 10).
 focus_case(c3).
 val(c3, d1, 15). val(c3, d2, 15).
 
-#show pruned/2.
 #show constraint/2.
