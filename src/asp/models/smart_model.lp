@@ -14,11 +14,6 @@ ival(reason(C), D, P) :- case(C, S), mf(C, D, P).
 
 ival(F, D, P) :- focus_case(F), val(F, D, P).
 
-%%% POOL %%%
-
-pooled(reduct(C), S) :- case(C, S).
-pooled(reason(C), S) :- case(C, S).
-
 %%% VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
@@ -28,7 +23,12 @@ ord(S, D, P, Q) :-
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-%%% HELPERS %%%
+%%% POOL %%%
+
+pooled(reduct(C), S) :- case(C, S).
+pooled(reason(C), S) :- case(C, S).
+
+%%% DOMAIN COMPARISONS %%%
 
 iset(X) :- ival(X, D, P).
 
@@ -44,7 +44,7 @@ has_ival(X, D) :- ival(X, D, P).
     ival(X, D, P), ival(Y, D, Q),
     ord(S, D, Q, P), P != Q.
 
-%%% PRUNE %%%
+%%% PRUNE POOLS %%%
 
 pruned(Y, S) :-
     pooled(X, S), pooled(Y, S), X < Y,
@@ -64,7 +64,7 @@ ival(residual(X, Y), D, P) :-
     pooled(residual(X, Y), S),
     not has_ival(X, D), ival(Y, D, P).
 
-%%% GENERATE UNION CASES %%%
+%%% PARTIAL PRECEDENTS %%%
 
 fixpoint(X, S) :- pooled(X, S), not pruned(X, S).
 
@@ -85,6 +85,8 @@ partial_precedent(union(union(X, Y), Z), S, F) :-
 
 ival(union(X, Y), D, P) :- partial_precedent(union(X, Y), S, F), ival(X, D, P).
 ival(union(X, Y), D, P) :- partial_precedent(union(X, Y), S, F), ival(Y, D, P).
+
+%%% CONSTRAINT %%%
 
 -precedent(X, S, F) :-
     partial_precedent(X, S, F),
