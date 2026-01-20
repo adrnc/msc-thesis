@@ -46,7 +46,7 @@ pooled(reason(C), S) :- case(C, S).
 %%% PRUNE %%%
 
 pruned(C', S) :-
-    pooled(C, S), pooled(C', S), C != C',
+    pooled(C, S), pooled(C', S), C < C',
     not -domain_subseteq(C, C'),
     not -domain_subseteq(C', C),
     not -dims_leq(S, C, C').
@@ -75,7 +75,7 @@ ground_partial_precedent(C, S, F) :-
 partial_precedent(union(C, C'), S, F) :-
     ground_partial_precedent(C, S, F),
     ground_partial_precedent(C', S, F),
-    C != C', not -domain_disjoint(C, C').
+    C < C', not -domain_disjoint(C, C').
 
 ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C, D, P).
 ival(union(C, C'), D, P) :- partial_precedent(union(C, C'), S, F), ival(C', D, P).
@@ -92,3 +92,17 @@ partial_precedent(union(union(C1, C2), C3), S, F) :-
 constraint(F, S) :-
     partial_precedent(C, S, F),
     not -precedent(C, S, F).
+
+%%% EXAMPLE %%%
+
+strengthens(d1, defendant).
+strengthens(d2, defendant).
+
+case(c1, defendant).
+val(c1, d1, 20). mf(c1, d1, 10).
+
+case(c2, defendant).
+val(c2, d2, 20). mf(c2, d2, 10).
+
+focus_case(c3).
+val(c3, d1, 15). val(c3, d2, 15).
