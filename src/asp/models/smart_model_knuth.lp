@@ -38,9 +38,6 @@ has_ival(X, D) :- ival(X, D, P).
 -domain_subseteq(X, Y) :-
     has_ival(X, D), iset(Y), not has_ival(Y, D).
 
--domain_disjoint(X, Y) :-
-    has_ival(X, D), has_ival(Y, D).
-
 -dims_leq(S, X, Y) :-
     ival(X, D, P), ival(Y, D, Q),
     ord(S, D, Q, P), P != Q.
@@ -80,7 +77,7 @@ potential_precedent(X, S, F) :-
 
 :-
     precedent(X, S, F), precedent(Y, S, F),
-    X != Y, -domain_disjoint(X, Y).
+    X != Y, has_ival(X, D), has_ival(Y, D).
 
 ival_covered(F, D, S) :-
     precedent(X, S, F), has_ival(X, D).
