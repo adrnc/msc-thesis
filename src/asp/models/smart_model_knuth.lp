@@ -1,15 +1,12 @@
 %%% SIDES %%%
 
-side(plaintiff). side(defendant).
 opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
 %%% VALUE TRANSLATION %%%
 
-has_mf(R, D) :- mf(R, D, P).
-
 ival(reduct(C), D, P) :- case(C, S), mf(C, D, P).
-ival(reduct(C), D, P) :- case(C, S), val(C, D, P), not has_mf(C, D).
+ival(reduct(C), D, P) :- case(C, S), val(C, D, P), not mf(C, D, _).
 
 ival(reason(C), D, P) :- case(C, S), mf(C, D, P).
 
@@ -18,7 +15,7 @@ ival(F, D, P) :- focus_case(F), val(F, D, P).
 %%% VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
-    ival(X, D, P), ival(Y, D, Q),
+    ival(_, D, P), ival(_, D, Q),
     strengthens(D, S), P <= Q.
 
 % duality
@@ -31,60 +28,59 @@ pooled(reason(C), S) :- case(C, S).
 
 %%% DOMAIN COMPARISONS %%%
 
-iset(X) :- ival(X, D, P).
+missing_dim(X, Y) :-
+    ival(X, _, _), ival(Y, D, _), not ival(X, D, _).
 
-has_ival(X, D) :- ival(X, D, P).
+subseteq(X, Y) :-
+    ival(X, _, _), ival(Y, _, _),
+    not missing_dim(Y, X).
 
--domain_subseteq(X, Y) :-
-    has_ival(X, D), iset(Y), not has_ival(Y, D).
-
--dims_leq(S, X, Y) :-
+worse_on_dim(S, X, Y) :-
     ival(X, D, P), ival(Y, D, Q),
-    ord(S, D, Q, P), P != Q.
+    ord(S, D, P, Q), P != Q.
+
+leq(S, X, Y) :-
+    ival(X, _, _), ival(Y, _, _), opposite(S, _),
+    not worse_on_dim(S, Y, X).
 
 %%% PRUNE POOLS %%%
 
 pruned(Y, S) :-
     pooled(X, S), pooled(Y, S), X < Y,
-    not -domain_subseteq(X, Y),
-    not -domain_subseteq(Y, X),
-    not -dims_leq(S, X, Y).
+    subseteq(X, Y), subseteq(Y, X), leq(S, X, Y).
 
 %%% RESIDUALS %%%
 
 pooled(residual(X, Y), S) :-
     pooled(X, S'), pooled(Y, S), opposite(S, S'),
     not pruned(X, S'), not pruned(Y, S),
-    not -domain_subseteq(X, Y), not -dims_leq(S, Y, X),
-    not has_ival(X, D), has_ival(Y, D).
+    subseteq(X, Y), leq(S, Y, X),
+    not ival(X, D, _), ival(Y, D, _).
 
 ival(residual(X, Y), D, P) :-
     pooled(residual(X, Y), S),
-    not has_ival(X, D), ival(Y, D, P).
-
-fixpoint(X, S) :- pooled(X, S), not pruned(X, S).
+    not ival(X, D, _), ival(Y, D, P).
 
 %%% CONSTRAINT %%%
 
-1 { constraint(F, S) : focus_case(F), side(S) } 1.
+1 { constraint(F, S) : focus_case(F), opposite(S, _) } 1.
 
-potential_precedent(X, S, F) :-
-    fixpoint(X, S), constraint(F, S),
-    not -domain_subseteq(X, F),
-    not -dims_leq(S, X, F).
+candidate(X, S, F) :-
+    pooled(X, S), not pruned(X, S), constraint(F, S),
+    subseteq(X, F), leq(S, X, F).
 
-1 { precedent(X, S, F) : potential_precedent(X, S, F) }.
+1 { precedent(X, S, F) : candidate(X, S, F) }.
 
 :-
     precedent(X, S, F), precedent(Y, S, F),
-    X != Y, has_ival(X, D), has_ival(Y, D).
+    X != Y, ival(X, D, _), ival(Y, D, _).
 
-ival_covered(F, D, S) :-
-    precedent(X, S, F), has_ival(X, D).
+covered(F, S, D) :-
+    precedent(X, S, F), ival(X, D, _).
 
 :-
-    constraint(F, S), has_ival(F, D),
-    not ival_covered(F, D, S).
+    constraint(F, S), ival(F, D, _),
+    not covered(F, S, D).
 
 %%% EXAMPLE %%%
 
@@ -95,6 +91,7 @@ case(c1, defendant).
 val(c1, d1, 20). mf(c1, d1, 10).
 
 case(c2, defendant).
+val(c2, d1, 20). mf(c2, d1, 10).
 val(c2, d2, 20). mf(c2, d2, 10).
 
 focus_case(c3).
