@@ -46,7 +46,7 @@ leq(S, X, Y) :-
 %%% PRUNE POOLS %%%
 
 pruned(Y, S) :-
-    pooled(X, S), pooled(Y, S), X < Y,
+    pooled(X, S), pooled(Y, S), not pruned(X, S),
     subseteq(X, Y), subseteq(Y, X), leq(S, X, Y).
 
 %%% RESIDUALS %%%
@@ -75,12 +75,12 @@ candidate(X, S, F) :-
     precedent(X, S, F), precedent(Y, S, F),
     X != Y, ival(X, D, _), ival(Y, D, _).
 
-covered(F, S, D) :-
+dim_covered(F, S, D) :-
     precedent(X, S, F), ival(X, D, _).
 
 :-
     constraint(F, S), ival(F, D, _),
-    not covered(F, S, D).
+    not dim_covered(F, S, D).
 
 %%% EXAMPLE %%%
 
