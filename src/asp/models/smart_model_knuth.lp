@@ -1,52 +1,48 @@
 %%% SIDES %%%
 
+side(plaintiff). side(defendant).
 opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
-%%% VALUE TRANSLATION %%%
+%%% INITIALISE POOLS %%%
 
-ival(reduct(C), D, P) :- case(C, S), mf(C, D, P).
-ival(reduct(C), D, P) :- case(C, S), val(C, D, P), not mf(C, D, _).
+pooled(reduct(C), S) :- case(C, S).
+val(reduct(C), D, P) :- case(C, S), mf(C, D, P).
+val(reduct(C), D, P) :- case(C, S), val(C, D, P), not mf(C, D, _).
 
-ival(reason(C), D, P) :- case(C, S), mf(C, D, P).
-
-ival(F, D, P) :- focus_case(F), val(F, D, P).
+pooled(reason(C), S) :- case(C, S).
+val(reason(C), D, P) :- case(C, S), mf(C, D, P).
 
 %%% VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
-    ival(_, D, P), ival(_, D, Q),
+    val(_, D, P), val(_, D, Q),
     strengthens(D, S), P <= Q.
 
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-%%% POOL %%%
-
-pooled(reduct(C), S) :- case(C, S).
-pooled(reason(C), S) :- case(C, S).
-
 %%% DOMAIN COMPARISONS %%%
 
 missing_dim(X, Y) :-
-    ival(X, _, _), ival(Y, D, _), not ival(X, D, _).
+    val(X, _, _), val(Y, D, _), not val(X, D, _).
 
 subseteq(X, Y) :-
-    ival(X, _, _), ival(Y, _, _),
+    val(X, _, _), val(Y, _, _),
     not missing_dim(Y, X).
 
 worse_on_dim(S, X, Y) :-
-    ival(X, D, P), ival(Y, D, Q),
+    val(X, D, P), val(Y, D, Q),
     ord(S, D, P, Q), P != Q.
 
 leq(S, X, Y) :-
-    ival(X, _, _), ival(Y, _, _), opposite(S, _),
+    val(X, _, _), val(Y, _, _), opposite(S, _),
     not worse_on_dim(S, Y, X).
 
 %%% PRUNE POOLS %%%
 
 pruned(Y, S) :-
-    pooled(X, S), pooled(Y, S), not pruned(X, S),
+    pooled(X, S), pooled(Y, S), not pruned(X, S), X != Y,
     subseteq(X, Y), subseteq(Y, X), leq(S, X, Y).
 
 %%% RESIDUALS %%%
@@ -55,15 +51,15 @@ pooled(residual(X, Y), S) :-
     pooled(X, S'), pooled(Y, S), opposite(S, S'),
     not pruned(X, S'), not pruned(Y, S),
     subseteq(X, Y), leq(S, Y, X),
-    not ival(X, D, _), ival(Y, D, _).
+    not val(X, D, _), val(Y, D, _).
 
-ival(residual(X, Y), D, P) :-
+val(residual(X, Y), D, P) :-
     pooled(residual(X, Y), S),
-    not ival(X, D, _), ival(Y, D, P).
+    not val(X, D, _), val(Y, D, P).
 
 %%% CONSTRAINT %%%
 
-1 { constraint(F, S) : focus_case(F), opposite(S, _) } 1.
+1 { constraint(F, S) : focus_case(F), side(S) } 1.
 
 candidate(X, S, F) :-
     pooled(X, S), not pruned(X, S), constraint(F, S),
@@ -73,13 +69,13 @@ candidate(X, S, F) :-
 
 :-
     precedent(X, S, F), precedent(Y, S, F),
-    X != Y, ival(X, D, _), ival(Y, D, _).
+    X != Y, val(X, D, _), val(Y, D, _).
 
 dim_covered(F, S, D) :-
-    precedent(X, S, F), ival(X, D, _).
+    precedent(X, S, F), val(X, D, _).
 
 :-
-    constraint(F, S), ival(F, D, _),
+    constraint(F, S), val(F, D, _),
     not dim_covered(F, S, D).
 
 %%% EXAMPLE %%%
