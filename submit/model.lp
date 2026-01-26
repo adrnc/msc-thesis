@@ -6,6 +6,20 @@ side(defendant).
 opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
+%%% RESTRICT GROUNDING OF SETS %%%
+
+usize(1..N) :- dim_count(N).
+
+uset(reduct(C), S, N) :- case(C, S), usize(N), N = #count { D : val(C, D, _) }.
+uset(reason(C), S, N) :- case(C, S), usize(N), N = #count { D : mf(C, D, _) }.
+
+uset(residual(X, Y), S, K) :-
+    uset(X, S', M), uset(Y, S, N), opposite(S, S'),
+    M < N, K = N - 1, usize(K).
+
+set(F) :- focus_case(F).
+set(X) :- uset(X, _, _).
+
 %%% INFER VALUE RELATION %%%
 
 ord(S, D, P, Q) :-
@@ -18,18 +32,20 @@ ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 %%% ADD DOMAIN COMPARISONS %%%
 
 missing_dim(X, Y) :-
-    val(X, _, _), val(Y, D, _), not val(X, D, _).
+    set(X), set(Y),
+    val(Y, D, _), not val(X, D, _).
 
 subseteq(X, Y) :-
-    val(X, _, _), val(Y, _, _),
+    set(X), set(Y),
     not missing_dim(Y, X).
 
 worse_on_dim(S, X, Y) :-
+    set(X), set(Y),
     val(X, D, P), val(Y, D, Q),
     ord(S, D, P, Q), P != Q.
 
 leq(S, X, Y) :-
-    val(X, _, _), val(Y, _, _), opposite(S, _),
+    side(S), set(X), set(Y),
     not worse_on_dim(S, Y, X).
 
 %%% INITIALISE POOLS %%%
@@ -80,4 +96,3 @@ dim_covered(F, S, D) :-
 :-
     constraint(F, S), val(F, D, _),
     not dim_covered(F, S, D).
-
