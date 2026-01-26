@@ -1,7 +1,5 @@
 %%% DIMENSIONS %%%
 
-dim_count(3).
-
 % Every occurring dimension needs to specify a value relation.
 % For simplicity, any dimension occuring in the input is assumed
 % to only contain integer values and a natural ordering of these.
