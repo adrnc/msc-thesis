@@ -6,6 +6,15 @@ side(defendant).
 opposite(plaintiff, defendant).
 opposite(defendant, plaintiff).
 
+%%% INFER VALUE RELATION %%%
+
+ord(S, D, P, Q) :-
+    val(_, D, P), val(_, D, Q),
+    strengthens(D, S), P <= Q.
+
+% duality
+ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
+
 %%% RESTRICT GROUNDING OF SETS %%%
 
 usize(1..N) :- dim_count(N).
@@ -19,15 +28,6 @@ uset(residual(X, Y), S, K) :-
 
 set(F) :- focus_case(F).
 set(X) :- uset(X, _, _).
-
-%%% INFER VALUE RELATION %%%
-
-ord(S, D, P, Q) :-
-    val(_, D, P), val(_, D, Q),
-    strengthens(D, S), P <= Q.
-
-% duality
-ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
 %%% ADD DOMAIN COMPARISONS %%%
 
