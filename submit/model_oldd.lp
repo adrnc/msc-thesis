@@ -15,10 +15,6 @@ ord(S, D, P, Q) :-
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-% DOMAIN
-
-dom() :-
-
 %%% RESTRICT GROUNDING OF SETS %%%
 
 % We instantiate residuals using the function residual(X, Y).
@@ -37,6 +33,34 @@ dom() :-
 % where X refers to a valid expansion. We then limit the
 % grounding of subsequent rules containing fact situations,
 % by requiring that there are matching set(...) statements.
+
+% We now initialise cases that contain the number of dimensions
+% in the domain.
+ncase(reduct(C), S, N) :- case(C, S), N = #count { D : val(C, D, _) }.
+ncase(reason(C), S, N) :- case(C, S), N = #count { D : mf(C, D, _) }.
+
+% We also initialise the value assignments for reduct and reason
+% cases
+val(reduct(C), D, P) :- case(C, S), mf(C, D, P).
+val(reduct(C), D, P) :- case(C, S), val(C, D, P), not mf(C, D, _).
+val(reason(C), D, P) :- case(C, S), mf(C, D, P).
+
+% This is the crucial step where we limit the grounding.
+% When generating residuals, we make the observation that
+% residual(X, Y) contains at least one fewer dimension than
+% Y, and at least one fewer dimension than X.
+ncase(residual(X, Y), S, K) :-
+    % Since residuals are generated for opposing cases,
+    % we pick two opposing cases together with their
+    % domain sizes.
+    ncase(X, S', M), ncase(Y, S, N), opposite(S, S'),
+    % The size of the residual has to be N - M, since
+    % it is the set difference Y \ X, and X is a subset
+    % of Y.
+    K = N - M, M < N,
+    % The grounding is limited by requiring that at least
+    % some element remains in the residual.
+    1 <= K.
 
 % Is residual(residual(X, Y), X) possible? No, since X is a subset of Y
 % Is residual(Y, residual(X, Y)) possible?
