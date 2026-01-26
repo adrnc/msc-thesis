@@ -46,8 +46,8 @@ candidate(C, S, F) :-
     subseteq(C, F), leq(S, C, F).
 
 pruned(C, S, F) :-
-    candidate(C, S, F), candidate(C', S, F), C != C',
-    subseteq(C, C').
+    candidate(C, S, F), candidate(C', S, F),
+    C != C', subseteq(C, C').
 
 1 { precedent(C, S, F) : candidate(C, S, F), not pruned(C, S, F) } 1
     :- constraint(F, S), candidate(_, S, F).
