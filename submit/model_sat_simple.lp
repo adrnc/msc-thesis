@@ -20,23 +20,6 @@ ord(S, D, P, Q) :-
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-%%% COMPARE FACT SITUATIONS %%%
-
-missing_dim(X, Y) :-
-    rval(X, _, _), rval(Y, D, _), not rval(X, D, _).
-
-subseteq(X, Y) :-
-    rval(X, _, _), rval(Y, _, _),
-    not missing_dim(Y, X).
-
-worse_on_dim(S, X, Y) :-
-    rval(X, D, P), rval(Y, D, Q),
-    ord(S, D, P, Q), P != Q.
-
-leq(S, X, Y) :-
-    side(S), rval(X, _, _), rval(Y, _, _),
-    not worse_on_dim(S, Y, X).
-
 %%% SAT SOLVING %%%
 
 1 { supports(S, D, P) : rval(C, D, P) } :- case(C, S).
