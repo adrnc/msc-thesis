@@ -20,30 +20,13 @@ ord(S, D, P, Q) :-
 % duality
 ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
-%%% COMPARE FACT SITUATIONS %%%
-
-missing_dim(X, Y) :-
-    rval(X, _, _), rval(Y, D, _), not rval(X, D, _).
-
-subseteq(X, Y) :-
-    rval(X, _, _), rval(Y, _, _),
-    not missing_dim(Y, X).
-
-worse_on_dim(S, X, Y) :-
-    rval(X, D, P), rval(Y, D, Q),
-    ord(S, D, P, Q), P != Q.
-
-leq(S, X, Y) :-
-    side(S), rval(X, _, _), rval(Y, _, _),
-    not worse_on_dim(S, Y, X).
-
 %%% SAT SOLVING %%%
 
-1 { supports(S, D, P) : rval(C, D, P) } :- case(C, S).
+1 { supports(S, D, P) : rval(C, D, P) } 1 :- case(C, S).
 
 1 { supports(S, D, P) : side(S) } 1 :- case(C, _), rval(C, D, P).
 
-supports(S, D, Q) :- supports(D, P, S), ord(S, D, P, Q).
+supports(S, D, Q) :- supports(S, D, P), ord(S, D, P, Q).
 
 :-
     supports(S, D, P), supports(S', D, Q),
@@ -51,19 +34,28 @@ supports(S, D, Q) :- supports(D, P, S), ord(S, D, P, Q).
 
 %%% MODEL CONSTRAINT %%%
 
+missing_dim(F, C, S) :-
+    focus_case(F), case(C, S),
+    not rval(F, D, _), rval(C, D, _).
+
+worse_on_dim(F, C, S) :-
+    focus_case(F), case(C, S),
+    rval(F, D, P), rval(C, D, Q),
+    ord(S, D, P, Q), P != Q.
+
+precedent(F, C, S) :-
+    focus_case(F), case(C, S),
+    not missing_dim(F, C, S),
+    not worse_on_dim(F, C, S).
+
 % empty precedent
-precedent(empty, S, F) :- side(S), focus_case(F).
+precedent(F, empty, S) :- focus_case(F), side(S).
 
-precedent(C, S, F) :-
-    case(C, S), focus_case(F),
-    subseteq(C, F), leq(S, C, F).
+covered(F, C, S, D) :- precedent(F, C, S), rval(C, D, _).
 
-covered(C, S, F, D) :-
-    precedent(C, S, F), rval(C, D, _).
-
-covered(C, S, F, D) :-
-    precedent(C, S, F), rval(F, D, P), supports(S, D, P).
+covered(F, C, S, D) :-
+    precedent(F, C, S), rval(F, D, P), supports(S, D, P).
 
 constraint(F, S) :-
-    precedent(C, S, F),
-    0 == #count { D : rval(F, D, _), not covered(C, S, F, D) }.
+    precedent(F, C, S),
+    0 == #count { D : rval(F, D, _), not covered(F, C, S, D) }.
