@@ -32,19 +32,12 @@ supports(S, D, Q) :- supports(S, D, P), ord(S, D, P, Q).
 
 %%% MODEL CONSTRAINT %%%
 
-missing_dim(F, C, S) :-
-    focus_case(F), case(C, S),
-    not rval(F, D, _), rval(C, D, _).
-
-worse_on_dim(F, C, S) :-
-    focus_case(F), case(C, S),
-    rval(F, D, P), rval(C, D, Q),
-    ord(S, D, P, Q), P != Q.
-
 precedent(F, C, S) :-
     focus_case(F), case(C, S),
-    not missing_dim(F, C, S),
-    not worse_on_dim(F, C, S).
+    #count {
+        D : rval(C, D, _), not rval(F, D, _);
+        D : rval(C, D, P), rval(F, D, Q), ord(S, D, Q, P), P != Q
+    } == 0.
 
 % empty precedent
 precedent(F, empty, S) :- focus_case(F), side(S).
@@ -56,4 +49,4 @@ covered(F, C, S, D) :-
 
 constraint(F, S) :-
     precedent(F, C, S),
-    0 == #count { D : rval(F, D, _), not covered(F, C, S, D) }.
+    #count { D : rval(F, D, _), not covered(F, C, S, D) } == 0.
