@@ -39,10 +39,14 @@ leq(S, X, Y) :-
 
 %%% SAT SOLVING %%%
 
-1 { supports(D, P, S) : rval(C, D, P) } :- case(C, S).
+1 { supports(S, D, P) : rval(C, D, P) } :- case(C, S).
+
+%1 { supports(S, D, P) : side(S) } 1 :- case(C, _), rval(C, D, P).
+
+supports(S, D, Q) :- supports(D, P, S), ord(S, D, P, Q).
 
 :-
-    supports(D, P, S), supports(D, Q, S'),
+    supports(S, D, P), supports(S', D, Q),
     opposite(S, S'), ord(S, D, P, Q).
 
 %%% MODEL CONSTRAINT %%%
@@ -58,8 +62,7 @@ covered(C, S, F, D) :-
     precedent(C, S, F), rval(C, D, _).
 
 covered(C, S, F, D) :-
-    precedent(C, S, F), rval(F, D, P),
-    supports(D, Q, S), ord(S, D, Q, P).
+    precedent(C, S, F), rval(F, D, P), supports(S, D, P).
 
 constraint(F, S) :-
     precedent(C, S, F),
