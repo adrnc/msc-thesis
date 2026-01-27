@@ -28,9 +28,7 @@ ord(S', D, Q, P) :- ord(S, D, P, Q), opposite(S, S').
 
 supports(S, D, Q) :- supports(S, D, P), ord(S, D, P, Q).
 
-:-
-    supports(S, D, P), supports(S', D, Q),
-    opposite(S, S'), ord(S, D, P, Q).
+:- supports(S, D, P), supports(S', D, P), opposite(S, S').
 
 %%% MODEL CONSTRAINT %%%
 
