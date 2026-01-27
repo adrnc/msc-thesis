@@ -14,15 +14,17 @@ strengthens(d3, defendant).
 %%% CASE BASE %%%
 
 case(c1, defendant).
-val(c1, d1, 14). mf(c1, d1, 12).
-val(c1, d2, 80). mf(c1, d2, 60).
-val(c1, d3, 8).
+val(c1, d1, 18). mf(c1, d1, 12).
 
-case(c2, plaintiff).
-val(c2, d1, 13).
-val(c2, d2, 70).
+case(c2, defendant).
+val(c2, d2, 80). mf(c2, d2, 75).
+val(c2, d3, 1).
+
+case(c2', plaintiff).
+val(c2', d3, 2).
 
 %%% FOCUS CASE %%%
 
 focus_case(c3).
-val(c3, d3, 9).
+val(c3, d1, 16).
+val(c3, d2, 77).
