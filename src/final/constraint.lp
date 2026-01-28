@@ -6,7 +6,7 @@ ord_failure(F, C, S) :-
 
 % some dimension that is in F but
 % not in C does not support side S
-ext_failure(F, C, S) :-
+add_failure(F, C, S) :-
     focus_case(F), case(C, S),
     rval(F, D, P), not rval(C, D, _),
     not supports(S, D, P).
@@ -14,7 +14,7 @@ ext_failure(F, C, S) :-
 % some dimension that is in C but
 % not in F does not support the
 % opposing side S'
-red_failure(F, C, S) :-
+rem_failure(F, C, S) :-
     focus_case(F), case(C, S),
     not rval(F, D, _), rval(C, D, P),
     opposite(S, S'), not supports(S', D, P).
