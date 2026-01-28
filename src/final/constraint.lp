@@ -1,12 +1,12 @@
 % some dimension is worse on F than on C
-val_failure(F, C, S) :-
+ord_failure(F, C, S) :-
     focus_case(F), case(C, S),
     rval(F, D, P), rval(C, D, Q),
     ord(S, D, P, Q), P != Q.
 
 % some dimension that is in F but
 % not in C does not support side S
-add_failure(F, C, S) :-
+ext_failure(F, C, S) :-
     focus_case(F), case(C, S),
     rval(F, D, P), not rval(C, D, _),
     not supports(S, D, P).
@@ -14,7 +14,7 @@ add_failure(F, C, S) :-
 % some dimension that is in C but
 % not in F does not support the
 % opposing side S'
-del_failure(F, C, S) :-
+red_failure(F, C, S) :-
     focus_case(F), case(C, S),
     not rval(F, D, _), rval(C, D, P),
     opposite(S, S'), not supports(S', D, P).
