@@ -21,8 +21,8 @@ rem_failure(F, C, S) :-
 
 precedent(F, C, S) :-
     focus_case(F), case(C, S),
-    not val_failure(F, C, S),
+    not ord_failure(F, C, S),
     not add_failure(F, C, S),
-    not del_failure(F, C, S).
+    not rem_failure(F, C, S).
 
 constraint(F, S) :- precedent(F, C, S).
