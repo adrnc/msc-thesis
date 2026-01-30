@@ -26,7 +26,7 @@ def solve(asp_dir: str, input_files: str, show_supports: bool, show_precedents: 
     if show_precedents:
         show.append("precedent/3")
 
-    ctl2 = Control(["--project", "--show", ",".join(show)])
+    ctl2 = Control(["--project", "--show", ",".join(show), "--warn=no-atom-undefined"])
     ctl2.load(f"{asp_dir}/step2.lp")
 
     with ctl2.backend() as backend:
