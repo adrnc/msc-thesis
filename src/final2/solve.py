@@ -48,4 +48,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    solve(f"{path.dirname(__file__)}/asp", args.inputfiles, args.show_supports, args.show_precedents)
+    solve(f"{path.dirname(__file__)}/asp", args.inputfile, args.show_supports, args.show_precedent)
