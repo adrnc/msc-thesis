@@ -15,12 +15,17 @@ To install the dependencies, including the Python module for clingo, run:
 
 ## Execution
 
-```bash
+To execute the program, pass .lp input files via the command line.
+The program will then output
+
+```
 > python solve.py example.lp
 constraint(cf, defendant)
 ```
 
 ### CLI options
+
+Further options, such as `-s` and `-p`, can be specified to adjust the output of the program.
 
 ```
 > python solve.py --help
@@ -38,3 +43,5 @@ options:
 ```
 
 ## Implementation Details
+
+
