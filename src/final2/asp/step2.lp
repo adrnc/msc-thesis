@@ -28,5 +28,5 @@ precedent(F, C, S) :-
 constraint(F, S) :- precedent(F, C, S).
 
 min_supports(S, D, P) :-
-    supports(S, D, _),
-    P = #min { Q : supports(S, D, Q) }.
+    supports(S, D, P),
+    #count { Q : supports(S, D, Q), ord(S, D, Q, P), P != Q } = 0.
