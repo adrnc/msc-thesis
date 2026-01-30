@@ -39,12 +39,12 @@ def solve(asp_dir: str, input_files: str, show_supports: bool, show_precedents: 
 
 if __name__ == "__main__":
     parser = ArgumentParser(
-        prog="Model",
+        prog="solve.py",
         description="An implementation of the Reduction Model for incomplete and multi-precedent cases")
 
-    parser.add_argument("-s", "--show-supports", action="store_true", help="Show the minimal supporting thresholds for dimensions")
-    parser.add_argument("-p", "--show-precedents", action="store_true", help="Show the precedent cases in the output")
-    parser.add_argument("inputfiles", nargs="+", help="The input files in .lp format containing the case base and the focus case")
+    parser.add_argument("-s", "--show-supports", action="store_true", help="show the minimal supporting thresholds for dimensions")
+    parser.add_argument("-p", "--show-precedent", action="store_true", help="show the precedent cases in the output")
+    parser.add_argument("inputfile", nargs="+", help="an input file in .lp format containing dimensions, cases, and a focus case")
 
     args = parser.parse_args()
 
