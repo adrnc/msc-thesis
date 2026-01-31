@@ -10,7 +10,7 @@ This repository is an addition to the paper written on the same matter.
 This project requires [Python 3.13](https://www.python.org/downloads/) or newer.
 To install the dependencies, including the Python module for clingo, run:
 ```bash
-> pip install
+> pip install -r requirements.txt
 ```
 
 ## Execution
