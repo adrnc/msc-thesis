@@ -19,7 +19,7 @@ To execute the program, pass .lp input files via the command line.
 The program will then output
 
 ```
-> python solve.py example.lp
+> python solve.py example/example1.lp
 constraint(cf, defendant)
 ```
 
